@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>kontrolx — The hub for living, breathing data.</title>
+<style>
+  :root{
+    --ink:#0A0E1A;
+    --ink-2:#13182A;
+    --cobalt:#2A4BFF;
+    --amber:#FFB800;
+    --emerald:#00B884;
+    --plasma:#FF2E63;
+    --violet:#7B1FE5;
+    --slate:#6B7480;
+    --slate-2:#9BA3AD;
+    --slate-bright:#C7CCD4;
+    --line:#E5E8EC;
+    --mist:#F4F5F7;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.55}
+  a{color:inherit;text-decoration:none}
+
+  /* ============ NAV ============ */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .wm{font-size:18px;font-weight:700;letter-spacing:-.5px}
+  .nav-links{display:flex;gap:22px;font-size:14px;color:var(--slate)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;gap:10px}
+  .btn{display:inline-block;padding:9px 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:0}
+  .btn-primary{background:var(--ink);color:var(--white)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+
+  /* ============ HERO ============ */
+  .hero{background:var(--ink);color:var(--white);position:relative;overflow:hidden}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:120px 32px 100px;position:relative;z-index:2}
+  .hero-eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate-bright);margin:0 0 24px;font-weight:600}
+  .hero h1{font-size:96px;font-weight:700;letter-spacing:-.035em;margin:0 0 28px;line-height:0.98;max-width:1000px}
+  .hero .sub{font-size:22px;color:var(--slate-bright);margin:0 0 40px;max-width:780px;line-height:1.55}
+  .hero .sub b{color:#FFFFFF;font-weight:600}
+  .hero .cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .hero .cta{display:inline-block;padding:14px 22px;border-radius:10px;font-size:15px;font-weight:600}
+  .hero .cta-primary{background:#FFFFFF;color:var(--ink)}
+  .hero .cta-ghost{color:#FFFFFF;border:1px solid rgba(255,255,255,0.28)}
+  .hero .trust{margin-top:64px;display:flex;gap:24px;flex-wrap:wrap;color:var(--slate-bright);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  .hero .trust span{display:flex;align-items:center;gap:8px}
+  .hero .trust .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald)}
+  .hero-glow{position:absolute;right:-160px;top:-160px;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,0.32),rgba(42,75,255,0.22) 40%,rgba(10,14,26,0) 70%);filter:blur(24px);pointer-events:none;z-index:1}
+
+  /* ============ SECTION SHELL ============ */
+  section{padding:96px 32px}
+  .container{max-width:1180px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin:0 0 16px;font-weight:600}
+  .h2{font-size:48px;font-weight:700;letter-spacing:-.025em;margin:0 0 16px;line-height:1.05}
+  .lede{color:var(--slate);font-size:18px;margin:0 0 56px;max-width:720px;line-height:1.55}
+
+  /* ============ COLOR LEGEND (visual link) ============ */
+  .legend{display:flex;gap:24px;margin:-32px 0 40px;flex-wrap:wrap;font-size:12px;color:var(--slate);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .legend .pip{display:inline-block;width:12px;height:12px;border-radius:3px}
+
+  /* ============ PROBLEM ============ */
+  .problem{background:var(--mist)}
+  .problem .row{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+  .problem .big{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:0}
+  .problem .big em{font-style:normal;background:linear-gradient(180deg,transparent 60%,rgba(255,46,99,0.25) 60%)}
+  .problem .body{color:var(--slate);font-size:17px;line-height:1.6}
+
+  /* ============ HUB ============ */
+  .hub{background:var(--white)}
+  .hub-diagram{display:flex;justify-content:center;margin:48px 0 56px}
+  .hub-diagram svg{max-width:760px;width:100%;height:auto}
+  .hub-products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .product-card{border:1px solid var(--line);border-radius:16px;padding:32px;background:var(--white);position:relative;overflow:hidden;display:flex;flex-direction:column}
+  .product-card::before{content:"";position:absolute;left:0;top:0;right:0;height:5px}
+  .product-card.voice::before{background:var(--cobalt)}
+  .product-card.sign::before{background:var(--violet)}
+  .product-card.record::before{background:var(--plasma)}
+  .p-tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:700;margin:0 0 8px}
+  .p-name{font-size:26px;font-weight:700;letter-spacing:-.015em;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+  .p-name .pip{display:inline-block;width:12px;height:12px;border-radius:3px}
+  .product-card.voice .pip{background:var(--cobalt)}
+  .product-card.sign .pip{background:var(--violet)}
+  .product-card.record .pip{background:var(--plasma)}
+  .product-card p{margin:0 0 16px;color:var(--slate);font-size:15px;line-height:1.55;flex-grow:1}
+  .product-card ul{margin:0 0 16px;padding:0;list-style:none;border-top:1px solid var(--line);padding-top:14px}
+  .product-card ul li{font-size:12.5px;color:var(--ink);padding:5px 0;display:flex;align-items:center;gap:8px}
+  .product-card ul li:before{content:"";width:4px;height:4px;border-radius:50%;background:var(--slate);flex-shrink:0}
+  .product-card .replaces{font-size:12px;color:var(--slate);border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+  .product-card .replaces b{color:var(--ink);font-weight:600}
+
+  /* ============ PIPELINE ============ */
+  .pipeline{background:var(--mist)}
+  .pipeline .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .step{border:1px solid var(--line);border-radius:14px;padding:28px;background:var(--white);border-top:5px solid var(--line)}
+  .step.ingest{border-top-color:var(--cobalt)}
+  .step.screen{border-top-color:var(--amber)}
+  .step.enrich{border-top-color:var(--emerald)}
+  .step.place{border-top-color:var(--plasma)}
+  .step .step-num{font-family:"SF Mono",Menlo,monospace;font-size:11px;letter-spacing:.1em;margin:0 0 12px;font-weight:700}
+  .step.ingest .step-num{color:var(--cobalt)}
+  .step.screen .step-num{color:#B07F00}
+  .step.enrich .step-num{color:#007A56}
+  .step.place .step-num{color:var(--plasma)}
+  .step h3{margin:0 0 12px;font-size:24px;font-weight:700;letter-spacing:-.015em}
+  .step p{margin:0 0 16px;color:var(--slate);font-size:14.5px;line-height:1.55}
+  .step ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--line);padding-top:14px}
+  .step ul li{font-size:12.5px;color:var(--slate);padding:4px 0;display:flex;align-items:center;gap:8px}
+  .step ul li:before{content:"";width:4px;height:4px;border-radius:50%;background:var(--slate);flex-shrink:0}
+
+  /* ============ ACTIVATE (redesigned) ============ */
+  .activate{background:var(--white)}
+  .activate .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .act-card{border:1px solid var(--line);border-radius:14px;background:var(--white);overflow:hidden;display:flex;flex-direction:column;position:relative;min-height:280px}
+  .act-card .top-bar{height:6px;width:100%}
+  .act-card .body{padding:28px 32px 32px;display:flex;flex-direction:column;gap:14px;flex-grow:1}
+  .act-tag-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .act-tag{font-family:"SF Mono",Menlo,monospace;font-size:11px;letter-spacing:.12em;font-weight:700;padding:4px 10px;border-radius:4px}
+  .act-pair{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:600}
+  .act-pair b{font-weight:700}
+
+  .act-card h3{margin:4px 0 0;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.05}
+  .act-card .descr{margin:0;color:var(--slate);font-size:16px;line-height:1.55}
+  .act-card .example{margin-top:auto;font-family:"SF Mono",Menlo,monospace;font-size:13px;line-height:1.6;background:var(--mist);padding:16px 18px;border-radius:8px;color:var(--ink)}
+  .act-card .example .you{color:var(--ink);font-weight:700}
+  .act-card .example .ans{display:block;margin-top:4px;color:var(--slate)}
+  .act-card .example code{background:rgba(0,0,0,0.06);padding:1px 5px;border-radius:3px;font-size:12.5px}
+
+  /* color variants */
+  .act-card.ask .top-bar{background:var(--cobalt)}
+  .act-card.ask .act-tag{background:rgba(42,75,255,0.12);color:var(--cobalt)}
+  .act-card.ask .example .you{color:var(--cobalt)}
+
+  .act-card.visualize .top-bar{background:var(--amber)}
+  .act-card.visualize .act-tag{background:rgba(255,184,0,0.18);color:#8A6100}
+  .act-card.visualize .example .you{color:#8A6100}
+
+  .act-card.distribute .top-bar{background:var(--emerald)}
+  .act-card.distribute .act-tag{background:rgba(0,184,132,0.14);color:#007A56}
+  .act-card.distribute .example .you{color:#007A56}
+
+  .act-card.orchestrate .top-bar{background:var(--plasma)}
+  .act-card.orchestrate .act-tag{background:rgba(255,46,99,0.12);color:var(--plasma)}
+  .act-card.orchestrate .example .you{color:var(--plasma)}
+
+  /* ============ PROTECTION ============ */
+  .protection{background:var(--mist)}
+  .protection .super{display:inline-block;padding:5px 10px;border-radius:4px;background:rgba(255,46,99,0.1);color:var(--plasma);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+  .protection .h2 em{font-style:normal;color:var(--plasma)}
+  .protection .product-banner{display:flex;align-items:center;gap:14px;padding:18px 22px;background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:32px;font-size:14px;color:var(--slate);flex-wrap:wrap}
+  .protection .product-banner .name{color:var(--ink);font-weight:700;font-size:16px}
+  .protection .product-banner .pip{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--plasma)}
+  .protection .product-banner .twofa{margin-left:auto;display:flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--plasma);border-radius:6px;color:var(--plasma);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .protection .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .receipt{border:1px solid var(--line);border-radius:12px;padding:28px;background:var(--white);position:relative;overflow:hidden}
+  .receipt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--cobalt),var(--plasma))}
+  .receipt .r-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;gap:8px}
+  .receipt .r-num{font-family:"SF Mono",Menlo,monospace;font-size:11px;color:var(--slate);letter-spacing:.1em;font-weight:700}
+  .receipt .r-stamp{font-family:"SF Mono",Menlo,monospace;font-size:10px;color:var(--plasma);letter-spacing:.12em;font-weight:700;border:1px solid var(--plasma);padding:2px 7px;border-radius:3px;display:flex;gap:6px;align-items:center}
+  .receipt .r-stamp::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--plasma)}
+  .receipt h3{margin:0 0 8px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .receipt p{margin:0 0 16px;color:var(--slate);font-size:15px;line-height:1.55}
+  .receipt .lines{font-family:"SF Mono",Menlo,monospace;font-size:12.5px;background:var(--mist);padding:14px;border-radius:8px;line-height:1.75;color:var(--ink)}
+  .receipt .lines .lbl{color:var(--slate)}
+  .receipt .lines .v{color:var(--ink);font-weight:600}
+  .receipt .lines .twofa-line{color:var(--plasma);font-weight:600}
+  .protection-foot{margin-top:32px;text-align:center;font-size:18px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+  .protection-foot b{color:var(--plasma);font-weight:700}
+
+  /* ============ LIVE RECORD (readability bumped) ============ */
+  .record{background:var(--ink);color:var(--white)}
+  .record .eyebrow{color:var(--slate-bright)}
+  .record .h2{color:var(--white)}
+  .record .lede{color:var(--slate-bright)}
+  .record-card{background:var(--ink-2);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:36px;font-family:"SF Mono",Menlo,Consolas,monospace}
+  .record-head{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--slate-bright);margin-bottom:24px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+  .record-head .id{color:var(--plasma)}
+  .record-title{font-family:-apple-system,Inter,sans-serif;font-size:20px;font-weight:600;margin:0 0 20px;color:var(--white)}
+  .record-title span{color:var(--slate-bright);font-weight:400;margin-left:10px;font-size:15px}
+  .row-evt{display:grid;grid-template-columns:100px 1fr 130px 110px;gap:18px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.1);align-items:center;font-size:14.5px}
+  .row-evt:last-child{border-bottom:0}
+  .stage{font-size:11px;letter-spacing:.12em;font-weight:700;padding:5px 9px;border-radius:4px;text-align:center;width:fit-content}
+  .stage.intake{background:rgba(42,75,255,0.22);color:#A8C2FF}
+  .stage.screen-st{background:rgba(255,184,0,0.22);color:#FFD980}
+  .stage.enrich-st{background:rgba(0,184,132,0.22);color:#7FEEC4}
+  .stage.place{background:rgba(255,46,99,0.22);color:#FFAEC2}
+  .key{color:#FFFFFF;font-weight:600}
+  .val{color:var(--slate-bright)}
+  .cost{color:#FFAEC2;text-align:right;font-weight:600}
+  .rev{color:#7FEEC4;text-align:right;font-weight:600}
+  .neut{color:var(--slate-bright);text-align:right}
+  .record-totals{margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.15);display:grid;grid-template-columns:repeat(3,1fr);gap:20px;font-family:-apple-system,Inter,sans-serif}
+  .total-cell h5{margin:0 0 6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-bright);font-weight:600}
+  .total-cell .v{font-size:28px;font-weight:700;letter-spacing:-.015em}
+  .v.cost{color:#FFAEC2;text-align:left}
+  .v.rev{color:#7FEEC4;text-align:left}
+  .v.profit{color:#FFFFFF;text-align:left}
+  .record-foot{margin-top:28px;font-size:14px;color:var(--slate-bright);text-align:center;font-family:-apple-system,Inter,sans-serif}
+  .record-foot b{color:var(--white);font-weight:600}
+
+  /* ============ MOAT ============ */
+  .moat{background:var(--white)}
+  .moat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .moat-card{border:1px solid var(--line);border-radius:14px;padding:36px;background:var(--white)}
+  .moat-card .n{font-size:60px;font-weight:800;color:var(--cobalt);line-height:1;letter-spacing:-.03em;margin:0 0 16px}
+  .moat-card:nth-child(2) .n{color:var(--plasma)}
+  .moat-card h3{margin:0 0 12px;font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .moat-card p{margin:0;color:var(--slate);font-size:16px;line-height:1.6}
+
+  /* ============ INDUSTRIES ============ */
+  .industries{background:var(--mist)}
+  .industries .h2{margin-bottom:8px}
+  .industries .ind-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:32px}
+  .ind-chip{padding:18px 14px;background:var(--white);border:1px solid var(--line);border-radius:10px;font-size:13px;font-weight:600;text-align:center;color:var(--ink);letter-spacing:-.01em}
+
+  /* ============ WHY NOW ============ */
+  .why-now{background:var(--white)}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .why-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:32px;min-height:220px;display:flex;flex-direction:column}
+  .why-card .step-n{font-size:14px;font-weight:700;color:var(--slate);margin:0 0 16px;font-family:"SF Mono",Menlo,monospace}
+  .why-card h4{margin:0 0 12px;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+  .why-card p{margin:0;color:var(--slate);font-size:15px;line-height:1.55}
+
+  /* ============ REPLACES ============ */
+  .replaces{background:var(--mist)}
+  .replaces-tbl{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--white)}
+  .replaces-tbl th,.replaces-tbl td{padding:18px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:14.5px;vertical-align:top}
+  .replaces-tbl tr:last-child td{border-bottom:0}
+  .replaces-tbl th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:700;background:var(--mist)}
+  .replaces-tbl td.kx{font-weight:700;letter-spacing:-.01em;width:22%;color:var(--ink)}
+  .replaces-tbl td.kx .pip{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .replaces-tbl td.cat{color:var(--slate);width:18%;font-size:13px}
+  .replaces-tbl td.inc{color:var(--slate);width:30%}
+  .replaces-tbl td.claim strong{color:var(--ink);font-weight:600}
+
+  /* ============ CTA ============ */
+  .cta-block{background:var(--ink);color:var(--white);border-radius:24px;padding:80px 64px;text-align:center;margin:96px auto;max-width:1180px;position:relative;overflow:hidden}
+  .cta-block .glow{position:absolute;left:50%;top:-200px;transform:translateX(-50%);width:600px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(42,75,255,0.35),rgba(255,46,99,0.25) 50%,rgba(10,14,26,0) 70%);filter:blur(40px);pointer-events:none}
+  .cta-block h2{position:relative;font-size:56px;font-weight:700;letter-spacing:-.025em;margin:0 0 16px;line-height:1.05}
+  .cta-block p{position:relative;color:var(--slate-bright);font-size:18px;margin:0 0 32px;max-width:580px;margin-left:auto;margin-right:auto}
+  .cta-block .cta-row{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  /* ============ FOOTER ============ */
+  footer{padding:48px 32px;border-top:1px solid var(--line);background:var(--white)}
+  .foot{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;font-size:13px;color:var(--slate)}
+  .foot a{color:var(--slate)}
+  .foot a:hover{color:var(--ink)}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:880px){
+    .nav-inner{padding:12px 20px;gap:16px}
+    .nav-links{display:none}
+    section{padding:64px 20px}
+    .hero-inner{padding:80px 20px 64px}
+    .hero h1{font-size:52px;letter-spacing:-.025em}
+    .hero .sub{font-size:17px}
+    .h2{font-size:32px}
+    .problem .row{grid-template-columns:1fr;gap:24px}
+    .problem .big{font-size:28px}
+    .hub-products{grid-template-columns:1fr}
+    .pipeline .steps{grid-template-columns:1fr 1fr}
+    .activate .grid{grid-template-columns:1fr}
+    .act-card h3{font-size:26px}
+    .protection .grid{grid-template-columns:1fr}
+    .moat-grid{grid-template-columns:1fr}
+    .why-grid{grid-template-columns:1fr}
+    .industries .ind-grid{grid-template-columns:repeat(2,1fr)}
+    .row-evt{grid-template-columns:90px 1fr 100px;font-size:13px}
+    .record-totals{grid-template-columns:1fr}
+    .cta-block{padding:48px 28px;border-radius:18px}
+    .cta-block h2{font-size:32px}
+    .replaces-tbl td{padding:14px}
+    .replaces-tbl td.kx,.replaces-tbl td.cat,.replaces-tbl td.inc{width:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg viewBox="0 0 140 140" width="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="20" width="70" height="70" rx="12" fill="#2A4BFF" transform="rotate(-12 55 55)"/>
+        <rect x="50" y="50" width="70" height="70" rx="12" fill="#FF2E63" transform="rotate(12 85 85)" style="mix-blend-mode:multiply"/>
+      </svg>
+      <span class="wm">kontrolx</span>
+    </div>
+    <div class="nav-links">
+      <a href="#hub">Products</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#activate">Activate</a>
+      <a href="#protection">Record</a>
+      <a href="#moat">Why us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#cta" class="btn btn-ghost">Sign in</a>
+      <a href="#cta" class="btn btn-primary">Start a feed</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">The data hub · for any business</p>
+    <h1>Living,<br>breathing data.</h1>
+    <p class="sub"><b>kontrolx is the hub.</b> Ingest, screen, enrich, place. Then talk to it, visualize it, distribute it, and defend it. Voice, Sign, and Record plug in natively. No glue. No bolts. No integrations to maintain.</p>
+    <div class="cta-row">
+      <a href="#cta" class="cta cta-primary">Start a feed</a>
+      <a href="#record" class="cta cta-ghost">See it run</a>
+    </div>
+    <div class="trust">
+      <span><span class="dot"></span>HIPAA-aligned</span>
+      <span><span class="dot"></span>SOC 2 Type 2 in progress</span>
+      <span><span class="dot"></span>Defensible record of every yes</span>
+      <span><span class="dot"></span>Your data, never pooled</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PROBLEM ============ -->
+<section class="problem">
+  <div class="container">
+    <p class="eyebrow">The problem</p>
+    <div class="row">
+      <p class="big">Your data is <em>everywhere</em>. None of it talks. Every decision gets made on stale reports and gut feel.</p>
+      <p class="body">Sources sit in spreadsheets, CRMs, ERPs, warehouses, and SaaS tools you forgot you bought. Cleaning is manual. Enrichment lives in vendor portals. Dashboards ship stale. And when a regulator or a customer dispute arrives, the receipts are scattered across six systems.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HUB ============ -->
+<section class="hub" id="hub">
+  <div class="container">
+    <p class="eyebrow">The architecture</p>
+    <h2 class="h2">kontrolx is the hub.<br>Three products plug in.</h2>
+    <p class="lede">One core platform holds every record. Three named products run natively on top of it. Everything we build sits on the same hub — no glue, no bolts, no third-party integrations to maintain.</p>
+
+    <!-- Hub diagram -->
+    <div class="hub-diagram">
+      <svg viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" aria-label="kontrolx hub diagram">
+        <g stroke="#E5E8EC" stroke-width="2" fill="none">
+          <line x1="380" y1="180" x2="160" y2="80"/>
+          <line x1="380" y1="180" x2="600" y2="80"/>
+          <line x1="380" y1="180" x2="380" y2="300"/>
+        </g>
+        <g transform="translate(380 180)">
+          <circle r="100" fill="#0A0E1A"/>
+          <circle r="100" fill="url(#hubGlow)" opacity="0.6"/>
+          <g transform="translate(-38 -42)">
+            <rect x="6" y="6" width="48" height="48" rx="8" fill="#2A4BFF" transform="rotate(-12 30 30)"/>
+            <rect x="22" y="22" width="48" height="48" rx="8" fill="#FF2E63" transform="rotate(12 46 46)" style="mix-blend-mode:screen"/>
+          </g>
+          <text y="46" text-anchor="middle" font-family="-apple-system,Inter,sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">kontrolx</text>
+          <text y="68" text-anchor="middle" font-family="-apple-system,Inter,sans-serif" font-size="11" font-weight="600" fill="#C7CCD4" letter-spacing="0.12em">THE HUB</text>
+        </g>
+        <defs>
+          <radialGradient id="hubGlow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="rgba(42,75,255,0.4)"/>
+            <stop offset="0.6" stop-color="rgba(255,46,99,0.2)"/>
+            <stop offset="1" stop-color="rgba(10,14,26,0)"/>
+          </radialGradient>
+        </defs>
+        <g transform="translate(160 80)">
+          <rect x="-72" y="-32" width="144" height="64" rx="14" fill="#FFFFFF" stroke="#E5E8EC" stroke-width="2"/>
+          <circle cx="-50" cy="0" r="6" fill="#2A4BFF"/>
+          <text x="-36" y="-2" font-family="-apple-system,Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="0.1em" fill="#6B7480">VOICE</text>
+          <text x="-36" y="14" font-family="-apple-system,Inter,sans-serif" font-size="14" font-weight="700" fill="#0A0E1A">kontrolx Voice</text>
+        </g>
+        <g transform="translate(600 80)">
+          <rect x="-72" y="-32" width="144" height="64" rx="14" fill="#FFFFFF" stroke="#E5E8EC" stroke-width="2"/>
+          <circle cx="-50" cy="0" r="6" fill="#7B1FE5"/>
+          <text x="-36" y="-2" font-family="-apple-system,Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="0.1em" fill="#6B7480">SIGN</text>
+          <text x="-36" y="14" font-family="-apple-system,Inter,sans-serif" font-size="14" font-weight="700" fill="#0A0E1A">kontrolx Sign</text>
+        </g>
+        <g transform="translate(380 330)">
+          <rect x="-78" y="-32" width="156" height="64" rx="14" fill="#FFFFFF" stroke="#E5E8EC" stroke-width="2"/>
+          <circle cx="-56" cy="0" r="6" fill="#FF2E63"/>
+          <text x="-42" y="-2" font-family="-apple-system,Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="0.1em" fill="#6B7480">RECORD</text>
+          <text x="-42" y="14" font-family="-apple-system,Inter,sans-serif" font-size="14" font-weight="700" fill="#0A0E1A">kontrolx Record</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hub-products">
+      <div class="product-card voice">
+        <p class="p-tag">Product · 01</p>
+        <p class="p-name"><span class="pip"></span>kontrolx Voice</p>
+        <p>AI calls that already know the customer. The agent reads the full record before dialing, then writes back what happened — outcome, sentiment, costs, next action.</p>
+        <ul>
+          <li>Triggered by any event on the record</li>
+          <li>Reads + writes back to the hub</li>
+          <li>Per-call cost tagged to the row</li>
+          <li>Full transcript stored, searchable</li>
+        </ul>
+        <p class="replaces">Replaces <b>Bland · Retell · Vapi</b></p>
+      </div>
+
+      <div class="product-card sign">
+        <p class="p-tag">Product · 02</p>
+        <p class="p-name"><span class="pip"></span>kontrolx Sign</p>
+        <p>Contracts inside the platform. Once signed, the deal turns on — workflows trigger, status changes, revenue starts. No outside tools, no PDFs to chase.</p>
+        <ul>
+          <li>Sequential or parallel signing</li>
+          <li>Document version stored with hash</li>
+          <li>Signed = active (downstream triggers)</li>
+          <li>2FA verification on every signature</li>
+        </ul>
+        <p class="replaces">Replaces <b>DocuSign · Adobe Sign · PandaDoc</b></p>
+      </div>
+
+      <div class="product-card record">
+        <p class="p-tag">Product · 03 · the protection layer</p>
+        <p class="p-name"><span class="pip"></span>kontrolx Record</p>
+        <p>The compliance tool that captures every yes — ToS, landing-page consent, contract records, transactions — all coupled with 2FA. Compliance becomes protection.</p>
+        <ul>
+          <li>Terms of service acceptance + version</li>
+          <li>Landing-page form + consent capture</li>
+          <li>Contract + signature trail</li>
+          <li>Transaction proof + reconciliation</li>
+          <li>2FA verified at every step</li>
+        </ul>
+        <p class="replaces">Replaces <b>Jornaya · TrustedForm · audit log vendors</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIPELINE ============ -->
+<section class="pipeline" id="pipeline">
+  <div class="container">
+    <p class="eyebrow">Inside the hub · core engine</p>
+    <h2 class="h2">Ingest. Screen. Enrich. Place.</h2>
+    <p class="lede">Four steps that turn any source into one structured, typed, queryable record. Built for any industry — any data shape, any volume, any cadence.</p>
+
+    <div class="legend">
+      <span><span class="pip" style="background:var(--cobalt)"></span>Ingest</span>
+      <span><span class="pip" style="background:var(--amber)"></span>Screen</span>
+      <span><span class="pip" style="background:var(--emerald)"></span>Enrich</span>
+      <span><span class="pip" style="background:var(--plasma)"></span>Place</span>
+    </div>
+
+    <div class="steps">
+      <div class="step ingest">
+        <p class="step-num">01 · INGEST</p>
+        <h3>Ingest</h3>
+        <p>Pull data from anywhere. APIs, webhooks, SFTP, scrapers, CRMs, ERPs, spreadsheets — push or pull, scheduled or real-time.</p>
+        <ul>
+          <li>200+ source connectors</li>
+          <li>Custom HTTP + webhook</li>
+          <li>File drops (CSV, Parquet, JSON)</li>
+          <li>Real-time streams</li>
+        </ul>
+      </div>
+      <div class="step screen">
+        <p class="step-num">02 · SCREEN</p>
+        <h3>Screen</h3>
+        <p>Every row checked on the way in. Validate, dedupe, consent-check, signature-check — before anything moves downstream.</p>
+        <ul>
+          <li>Schema + type validation</li>
+          <li>Dedupe + fuzzy match</li>
+          <li>Consent, signature, ToS capture</li>
+          <li>Fraud and bot screens</li>
+        </ul>
+      </div>
+      <div class="step enrich">
+        <p class="step-num">03 · ENRICH</p>
+        <h3>Enrich</h3>
+        <p>Append what's missing. Classify what's ambiguous. Cost each enrichment to the row that called for it.</p>
+        <ul>
+          <li>Vendor API enrichments</li>
+          <li>Geo, firmographic, identity</li>
+          <li>AI classification + scoring</li>
+          <li>Cost tagged per row</li>
+        </ul>
+      </div>
+      <div class="step place">
+        <p class="step-num">04 · PLACE</p>
+        <h3>Place</h3>
+        <p>Put the data where it earns. A dashboard, a buyer, an agent, a downstream system, a decision. Revenue tagged. Margin live.</p>
+        <ul>
+          <li>Reverse ETL to any tool</li>
+          <li>Webhooks + APIs out</li>
+          <li>Trigger workflows + agents</li>
+          <li>Revenue per row, tracked</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTIVATE (redesigned) ============ -->
+<section class="activate" id="activate">
+  <div class="container">
+    <p class="eyebrow">Once it's stored · what you do with it</p>
+    <h2 class="h2">Talk to your data. Watch it move.</h2>
+    <p class="lede">Every capability is color-matched to the pipeline step it pairs with. Ask follows Ingest. Visualize follows Screen. Distribute follows Enrich. Orchestrate follows Place.</p>
+
+    <div class="grid">
+      <!-- ASK -->
+      <div class="act-card ask">
+        <div class="top-bar"></div>
+        <div class="body">
+          <div class="act-tag-row">
+            <span class="act-tag">01 · ASK</span>
+            <span class="act-pair">Pairs with <b>INGEST</b></span>
+          </div>
+          <h3>Ask anything.</h3>
+          <p class="descr">Plain English in. Cited answers out. No SQL, no analyst queue, no waiting until Monday.</p>
+          <div class="example">
+            <span class="you">You:</span> Which acquisition source had the best margin last week?<br>
+            <span class="ans">kontrolx · <code>acme-source</code> · 64% margin · 312 rows · 8.4× ROI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISUALIZE -->
+      <div class="act-card visualize">
+        <div class="top-bar"></div>
+        <div class="body">
+          <div class="act-tag-row">
+            <span class="act-tag">02 · VISUALIZE</span>
+            <span class="act-pair">Pairs with <b>SCREEN</b></span>
+          </div>
+          <h3>Type a dashboard.</h3>
+          <p class="descr">Charts wired to live data. Share with one click. Pin to a workspace. No drag-and-drop, no template store.</p>
+          <div class="example">
+            <span class="you">You:</span> Build a dashboard of weekly margin by source, last 8 weeks.<br>
+            <span class="ans">kontrolx · Dashboard built · 6 charts · auto-refresh hourly</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISTRIBUTE -->
+      <div class="act-card distribute">
+        <div class="top-bar"></div>
+        <div class="body">
+          <div class="act-tag-row">
+            <span class="act-tag">03 · DISTRIBUTE</span>
+            <span class="act-pair">Pairs with <b>ENRICH</b></span>
+          </div>
+          <h3>Push anywhere.</h3>
+          <p class="descr">CRM, ad platform, data warehouse, partner, buyer. Always clean. Always consented. No CSV emails.</p>
+          <div class="example">
+            <span class="you">You:</span> Sync new tier-1 leads to HubSpot every 5 minutes.<br>
+            <span class="ans">kontrolx · Sync live · 47 rows pushed · 0 errors</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORCHESTRATE -->
+      <div class="act-card orchestrate">
+        <div class="top-bar"></div>
+        <div class="body">
+          <div class="act-tag-row">
+            <span class="act-tag">04 · ORCHESTRATE</span>
+            <span class="act-pair">Pairs with <b>PLACE</b></span>
+          </div>
+          <h3>Any event. Any action.</h3>
+          <p class="descr">Trigger workflows and agents on any event. The data becomes the operating system for the business.</p>
+          <div class="example">
+            <span class="you">You:</span> When a row hits tier-1, call (via Voice) within 30 seconds and log the outcome.<br>
+            <span class="ans">kontrolx · Workflow active · agent assigned · 8 calls placed today</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROTECTION / KONTROLX RECORD ============ -->
+<section class="protection" id="protection">
+  <div class="container">
+    <span class="super">Product spotlight · kontrolx Record</span>
+    <h2 class="h2">Not compliance. <em>Receipts.</em></h2>
+    <p class="lede">kontrolx Record captures every yes — terms of service, landing-page consent, contract signatures, and transactions — all paired with 2FA. When a dispute arrives, you don't search. You serve. This isn't a checkbox for the regulator. It's how you protect the business.</p>
+
+    <div class="product-banner">
+      <span class="pip"></span>
+      <span class="name">kontrolx Record</span>
+      <span style="color:var(--slate)">· the protection layer</span>
+      <span class="twofa">+ 2FA on every event</span>
+    </div>
+
+    <div class="grid">
+      <div class="receipt">
+        <div class="r-head">
+          <span class="r-num">01 · TERMS OF SERVICE</span>
+          <span class="r-stamp">2FA · PROOF</span>
+        </div>
+        <h3>Every policy they agreed to.</h3>
+        <p>Terms, privacy, and policy clicks — with the exact version they saw, the path they took to accept it, and the second 2FA verified it was them.</p>
+        <div class="lines">
+          <span class="lbl">event ·</span> <span class="v">terms.accepted</span><br>
+          <span class="lbl">policy ·</span> <span class="v">tos-v4.2 (sha:8aa9…)</span><br>
+          <span class="lbl">path ·</span> <span class="v">/signup → /terms → /confirm</span><br>
+          <span class="lbl">timestamp ·</span> <span class="v">2026.05.13 16:06:51 PT</span><br>
+          <span class="twofa-line">2fa · email + sms (verified 0.4s)</span><br>
+          <span class="lbl">retained ·</span> <span class="v">indefinite · immutable</span>
+        </div>
+      </div>
+
+      <div class="receipt">
+        <div class="r-head">
+          <span class="r-num">02 · LANDING PAGE + CONSENT</span>
+          <span class="r-stamp">2FA · PROOF</span>
+        </div>
+        <h3>Every form they filled, captured.</h3>
+        <p>Opt-in captured at the source. Form version, disclosure shown, IP and device — bound to a 2FA-verified identity. Revocation in seconds.</p>
+        <div class="lines">
+          <span class="lbl">event ·</span> <span class="v">consent.opt_in</span><br>
+          <span class="lbl">source ·</span> <span class="v">landing.v2 · checkbox</span><br>
+          <span class="lbl">disclosure ·</span> <span class="v">tcpa-v3.1 (sha:9f2a…)</span><br>
+          <span class="lbl">ip + device ·</span> <span class="v">174.92.xx.xx · ios.17.4</span><br>
+          <span class="twofa-line">2fa · phone otp (verified 0.7s)</span><br>
+          <span class="lbl">timestamp ·</span> <span class="v">2026.05.13 16:07:04 PT</span>
+        </div>
+      </div>
+
+      <div class="receipt">
+        <div class="r-head">
+          <span class="r-num">03 · CONTRACT RECORD</span>
+          <span class="r-stamp">2FA · PROOF</span>
+        </div>
+        <h3>Every contract, on file.</h3>
+        <p>Contracts signed inside kontrolx Sign. Document version, signer, device, timestamp — and 2FA confirming the signer is who they said they were.</p>
+        <div class="lines">
+          <span class="lbl">event ·</span> <span class="v">contract.signed</span><br>
+          <span class="lbl">document ·</span> <span class="v">msa-v2.4.pdf (sha:c14b…)</span><br>
+          <span class="lbl">signer ·</span> <span class="v">jane.doe@acme.com</span><br>
+          <span class="twofa-line">2fa · email + authenticator (verified 0.5s)</span><br>
+          <span class="lbl">timestamp ·</span> <span class="v">2026.05.13 09:42:11 PT</span><br>
+          <span class="lbl">retained ·</span> <span class="v">indefinite · immutable</span>
+        </div>
+      </div>
+
+      <div class="receipt">
+        <div class="r-head">
+          <span class="r-num">04 · TRANSACTIONS</span>
+          <span class="r-stamp">2FA · PROOF</span>
+        </div>
+        <h3>Every dollar, traceable.</h3>
+        <p>Every cost and payment tied to the action that caused it — and to the 2FA-verified actor that approved it. Chargebacks, refunds, disputes — defended by the record.</p>
+        <div class="lines">
+          <span class="lbl">event ·</span> <span class="v">payment.captured</span><br>
+          <span class="lbl">amount ·</span> <span class="v">$25.00 · usd</span><br>
+          <span class="lbl">caused_by ·</span> <span class="v">buyer.payout · tier-1</span><br>
+          <span class="lbl">processor ·</span> <span class="v">stripe.charge_id (3df…)</span><br>
+          <span class="twofa-line">2fa · approver session (verified)</span><br>
+          <span class="lbl">reconciled ·</span> <span class="v">true · ledger #00482</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="protection-foot">Every action, immutable. Every dollar, traceable. <b>Every yes, defensible.</b></p>
+  </div>
+</section>
+
+<!-- ============ LIVE RECORD ============ -->
+<section class="record" id="record">
+  <div class="container">
+    <p class="eyebrow">Proof in motion</p>
+    <h2 class="h2">Every step on one record.</h2>
+    <p class="lede">This is the product. Every number connects to the action that made it. No tool to leave. No data to merge. No dollar to reconcile. Below is one row — eight events, full P&L.</p>
+
+    <div class="record-card">
+      <div class="record-head">
+        <span>// PROFILE · <span class="id">8D3F2A</span> · LIVE</span>
+        <span>2026.05.13 / 16:07 PT</span>
+      </div>
+      <p class="record-title">Acme Source — phone lead <span>8 events · 1 source</span></p>
+
+      <div class="row-evt">
+        <span class="stage intake">INGEST</span>
+        <span><span class="key">vendor</span> · <span class="val">acme-source</span></span>
+        <span class="neut">+1 source</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage intake">INGEST</span>
+        <span><span class="key">phone</span> · <span class="val">+1 555 670 0027</span></span>
+        <span class="neut">+1 source</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage screen-st">SCREEN</span>
+        <span><span class="key">phone-verify.action</span> · <span class="val">number-verified</span></span>
+        <span class="neut">+1 source</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage screen-st">SCREEN</span>
+        <span><span class="key">phone-verify.cost</span></span>
+        <span class="cost">−$0.03</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage enrich-st">ENRICH</span>
+        <span><span class="key">voice.call-placed</span> · <span class="val">agent-01</span></span>
+        <span class="neut">+1 source</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage enrich-st">ENRICH</span>
+        <span><span class="key">voice.call.cost</span></span>
+        <span class="cost">−$0.42</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage place">PLACE</span>
+        <span><span class="key">buyer.payout</span> · <span class="val">tier-1-buyer</span></span>
+        <span class="rev">+$25.00</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+      <div class="row-evt">
+        <span class="stage place">PLACE</span>
+        <span><span class="key">platform.fee</span></span>
+        <span class="cost">−$1.25</span>
+        <span class="neut">2026.05.13</span>
+      </div>
+
+      <div class="record-totals">
+        <div class="total-cell">
+          <h5>Total cost</h5>
+          <span class="v cost">−$1.70</span>
+        </div>
+        <div class="total-cell">
+          <h5>Total revenue</h5>
+          <span class="v rev">+$25.00</span>
+        </div>
+        <div class="total-cell">
+          <h5>Profit per row</h5>
+          <span class="v profit">+$23.30</span>
+        </div>
+      </div>
+
+      <p class="record-foot">One row. <b>Three numbers.</b> Always reconciled.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOAT ============ -->
+<section class="moat" id="moat">
+  <div class="container">
+    <p class="eyebrow">Why us</p>
+    <h2 class="h2">Why nobody else can do this.</h2>
+    <p class="lede">Two structural choices we made early. A competitor has to start over to match either one.</p>
+
+    <div class="moat-grid">
+      <div class="moat-card">
+        <p class="n">01</p>
+        <h3>One hub. Every product native.</h3>
+        <p>Voice, Sign, and Record all read and write the same record. There is no integration layer because there is no second system. Competitors stitch together separate vendors; we run on one schema.</p>
+      </div>
+      <div class="moat-card">
+        <p class="n">02</p>
+        <h3>The customer gets smarter — not us.</h3>
+        <p>Each customer's data lives in its own space. We don't pool it. We don't train on it. We don't sell it. Every business gets sharper from working on its own data. Yours stays yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<section class="industries">
+  <div class="container">
+    <p class="eyebrow">For</p>
+    <h2 class="h2">Any business. Any data.</h2>
+    <p class="lede">Anywhere data drives a cost or a revenue. If you can describe what a row is worth, kontrolx can run on it.</p>
+    <div class="ind-grid">
+      <div class="ind-chip">Insurance</div>
+      <div class="ind-chip">Healthcare</div>
+      <div class="ind-chip">Fintech</div>
+      <div class="ind-chip">Real estate</div>
+      <div class="ind-chip">Marketing</div>
+      <div class="ind-chip">Legal</div>
+      <div class="ind-chip">Retail</div>
+      <div class="ind-chip">Logistics</div>
+      <div class="ind-chip">Manufacturing</div>
+      <div class="ind-chip">Home services</div>
+      <div class="ind-chip">Education</div>
+      <div class="ind-chip">Media</div>
+      <div class="ind-chip">SaaS</div>
+      <div class="ind-chip">Energy</div>
+      <div class="ind-chip">Government</div>
+      <div class="ind-chip">Non-profit</div>
+      <div class="ind-chip">Hospitality</div>
+      <div class="ind-chip">Automotive</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY NOW ============ -->
+<section class="why-now" id="why-now">
+  <div class="container">
+    <p class="eyebrow">Why now</p>
+    <h2 class="h2">The timing won't repeat.</h2>
+    <p class="lede">Three shifts have arrived at the same time. Each one alone would justify a rebuild. All three together force one.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <p class="step-n">01</p>
+        <h4>Disputes are the new audits.</h4>
+        <p>Chargebacks, class actions, regulator inquiries, customer revocations. Compliance is no longer a checkbox — it's defense. You either have the receipts or you don't.</p>
+      </div>
+      <div class="why-card">
+        <p class="step-n">02</p>
+        <h4>Margins are getting tighter.</h4>
+        <p>Every dollar must be tracked. Every cost tagged to the action that caused it. Every row priced. Gut-feel is over.</p>
+      </div>
+      <div class="why-card">
+        <p class="step-n">03</p>
+        <h4>AI changes the game.</h4>
+        <p>The edge is who governs the data — not who has it. Agents only work as well as the record they read. The record is the product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REPLACES ============ -->
+<section class="replaces" id="replaces">
+  <div class="container">
+    <p class="eyebrow">What we replace</p>
+    <h2 class="h2">One hub. Eight categories displaced.</h2>
+    <p class="lede">Embed kontrolx alongside what you have today, or replace these categories outright. Each row maps to either the core hub or one of the three products.</p>
+
+    <table class="replaces-tbl">
+      <thead>
+        <tr><th>kontrolx</th><th>Category</th><th>Incumbents</th><th>What we do instead</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#0A0E1A"></span>Core hub</td>
+          <td class="cat">ETL · ingestion</td>
+          <td class="inc">Fivetran · Airbyte · Stitch</td>
+          <td class="claim">200+ connectors plus custom. <strong>Cost-tagged at the row.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#0A0E1A"></span>Core hub</td>
+          <td class="cat">CRM</td>
+          <td class="inc">Salesforce · HubSpot · Zoho</td>
+          <td class="claim">People, assets, AND businesses. <strong>Not just contacts.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#0A0E1A"></span>Core hub</td>
+          <td class="cat">CDP · identity</td>
+          <td class="inc">Segment · Rudderstack · mParticle</td>
+          <td class="claim">One record per entity. <strong>Lifetime, not session.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#0A0E1A"></span>Core hub</td>
+          <td class="cat">BI · analytics</td>
+          <td class="inc">Tableau · Looker · Power BI</td>
+          <td class="claim">Plain-English questions. <strong>Type a dashboard into existence.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#0A0E1A"></span>Core hub</td>
+          <td class="cat">Reverse ETL · orchestration</td>
+          <td class="inc">Hightouch · Census · Zapier · Workato</td>
+          <td class="claim">Distribute + trigger on any event. <strong>Native.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#2A4BFF"></span>Voice</td>
+          <td class="cat">AI voice agents</td>
+          <td class="inc">Bland · Retell · Vapi</td>
+          <td class="claim">Reads the record. <strong>Writes back what happened.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#7B1FE5"></span>Sign</td>
+          <td class="cat">E-signature</td>
+          <td class="inc">DocuSign · Adobe Sign · PandaDoc</td>
+          <td class="claim">Contracts on the record. <strong>Signed = active.</strong></td>
+        </tr>
+        <tr>
+          <td class="kx"><span class="pip" style="background:#FF2E63"></span>Record</td>
+          <td class="cat">Compliance + audit log</td>
+          <td class="inc">Jornaya · TrustedForm · audit trail tools</td>
+          <td class="claim">Consent, ToS, contracts, transactions. <strong>2FA-protected.</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CTA BLOCK ============ -->
+<div class="cta-block" id="cta">
+  <div class="glow"></div>
+  <h2>kontrolx is the hub.</h2>
+  <p>One platform. Three products. Living, breathing data — ingested, screened, enriched, placed, defended.</p>
+  <div class="cta-row">
+    <a href="mailto:hello@kontrolx.ai" class="cta cta-primary" style="background:#FFFFFF;color:#0A0E1A;padding:14px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Start a feed</a>
+    <a href="mailto:hello@kontrolx.ai" class="cta cta-ghost" style="color:#FFFFFF;border:1px solid rgba(255,255,255,0.28);padding:14px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Talk to the team</a>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg viewBox="0 0 140 140" width="24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="20" width="70" height="70" rx="12" fill="#2A4BFF" transform="rotate(-12 55 55)"/>
+        <rect x="50" y="50" width="70" height="70" rx="12" fill="#FF2E63" transform="rotate(12 85 85)" style="mix-blend-mode:multiply"/>
+      </svg>
+      <span style="font-weight:700;color:var(--ink);font-size:14px">kontrolx</span>
+      <span style="margin-left:14px">The hub for living, breathing data.</span>
+    </div>
+    <div style="display:flex;gap:24px">
+      <a href="#hub">Products</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#protection">Record</a>
+      <a href="mailto:hello@kontrolx.ai">hello@kontrolx.ai</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
