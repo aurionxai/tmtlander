@@ -62,6 +62,13 @@
       background: linear-gradient(90deg, transparent, rgba(168,130,28,0.55), transparent);
       pointer-events: none;
     }
+    .firm-logo {
+      display: block;
+      width: clamp(120px, 18vw, 168px);
+      height: auto;
+      margin: 0 auto 14px;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18));
+    }
     .firm-tag {
       display: inline-block;
       font-size: 11px;
@@ -160,27 +167,16 @@
       height: 132px;
       border-radius: 12px;
       background: rgba(168,130,28,0.08);
-      border: 2px dashed var(--accent);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 8px 6px;
+      border: 1px solid rgba(168,130,28,0.30);
+      overflow: hidden;
       flex-shrink: 0;
     }
-    .endorsement-photo-icon { font-size: 34px; line-height: 1; margin-bottom: 5px; }
-    .endorsement-photo-label {
-      font-family: 'Bebas Neue', 'Arial Black', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.8px;
-      color: var(--accent);
-      line-height: 1.15;
-    }
-    .endorsement-photo-sub {
-      font-size: 8.5px;
-      color: var(--text-muted);
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-top: 4px;
-      font-weight: 700;
+    .endorsement-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
     }
     .endorsement-text { flex: 1; min-width: 0; }
     .endorsement-tag {
@@ -1010,6 +1006,7 @@
 
 <!-- HERO -->
 <header class="hero">
+  <img src="assets/tmt-law-seal.png" alt="The Money Team Law Firm seal" class="firm-logo" />
   <div class="firm-tag">TheMoneyTeam.Law · For Firms</div>
   <h1>Built for Firms. <em>Powered by Wins.</em></h1>
   <p>Pre-qualified cases, medical records, 24/7 intake, marketing — we take what slows your firm down so you can focus on winning. Tell us where you need help.</p>
@@ -1038,10 +1035,8 @@
   <div class="hero-phone-label">Talk to a partner manager</div>
 
   <div class="endorsement" role="complementary" aria-label="Celebrity endorsement">
-    <div class="endorsement-photo" aria-label="Floyd Mayweather photo placeholder">
-      <div class="endorsement-photo-icon">🥊</div>
-      <div class="endorsement-photo-label">FLOYD<br>MAYWEATHER</div>
-      <div class="endorsement-photo-sub">Photo</div>
+    <div class="endorsement-photo">
+      <img src="assets/floyd-portrait.png" alt="Floyd Mayweather" />
     </div>
     <div class="endorsement-text">
       <p class="endorsement-quote">"They fight for you the same way I fight in the ring — to win."</p>
