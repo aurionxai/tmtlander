@@ -1020,7 +1020,7 @@
       position: absolute;
       top: 14px;
       right: 14px;
-      z-index: 5;
+      z-index: 100;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -1140,14 +1140,16 @@
     /* Chat is a contained widget on the page — all selections live INSIDE it */
     .chat-wrap {
       flex: 0 0 auto;
-      padding: 24px 16px 32px;
+      padding: 24px 16px 24px;
       background: var(--bg);
     }
     .chat-card {
       width: 100%;
       max-width: 760px;
       margin: 0 auto;
-      height: min(720px, calc(100vh - 220px));
+      /* Static size — outer dimensions don't change as content fills */
+      height: min(720px, calc(100dvh - 240px));
+      min-height: 520px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 22px;
@@ -1209,16 +1211,35 @@
     }
 
     @media (max-width: 600px) {
-      .hero-frozen { padding: 14px 14px 12px; }
-      .firm-logo-floyd { width: 56px; height: 56px; margin-bottom: 6px; border-width: 2px; }
-      .hero-frozen .firm-tag { margin-bottom: 6px; }
-      .hero-frozen h1 { font-size: clamp(22px, 7vw, 32px); }
+      .hero-frozen { padding: 12px 14px 10px; }
+      .firm-logo-floyd { width: 54px; height: 54px; margin-bottom: 6px; border-width: 2px; }
+      .hero-frozen .firm-tag { margin-bottom: 5px; padding: 3px 12px; font-size: 10px; }
+      .hero-frozen h1 { font-size: clamp(20px, 6.5vw, 30px); }
+
       .chat-wrap { padding: 14px 10px 18px; }
-      .chat-card { height: min(620px, calc(100vh - 200px)); border-radius: 16px; }
+      .chat-card {
+        height: min(620px, calc(100dvh - 200px));
+        min-height: 440px;
+        border-radius: 16px;
+      }
+
+      /* Tighter chat header on mobile so buttons don't clip */
+      .chat-card > .chat-header { padding: 6px 10px; gap: 6px; }
+      .chat-card > .chat-header .chat-meta h3 { font-size: 11px !important; letter-spacing: 1px !important; }
+      .chat-card > .chat-header .ask-btn,
+      .chat-card > .chat-header .reset-btn-hdr {
+        padding: 5px 9px;
+        font-size: 11px;
+        border-radius: 7px;
+      }
       .messages { padding: 14px 14px 6px; }
-      .chat-card > .chat-header { padding: 8px 12px; }
-      .corner-phone { top: 8px; right: 8px; }
-      .footer { padding: 4px 14px 24px; }
+      .corner-phone { top: 6px; right: 6px; padding: 6px 10px; font-size: 13px; }
+      .footer { padding: 6px 14px 22px; }
+      .footer .disclaimer { font-size: 10.5px; }
+    }
+    /* Very narrow screens — drop the chat title to give buttons room */
+    @media (max-width: 380px) {
+      .chat-card > .chat-header .chat-meta { display: none !important; }
     }
   </style>
 </head>
