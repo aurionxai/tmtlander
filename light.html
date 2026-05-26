@@ -104,6 +104,42 @@
     }
     .trust-item svg { color: var(--accent); flex-shrink: 0; }
 
+    /* ─── HERO PHONE CTA ─── */
+    .hero-phone {
+      margin: 26px auto 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+      font-size: clamp(24px, 4.5vw, 34px);
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 10px 26px;
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      background: rgba(168,130,28,0.06);
+      transition: all .2s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-phone:hover {
+      background: var(--accent);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(168,130,28,0.30);
+    }
+    .hero-phone svg { flex-shrink: 0; }
+    .hero-phone-num { line-height: 1; }
+    .hero-phone-label {
+      margin-top: 8px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
     /* ─── CHAT WRAPPER ─── */
     .chat-wrap {
       flex: 1;
@@ -871,6 +907,11 @@
       Response in Minutes
     </div>
   </div>
+  <a href="tel:5550000000" class="hero-phone" aria-label="Call us now">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h2.28a2 2 0 011.94 1.515l.77 3.08a2 2 0 01-.52 1.91L8.09 11.09a11 11 0 005.82 5.82l1.585-1.375a2 2 0 011.91-.52l3.08.77A2 2 0 0121 17.72V20a2 2 0 01-2 2h-1C9.716 22 2 14.284 2 5V4a1 1 0 011-1z"/></svg>
+    <span class="hero-phone-num">(555) 000-0000</span>
+  </a>
+  <div class="hero-phone-label">Call now — free consultation</div>
 </header>
 
 <!-- CHAT -->
