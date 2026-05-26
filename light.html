@@ -781,6 +781,69 @@
     .final-signed p  { font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:18px; }
     .checklist-row { display:flex; align-items:center; gap:9px; font-size:14px; margin-bottom:9px; }
     .checklist-row .ck { color:var(--success); font-size:16px; }
+
+    /* ─── POST-SIGN "WHAT HAPPENS NEXT" PANEL ─── */
+    .next-comms {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 6px 16px 8px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .next-comms-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin: 12px 0 4px;
+    }
+    .comm-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    .comm-row + .comm-row { /* dividers between */ }
+    .comm-row:first-of-type { border-top: none; }
+    .comm-icon {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .comm-body { flex: 1; min-width: 0; }
+    .comm-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .comm-detail { font-size: 12.5px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .comm-status {
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      white-space: nowrap;
+      color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .comm-status.sending::after {
+      content: '';
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: comm-pulse 1s ease-in-out infinite;
+    }
+    .comm-status.sent { color: var(--success); }
+    .comm-status.sent::before { content: '✓'; font-size: 13px; }
+    .comm-status.scheduled { color: var(--accent); }
+    .comm-status.scheduled::before { content: '🕒'; font-size: 12px; }
+    @keyframes comm-pulse {
+      0%, 100% { opacity: .25; transform: scale(.85); }
+      50%      { opacity: 1;   transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -3581,26 +3644,67 @@ async function completeIntake(lead) {
   await fireWebhook(payload);
 
   const fileCount = Object.values(uploads).flat().length;
+  const firstName = (lead.name || "").split(" ")[0];
+  const callDetail = lead.callTime === "asap"
+    ? "Within 15 minutes"
+    : "During your preferred time window";
+  const emailRow = lead.email ? `
+        <div class="comm-row">
+          <div class="comm-icon">📧</div>
+          <div class="comm-body">
+            <div class="comm-title">Email receipt + signed agreement</div>
+            <div class="comm-detail">${lead.email}</div>
+          </div>
+          <div class="comm-status sending" id="commEmailStatus">Sending</div>
+        </div>` : "";
+
   sheet.innerHTML = `
     <div class="final-signed">
       <div class="big-icon">🎉</div>
-      <h3>You're All Set, ${(lead.name||"").split(" ")[0]}!</h3>
-      <p>Your legal agreement has been signed and submitted. A member of our team will contact you shortly to begin working on your case.</p>
+      <h3>You're All Set, ${firstName}!</h3>
+      <p>Your legal agreement has been signed and submitted. Here's what's happening right now:</p>
 
       <div style="background:var(--surface-2);border-radius:14px;padding:16px 18px;text-align:left;margin-bottom:20px;">
         <div class="checklist-row"><span class="ck">✅</span> Case qualification completed</div>
         <div class="checklist-row"><span class="ck">✅</span> Retainer signed — ${new Date().toLocaleDateString()}</div>
         <div class="checklist-row"><span class="ck">${fileCount > 0 ? "✅" : "⏭️"}</span> ${fileCount > 0 ? `${fileCount} document${fileCount !== 1 ? "s" : ""} uploaded` : "Documents — you can send these later"}</div>
-        <div class="checklist-row"><span class="ck">✅</span> Confirmation sent to ${lead.phone}</div>
       </div>
 
-      <p style="font-size:13px;color:var(--text-muted);">Keep an eye on <strong>${lead.phone}</strong> — our team will call you ${lead.callTime === "asap" ? "as soon as possible" : "during your preferred time window"}.</p>
+      <div class="next-comms">
+        <p class="next-comms-title">What happens next</p>
+        <div class="comm-row">
+          <div class="comm-icon">💬</div>
+          <div class="comm-body">
+            <div class="comm-title">Text confirmation</div>
+            <div class="comm-detail">${lead.phone}</div>
+          </div>
+          <div class="comm-status sending" id="commTextStatus">Sending</div>
+        </div>${emailRow}
+        <div class="comm-row">
+          <div class="comm-icon">📞</div>
+          <div class="comm-body">
+            <div class="comm-title">Call from your case manager</div>
+            <div class="comm-detail">${callDetail}</div>
+          </div>
+          <div class="comm-status scheduled">Scheduled</div>
+        </div>
+      </div>
 
       <div class="modal-actions" style="flex-direction:column;gap:10px;">
         <button class="btn-primary" onclick="closeModal()">Close</button>
         <button class="btn-ghost" onclick="closeModal();restartChat()">← Evaluate another case</button>
       </div>
     </div>`;
+
+  // Mockup: simulate the SMS/email delivery so the user sees the handoff happen.
+  setTimeout(() => {
+    const t = document.getElementById("commTextStatus");
+    if (t) { t.className = "comm-status sent"; t.textContent = "Sent"; }
+  }, 900);
+  setTimeout(() => {
+    const e = document.getElementById("commEmailStatus");
+    if (e) { e.className = "comm-status sent"; e.textContent = "Sent"; }
+  }, 1700);
 }
 
 /* =====================================================
