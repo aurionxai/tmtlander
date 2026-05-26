@@ -1336,16 +1336,20 @@
       .data-panel { display: none; }
     }
     @media (max-width: 600px) {
-      .topbar { height: 48px; padding: 0 12px; gap: 8px; }
-      .topbar-logo { width: 28px; height: 28px; }
-      .topbar-name { font-size: 15px; letter-spacing: 1px; }
-      .topbar-phone { padding: 5px 10px; font-size: 12px; }
-      .topbar-btn { padding: 4px 8px; font-size: 11px; }
-      .messages { padding: 16px 14px 4px; gap: 12px; }
+      .topbar { height: 48px; padding: 0 10px; gap: 8px; }
+      .topbar-logo { width: 26px; height: 26px; }
+      .topbar-name { font-size: 14px; letter-spacing: 0.8px; }
+      .topbar-actions { gap: 6px; }
+      .topbar-phone { padding: 4px 9px; font-size: 11px; gap: 4px; }
+      .topbar-btn { padding: 4px 7px; font-size: 11px; }
+      .messages { padding: 16px 12px 4px; gap: 12px; }
       .chat-input-row { padding: 8px 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
       .pane-disclaimer { font-size: 10px; padding: 0 12px 8px; }
+      /* Keep bubbles fully inside the viewport on phones */
+      .messages .msg.bot { max-width: 82%; }
+      .messages .msg.user { max-width: 82%; }
     }
-    @media (max-width: 380px) {
+    @media (max-width: 420px) {
       .topbar-name { display: none; }
     }
   </style>
