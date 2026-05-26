@@ -210,6 +210,30 @@
       .endorsement-quote { font-size: 13.5px; }
     }
 
+    /* In-chat variant: flush banner under the chat header (Claude.ai-style intro) */
+    .endorsement.endorsement-inchat {
+      margin: 0;
+      max-width: none;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      border-bottom: 1px solid rgba(168,130,28,0.22);
+      padding: 14px 20px;
+    }
+    @media (max-width: 600px) {
+      .endorsement.endorsement-inchat {
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+        max-width: none;
+        padding: 12px 14px;
+        gap: 12px;
+      }
+      .endorsement.endorsement-inchat .endorsement-photo { width: 56px; height: 56px; flex-shrink: 0; }
+      .endorsement.endorsement-inchat .endorsement-quote { font-size: 13px; }
+    }
+
     /* ─── CHAT WRAPPER ─── */
     .chat-wrap {
       flex: 1;
@@ -1081,17 +1105,6 @@
     <span class="hero-cta-arrow">→</span>
   </a>
   <div class="hero-cta-sub">Takes 2 Minutes · 100% Confidential</div>
-
-  <div class="endorsement" role="complementary" aria-label="Celebrity endorsement">
-    <div class="endorsement-photo">
-      <img src="assets/floyd-portrait.png" alt="Floyd Mayweather" />
-    </div>
-    <div class="endorsement-text">
-      <p class="endorsement-quote">"They fight for you the same way I fight in the ring — to win."</p>
-      <div class="endorsement-name">Floyd "Money" Mayweather</div>
-      <div class="endorsement-title">50–0 · Undefeated World Champion</div>
-    </div>
-  </div>
 </header>
 
 <!-- CHAT -->
@@ -1107,6 +1120,17 @@
       <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
         <button class="ask-btn" onclick="openQuestionInput()" title="Ask a question">❓ Ask a question</button>
         <button class="reset-btn-hdr" onclick="restartChat()" title="Start over">↺ Reset</button>
+      </div>
+    </div>
+    <!-- Floyd intro banner (Claude.ai-style assistant intro) -->
+    <div class="endorsement endorsement-inchat" role="complementary" aria-label="Celebrity endorsement">
+      <div class="endorsement-photo">
+        <img src="assets/floyd-portrait.png" alt="Floyd Mayweather" />
+      </div>
+      <div class="endorsement-text">
+        <p class="endorsement-quote">"They fight for you the same way I fight in the ring — to win."</p>
+        <div class="endorsement-name">Floyd "Money" Mayweather</div>
+        <div class="endorsement-title">50–0 · Undefeated World Champion</div>
       </div>
     </div>
     <!-- Progress -->
