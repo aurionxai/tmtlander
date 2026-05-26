@@ -1179,7 +1179,7 @@ async function startChat() {
   await botDelay("Hey! Let's find out if you have a case worth fighting for. Takes 2 minutes — 100% free and confidential. 🏆", 1100);
 
   // Step 1 — practice area
-  await botDelay("What happened to you?", 700);
+  await botDelay("What happened to you? <strong>Tap one of the options below 👇</strong>", 700);
   setProgress(5);
   const area = await new Promise(resolve => {
     showPracticeGrid(resolve);
