@@ -340,17 +340,34 @@
       background: var(--surface-2);
       border: 1.5px solid var(--border);
       border-radius: 14px;
-      padding: 16px 14px;
+      padding: 16px 36px 16px 14px; /* extra right padding for chevron affordance */
       cursor: pointer;
       transition: all .2s;
       text-align: left;
       touch-action: manipulation;
+      position: relative;
+    }
+    .practice-card::after {
+      content: '›';
+      position: absolute;
+      right: 14px;
+      bottom: 10px;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--accent);
+      font-weight: 700;
+      opacity: 0.65;
+      transition: transform .2s ease, opacity .2s ease;
     }
     .practice-card:hover {
       border-color: var(--accent);
       background: rgba(168,130,28,0.06);
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .practice-card:hover::after {
+      transform: translateX(4px);
+      opacity: 1;
     }
     .pc-icon { font-size: 22px; margin-bottom: 7px; }
     .pc-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
@@ -566,7 +583,8 @@
       .pill { font-size: 13px; padding: 11px 14px; min-height: 44px; } /* 44px touch target */
       /* 2-col practice grid stays on mobile so all injury types are visible at a glance */
       .opts-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .practice-card { padding: 12px 10px; min-height: 92px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .practice-card { padding: 12px 22px 12px 10px; min-height: 92px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .practice-card::after { right: 7px; bottom: 7px; font-size: 22px; }
       .pc-icon  { font-size: 26px; margin-bottom: 6px; }
       .pc-title { font-size: 13px; line-height: 1.2; }
       .pc-desc  { display: none; } /* hide long descriptions on phones — title + icon is enough for quick selection */
