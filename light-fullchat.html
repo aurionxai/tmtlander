@@ -1108,36 +1108,40 @@
 
     /* ─── FULL-CHAT LAYOUT (frozen hero + ChatGPT/Claude-style chat) ─── */
     html, body {
-      height: 100%;
+      height: 100dvh;
       overflow: hidden;
     }
-    body {
-      min-height: 0;
-    }
+    body { min-height: 0; }
+
+    /* Hero — compact, frozen at top */
     .hero-frozen {
       flex-shrink: 0;
-      padding: 22px 20px 18px;
+      padding: 18px 20px 14px;
       background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF7 100%);
       border-bottom: 1px solid rgba(168,130,28,0.18);
     }
     .hero-frozen::before,
     .hero-frozen::after { display: none; }
     .firm-logo-floyd {
-      width: 84px;
-      height: 84px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       object-fit: cover;
       object-position: top center;
       border: 3px solid var(--accent);
       box-shadow: 0 6px 22px rgba(168,130,28,0.22);
-      margin: 0 auto 12px;
+      margin: 0 auto 10px;
     }
-    .hero-frozen .firm-tag { margin-bottom: 12px; }
+    .hero-frozen .firm-tag { margin-bottom: 8px; padding: 4px 14px; font-size: 10.5px; }
     .hero-frozen h1 {
-      font-size: clamp(28px, 5vw, 44px);
+      font-size: clamp(26px, 4.5vw, 38px);
       margin-bottom: 0;
       letter-spacing: 1.5px;
+      line-height: 1;
     }
+
+    /* Hide long TCPA footer in this layout — disclaimer link sits at bottom of chat */
+    .footer { display: none; }
 
     /* Chat fills the rest of the viewport */
     .chat-wrap {
@@ -1159,43 +1163,60 @@
       flex-direction: column;
       overflow: hidden;
     }
-    /* Compact chat header (keep Ask + Reset, drop the avatar + meta block) */
+
+    /* Compact chat header — slim title left, Ask/Reset right */
     .chat-card > .chat-header {
       background: transparent;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 0;
       padding: 8px 16px;
-      gap: 8px;
+      gap: 10px;
     }
-    .chat-card > .chat-header .chat-avatar,
-    .chat-card > .chat-header .chat-meta {
-      display: none;
-    }
-    .chat-card > .progress-bar {
-      flex-shrink: 0;
-    }
+    .chat-card > .chat-header .chat-avatar { display: none; }
+    .chat-card > .chat-header .chat-meta h3 { font-size: 13px !important; letter-spacing: 1.2px !important; opacity: 0.65; }
+    .chat-card > .chat-header .chat-meta p { display: none; }
+
+    .chat-card > .progress-bar { flex-shrink: 0; }
+
+    /* Messages: anchor content to bottom so the empty area sits above, like ChatGPT */
     .messages {
       flex: 1;
       min-height: 0;
       max-height: none;
       padding: 20px 22px 14px;
       gap: 16px;
+      justify-content: flex-end;
     }
-    #optsArea {
-      flex-shrink: 0;
-    }
+
+    #optsArea { flex-shrink: 0; }
+
     .chat-input-row {
       flex-shrink: 0;
       background: var(--surface);
       border-top: 1px solid var(--border);
       padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
     }
-    /* Drop the negative-margin overlap from the default chat-wrap so the hero edge is clean */
+
+    /* Tiny disclaimer line at the very bottom (ChatGPT-style) */
+    .mini-disclaimer {
+      flex-shrink: 0;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 6px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+      background: var(--bg);
+      letter-spacing: 0.2px;
+    }
+    .mini-disclaimer a { color: var(--accent); text-decoration: none; }
+    .mini-disclaimer a:hover { text-decoration: underline; }
+
     @media (max-width: 600px) {
-      .hero-frozen { padding: 16px 14px 14px; }
-      .firm-logo-floyd { width: 64px; height: 64px; margin-bottom: 8px; }
-      .hero-frozen h1 { font-size: clamp(24px, 7vw, 36px); }
+      .hero-frozen { padding: 14px 14px 12px; }
+      .firm-logo-floyd { width: 56px; height: 56px; margin-bottom: 6px; border-width: 2px; }
+      .hero-frozen .firm-tag { margin-bottom: 6px; }
+      .hero-frozen h1 { font-size: clamp(22px, 7vw, 32px); }
       .messages { padding: 14px 14px 10px; }
       .chat-card > .chat-header { padding: 6px 12px; }
+      .corner-phone { top: 8px; right: 8px; }
     }
   </style>
 </head>
@@ -1242,6 +1263,9 @@
       <button class="send-btn" onclick="sendText()">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
       </button>
+    </div>
+    <div class="mini-disclaimer">
+      Not legal advice. Free, confidential intake. <a href="#" onclick="document.querySelector('.footer').style.display='block';document.querySelector('.footer').scrollIntoView({behavior:'smooth'});return false;">Full disclaimer &amp; TCPA terms</a>
     </div>
   </div>
 </main>
