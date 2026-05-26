@@ -140,6 +140,80 @@
       font-weight: 600;
     }
 
+    /* ─── CELEBRITY ENDORSEMENT ─── */
+    .endorsement {
+      margin: 30px auto 4px;
+      max-width: 480px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      text-align: left;
+      background: rgba(168,130,28,0.04);
+      border: 1px solid rgba(168,130,28,0.22);
+      border-radius: 16px;
+      padding: 16px 18px;
+      position: relative;
+      z-index: 2;
+    }
+    .endorsement-photo {
+      width: 104px;
+      height: 132px;
+      border-radius: 12px;
+      background: rgba(168,130,28,0.08);
+      border: 2px dashed var(--accent);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8px 6px;
+      flex-shrink: 0;
+    }
+    .endorsement-photo-icon { font-size: 34px; line-height: 1; margin-bottom: 5px; }
+    .endorsement-photo-label {
+      font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      line-height: 1.15;
+    }
+    .endorsement-photo-sub {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+    .endorsement-text { flex: 1; min-width: 0; }
+    .endorsement-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .endorsement-quote {
+      font-family: 'Newsreader', 'Georgia', serif;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+    .endorsement-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .endorsement-title { font-size: 11px; color: var(--text-muted); margin-top: 1px; letter-spacing: 0.3px; }
+    @media (max-width: 600px) {
+      .endorsement {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        max-width: 340px;
+        padding: 14px 16px;
+        gap: 12px;
+      }
+      .endorsement-quote { font-size: 13.5px; }
+    }
+
     /* ─── CHAT WRAPPER ─── */
     .chat-wrap {
       flex: 1;
@@ -912,6 +986,20 @@
     <span class="hero-phone-num">(555) 000-0000</span>
   </a>
   <div class="hero-phone-label">Call now — free consultation</div>
+
+  <div class="endorsement" role="complementary" aria-label="Celebrity endorsement">
+    <div class="endorsement-photo" aria-label="Floyd Mayweather photo placeholder">
+      <div class="endorsement-photo-icon">🥊</div>
+      <div class="endorsement-photo-label">FLOYD<br>MAYWEATHER</div>
+      <div class="endorsement-photo-sub">Photo</div>
+    </div>
+    <div class="endorsement-text">
+      <div class="endorsement-tag">★ Celebrity Endorsed</div>
+      <p class="endorsement-quote">"They fight for you the same way I fight in the ring — to win."</p>
+      <div class="endorsement-name">Floyd "Money" Mayweather</div>
+      <div class="endorsement-title">50–0 · Undefeated World Champion</div>
+    </div>
+  </div>
 </header>
 
 <!-- CHAT -->
