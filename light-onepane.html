@@ -1310,18 +1310,22 @@
     }
 
     /* Bot avatar gets Floyd's portrait (AI assistant identity, like Claude/ChatGPT) */
-    .msg.bot .msg-icon {
-      width: 32px;
-      height: 32px;
-      padding: 0;
+    .msg-icon, .typing-wrap .msg-icon {
       overflow: hidden;
-      background: var(--accent);
+      padding: 0;
     }
-    .msg.bot .msg-icon img {
+    .msg-icon img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top center;
       display: block;
+    }
+    .msg.bot .msg-icon,
+    .typing-wrap .msg-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
     }
 
     /* In the chat-col we don't use the legacy .chat-card chrome */
