@@ -951,12 +951,12 @@
       50%      { opacity: 1;   transform: scale(1); }
     }
 
-    /* ─── FIXED CORNER PHONE (upper-right) ─── */
+    /* ─── CORNER PHONE (upper-right, scrolls with page — not floating) ─── */
     .corner-phone {
-      position: fixed;
+      position: absolute;
       top: 14px;
       right: 14px;
-      z-index: 9000;
+      z-index: 5;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -968,8 +968,7 @@
       padding: 9px 16px;
       border: 2px solid var(--accent);
       border-radius: 50px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
+      background: #FFFFFF;
       box-shadow: 0 6px 22px rgba(168,130,28,0.18);
       transition: all .18s ease;
     }
