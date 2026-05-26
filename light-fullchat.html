@@ -1237,9 +1237,10 @@
       .footer { padding: 6px 14px 22px; }
       .footer .disclaimer { font-size: 10.5px; }
     }
-    /* Very narrow screens — drop the chat title to give buttons room */
-    @media (max-width: 380px) {
+    /* Phones — drop the chat title strip so Ask + Reset don't clip */
+    @media (max-width: 500px) {
       .chat-card > .chat-header .chat-meta { display: none !important; }
+      .chat-card > .chat-header { justify-content: flex-end; }
     }
   </style>
 </head>
