@@ -1062,6 +1062,7 @@
         <p><span class="online"></span> Available now &nbsp;·&nbsp; ~2 min &nbsp;·&nbsp; No obligation</p>
       </div>
       <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+        <button class="ask-btn" onclick="openQuestionInput()" title="Ask a question">❓ Ask a question</button>
         <button class="reset-btn-hdr" onclick="restartChat()" title="Start over">↺ Reset</button>
       </div>
     </div>
@@ -3132,49 +3133,78 @@ function showDQ(reason) {
    ===================================================== */
 const KNOWLEDGE_BASE = {
   general: [
+    // ── Partnership / pricing ──
     {
-      keywords: ["fee","cost","charge","upfront","pay","money","price","afford","expensive","free"],
-      answer: "We never charge anything upfront. You <strong>only pay if we win</strong> — and even then, our fee comes out of your settlement. If we don't win, you owe us nothing."
+      keywords: ["fee","cost","pricing","price","how much","split","percentage","commission","what does it cost","what do you charge","rate","fees"],
+      answer: "Pricing depends on the service. <strong>Direct case purchases</strong> are flat-rate per signed case. <strong>Co-counsel referrals</strong> are typically <strong>25–33%</strong> on the back end. <strong>Intake center</strong> and <strong>records retrieval</strong> are subscription-based. <strong>Marketing</strong> is performance-based with transparent CPL targets. Your partner manager will walk through full pricing on the strategy call — no obligations."
     },
     {
-      keywords: ["how long","timeline","long does it take","how long will","when will","months","years"],
-      answer: "Every case is different. Simple cases can settle in a few months. More complex cases can take 1–2 years. We'll keep you updated every step of the way."
+      keywords: ["case","cases","buy cases","sell cases","case types","what kinds","practice","what do you sell","case mix","supply"],
+      answer: "We supply cases across <strong>auto accidents, personal injury, workers' comp, medical malpractice, nursing home, mass tort, employment, SSDI, civil rights/privacy, and class action / mass arbitration</strong>. Every case is pre-qualified by our 24/7 intake center before it hits a partner firm's queue."
     },
     {
-      keywords: ["what happens next","next step","after i sign","process","how does it work","start","begin"],
-      answer: "Once you sign your legal agreement, a case manager will call you within 1 business day. They'll walk you through everything and answer all your questions."
+      keywords: ["how long","timeline","when","delivery","how fast","turnaround","speed","when do i get","start","kick off","activate"],
+      answer: "Most partners receive their first batch of pre-qualified cases within <strong>5–10 business days</strong> of onboarding. Intake center and medical records services activate immediately. Marketing campaigns typically begin yielding leads in 2–4 weeks."
     },
     {
-      keywords: ["private","confidential","information","share my","my data","my info","secret","privacy"],
-      answer: "Everything you tell us is 100% confidential. We never share your information without your permission."
+      keywords: ["volume","how many","capacity","monthly","supply","number of cases","case volume","scale","throughput"],
+      answer: "Volume scales to your firm's intake capacity. Smaller firms typically start at <strong>5–15 cases/month</strong>, mid-size firms run <strong>25–75/month</strong>, and high-volume firms exceed <strong>100+</strong>. We never deliver more than your team can convert."
     },
     {
-      keywords: ["who are you","what firm","money team","tmt","mayweather","about you","your firm"],
-      answer: "We're TheMoneyTeam.Law — a plaintiff-side firm that fights for people who've been hurt. We only get paid when you win, so your success is our success."
+      keywords: ["quality","pre-qualified","prequalified","vetting","screening","how do you qualify","quality control","tire kicker","filter"],
+      answer: "Every case runs through a practice-area-specific qualification framework built by our trial attorneys. <strong>Statute of limitations, fault analysis, injury severity, and treatment status</strong> are confirmed before handoff. You only see cases that meet your firm's stated criteria."
     },
     {
-      keywords: ["attorney","lawyer","who will","assigned","talk to","my lawyer","my attorney"],
-      answer: "You'll be assigned a real attorney within 1 business day of signing your legal agreement. They'll handle your case personally from start to finish."
+      keywords: ["geographic","state","location","where","coverage","nationwide","my state","jurisdiction","cities","markets"],
+      answer: "We operate nationwide across <strong>210 cities</strong> with attorneys licensed in every state we serve. Cases route by jurisdiction, so partner firms only receive cases in markets they're admitted to practice in."
     },
     {
-      keywords: ["settlement","payout","compensation","how much","worth","value","how much money","can i get"],
-      answer: "Settlement amounts depend on your injuries, medical bills, lost pay, and other factors. We'll give you a real estimate after reviewing your case — there's no charge to find out."
+      keywords: ["credentials","experience","results","track record","firm","reputation","awards","ratings","attorneys","bench"],
+      answer: "<strong>200+ attorneys</strong> with 100+ years combined experience. AV Rated (Martindale-Hubbell). Recognized by <strong>Super Lawyers, Million Dollar Advocates Forum, National Trial Lawyers Top 100, and Best Lawyers in America</strong>. Notable results: $575M and $310M corporate negligence cases, $50M+ trucking, $33M product liability, $33M workplace arbitration, $25M+ class action."
     },
     {
-      keywords: ["call","phone number","contact","reach","speak to someone","talk to someone"],
-      answer: `You can call us anytime at <strong>${CFG.phone}</strong>. No cost, no obligation — just a real conversation.`
+      keywords: ["mayweather","floyd","money team","endorsement","ambassador","brand","celebrity","tmt"],
+      answer: "Floyd \"Money\" Mayweather is the firm's brand ambassador. The undefeated record reflects our commitment to winning, and the brand pull is what drives the lead volume that powers our case supply for partner firms — that's the engine you're plugging into."
     },
     {
-      keywords: ["document","upload","paperwork","records","what do i bring","what do i need","need to bring"],
-      answer: "You don't need any documents right now to get started. Once you sign your legal agreement, we'll tell you exactly what to gather — and we'll help you get most of it."
+      keywords: ["intake","intake center","24/7","phone","calls","answering","live agent","bilingual","spanish"],
+      answer: "Our <strong>24/7 intake center</strong> handles live calls, web chats, and texts. Bilingual agents pre-qualify every inquiry and sign the retainer agreement, so your team only ever handles signed cases — never tire-kickers."
     },
     {
-      keywords: ["location","state","where are you","office","come in","in person","do i need to come"],
-      answer: "We handle cases across multiple states. Most of our work is done remotely — you don't need to come into an office. We come to you."
+      keywords: ["records","medical records","retrieval","pull records","records help","demand package","providers"],
+      answer: "Our records team pulls every provider, manages the back-and-forth, <strong>fronts the cost</strong> (no out-of-pocket to your firm), and packages everything into a demand-ready file. Typical turnaround: <strong>30–45 days</strong> versus the industry average of 90+."
     },
     {
-      keywords: ["guarantee","promise","win","will i win","chances","odds"],
-      answer: "We can't guarantee a specific outcome — no honest lawyer can. What we can promise is that we fight hard for every client and only take cases we believe in."
+      keywords: ["marketing","ads","tv","seo","digital","leads","advertising","social","ppc"],
+      answer: "We run <strong>TV, paid search, social, and SEO</strong> campaigns with transparent reporting on CPL, conversion rates, and cost per signed case. Campaigns are tuned to your firm's intake capacity — no point in driving leads you can't sign."
+    },
+    {
+      keywords: ["co-counsel","co counsel","referral","split","fee split","refer","referral fee"],
+      answer: "Co-counsel arrangements are available on complex cases where you want trial firepower or specialty expertise. Standard splits are negotiated case-by-case but typically run <strong>25–33%</strong> on the back end. No upfront cost."
+    },
+    {
+      keywords: ["lit funding","funding","advance","cash advance","loan","case advance","operating capital"],
+      answer: "Non-recourse cash advances against pending settlements. Approval typically within <strong>48 hours</strong>. Rates are competitive and disclosed up-front — no surprise fees, no compounding interest games."
+    },
+    {
+      keywords: ["trial","appellate","appeal","trial support","trial counsel","second chair","verdict"],
+      answer: "We bring in trial-tested attorneys to second-chair complex cases or take the lead on cases headed to verdict. Appellate support available on adverse rulings. Common arrangement: hourly + bonus, or a fee split if it's a contingent matter."
+    },
+    {
+      keywords: ["sign up","onboarding","get started","how do i start","strategy call","next step","what now","schedule"],
+      answer: "After this intake you'll get a <strong>calendar invite within minutes</strong>. Your partner manager runs a 20-minute strategy call, finalizes pricing, and has you onboarded within <strong>1–2 business days</strong>. First cases or services typically activate the same week."
+    },
+    {
+      keywords: ["confidential","private","information","data","share","privacy","compete","steal"],
+      answer: "All firm information shared during intake is confidential. We don't share partner details across firms, and we never market to your existing client base. You stay in your lane, we stay in ours — that's how this works long-term."
+    },
+    {
+      keywords: ["call","phone number","contact","reach","speak to someone","talk to someone","direct"],
+      answer: `You can reach our partner team anytime at <strong>${CFG.phone}</strong>. No cost, no obligation — just a real conversation about whether we're a fit.`
+    },
+    {
+      keywords: ["bar","ethics","conflict","rule","violation","compliance"],
+      answer: "Every partnership structure we offer is bar-compliant and reviewed by the firm's ethics counsel. Direct case sales, referral splits, and co-counsel arrangements are all structured to meet the rules in your jurisdiction. We'll provide the engagement letters and disclosures."
     },
 
     // ── Injury types ──
@@ -3444,16 +3474,16 @@ function phoneErrorMsg(val) {
 let _savedOptsHTML = null;
 
 const KB_INJURY_CHIPS = [
-  { label:"🦴 Broken Bones",          q:"broken bones injury" },
-  { label:"🤕 Neck / Back Pain",       q:"neck or back pain injury" },
-  { label:"🧠 Head / Concussion",      q:"head injury concussion" },
-  { label:"💪 Whiplash / Muscle",      q:"whiplash muscle strain injury" },
-  { label:"🦵 Knee / Shoulder",        q:"knee or shoulder injury" },
-  { label:"🫀 Internal Injuries",      q:"internal injuries" },
-  { label:"🧠 PTSD / Anxiety",         q:"PTSD anxiety emotional distress" },
-  { label:"🩸 Scarring / Disfigurement",q:"scarring permanent marks injury" },
-  { label:"💀 Spinal / Paralysis",     q:"spinal cord paralysis catastrophic injury" },
-  { label:"🔥 Burns",                  q:"burn injury" },
+  { label:"💰 Pricing",                 q:"pricing how much fees split" },
+  { label:"📦 Case quality",            q:"quality pre-qualified screening" },
+  { label:"📈 Volume",                  q:"volume how many cases per month" },
+  { label:"⚡ Onboarding speed",        q:"how long onboarding turnaround timeline" },
+  { label:"🥊 Mayweather brand",        q:"mayweather floyd endorsement" },
+  { label:"🗺️ Geographic coverage",    q:"states geographic coverage where" },
+  { label:"📞 Intake center",           q:"intake center 24/7 calls" },
+  { label:"🏥 Medical records",         q:"medical records retrieval providers" },
+  { label:"📣 Marketing",               q:"marketing ads TV digital leads" },
+  { label:"⚖️ Bar / ethics",            q:"bar ethics compliance rules" },
 ];
 
 const KB_PRACTICES = [
@@ -3473,7 +3503,7 @@ function buildKBWrap(isFirst) {
   if (isFirst) {
     const hint = document.createElement("div");
     hint.className = "kb-input-hint";
-    hint.textContent = "Ask anything about your case, our fees, the process — we'll answer it straight. 💬";
+    hint.textContent = "Ask anything about pricing, case supply, services, geographic coverage, or how we work. 💬";
     wrap.appendChild(hint);
   }
 
@@ -3499,7 +3529,7 @@ function buildKBWrap(isFirst) {
   const areaLabel = document.createElement("div");
   areaLabel.className = "kb-chips-label";
   areaLabel.style.marginTop = "14px";
-  areaLabel.textContent = "Or jump to a practice area:";
+  areaLabel.textContent = "Or browse by practice area:";
   wrap.appendChild(areaLabel);
 
   const grid = document.createElement("div");
@@ -3522,7 +3552,7 @@ function buildKBWrap(isFirst) {
   // ── Injury type chips
   const injLabel = document.createElement("div");
   injLabel.className = "kb-chips-label";
-  injLabel.textContent = "Quick injury type questions:";
+  injLabel.textContent = "Common partner questions:";
   wrap.appendChild(injLabel);
 
   const chipsRow = document.createElement("div");
@@ -3539,7 +3569,7 @@ function buildKBWrap(isFirst) {
   // ── Back link
   const back = document.createElement("button");
   back.className = "undo-link";
-  back.textContent = "← Back to my case";
+  back.textContent = "← Back to intake";
   back.onclick = closeQuestionInput;
   wrap.appendChild(back);
 
