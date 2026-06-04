@@ -272,9 +272,16 @@ Generated from <code>src/flows/v2/</code> (warm-copy build of the
 as well. Plain-English knockout-questions list lives at
 <a href="/tmtlander/docs/consumer-knockout-questions.md" target="_blank" rel="noopener">docs/consumer-knockout-questions.md</a>.
 </p> </footer> </main> <script type="module">
+    /*
+     * Mermaid is initialized with startOnLoad: false so we can lazy-render
+     * each diagram only when its tab becomes active. Rendering inside a
+     * display:none panel produces a 0×0 SVG (the parser succeeds but the
+     * layout breaks), which is why every tab past the first one looked
+     * like a syntax error.
+     */
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
       theme: "dark",
       themeVariables: {
         background: "#0a0a0a",
@@ -289,33 +296,46 @@ as well. Plain-English knockout-questions list lives at
       flowchart: { curve: "basis", padding: 18 },
       securityLevel: "loose",
     });
-  </script> <script>
-    /* Tab switching — vanilla JS so the page works without React */
-    (function () {
-      var tabs = document.querySelectorAll(".dt-tab");
-      var panels = document.querySelectorAll(".dt-panel");
-      function activate(target) {
-        tabs.forEach(function (t) {
-          var on = t.dataset.target === target;
-          t.classList.toggle("is-active", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
-        panels.forEach(function (p) {
-          var on = p.id === "dt-panel-" + target;
-          p.classList.toggle("is-active", on);
-          p.setAttribute("aria-hidden", on ? "false" : "true");
-        });
-        // Update URL hash for shareable deep-links
-        if (history.replaceState) history.replaceState(null, "", "#" + target);
+
+    const rendered = new Set();
+
+    async function renderPanel(target) {
+      if (rendered.has(target)) return;
+      const el = document.querySelector("#dt-panel-" + target + " .mermaid");
+      if (!el) return;
+      rendered.add(target);
+      try {
+        await mermaid.run({ nodes: [el] });
+      } catch (err) {
+        rendered.delete(target);
+        console.error("[mermaid] render failed for tab " + target, err);
       }
-      tabs.forEach(function (t) {
-        t.addEventListener("click", function () { activate(t.dataset.target); });
+    }
+
+    function activate(target) {
+      document.querySelectorAll(".dt-tab").forEach(function (t) {
+        var on = t.dataset.target === target;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
       });
-      // Initial hash → activate the matching tab
-      var hash = window.location.hash.replace(/^#/, "");
-      if (hash) {
-        var match = document.querySelector('[data-target="' + hash + '"]');
-        if (match) activate(hash);
-      }
-    })();
+      document.querySelectorAll(".dt-panel").forEach(function (p) {
+        var on = p.id === "dt-panel-" + target;
+        p.classList.toggle("is-active", on);
+        p.setAttribute("aria-hidden", on ? "false" : "true");
+      });
+      renderPanel(target);
+      if (history.replaceState) history.replaceState(null, "", "#" + target);
+    }
+
+    // Wire tab click handlers
+    document.querySelectorAll(".dt-tab").forEach(function (t) {
+      t.addEventListener("click", function () { activate(t.dataset.target); });
+    });
+
+    // Decide which tab to open first: URL hash if valid, otherwise first tab
+    var hash = window.location.hash.replace(/^#/, "");
+    var initial = hash && document.querySelector('[data-target="' + hash + '"]')
+      ? hash
+      : document.querySelector(".dt-tab").dataset.target;
+    activate(initial);
   </script> </body></html>
