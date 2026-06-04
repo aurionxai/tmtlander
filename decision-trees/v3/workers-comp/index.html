@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>v3 · Workers&#39; Comp · Decision Trees · TheMoneyTeam.Law</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{-webkit-tap-highlight-color:rgba(212,175,55,.18)}button,a{-webkit-tap-highlight-color:rgba(212,175,55,.3);touch-action:manipulation}input,textarea{-webkit-appearance:none;font-size:16px}html,body{min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;background:#0a0a0a;color:#f7f5ef;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}p,li,span{overflow-wrap:anywhere}
+</style>
+<link rel="stylesheet" href="/tmtlander/_astro/decision-trees.BX3iverd.css"></head> <body>  <main class="dt"> <a class="dt-back" href="/tmtlander/decision-trees/">← Back to all decision trees</a> <header class="dt-header"> <h1 class="dt-title">v3 · Workers&#39; Comp</h1> <p class="dt-sub">
+Redesigned consumer intake. Every gate is <strong>binary, enum, or a date bucket</strong>.
+        Knockouts moved to the top so a tire-kicker bails in 1–2 questions instead of 8–14.
+        All free-text capture (name, phone, claim#, address) deferred to a single
+<strong>capture phase</strong> at the end.
+</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / gate</span> <span class="dt-chip dt-chip-go">Qualify / capture</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <nav class="dt-tabs" role="tablist" aria-label="v3 decision-tree product pages"> <a class="dt-tab " href="/tmtlander/decision-trees/v3/" aria-current="false"> <span class="dt-tab-icon">🎯</span> <span class="dt-tab-label">v3 Overview</span> </a> <a class="dt-tab " href="/tmtlander/decision-trees/v3/auto/" aria-current="false"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/v3/personal-injury/" aria-current="false"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </a><a class="dt-tab is-active" href="/tmtlander/decision-trees/v3/workers-comp/" aria-current="page"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/v3/nursing-home/" aria-current="false"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/v3/medical-malpractice/" aria-current="false"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/v3/ssdi/" aria-current="false"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </a> </nav> <section class="dt-section v3-compare"> <span class="dt-step-badge">v2 → v3 · what changed</span> <div class="v3-numbers"> <div class="v3-num"> <div class="v3-num-big">9</div> <div class="v3-num-lab">v2 questions</div> </div> <div class="v3-arrow">→</div> <div class="v3-num v3-num-good"> <div class="v3-num-big">4</div> <div class="v3-num-lab">v3 gates</div> </div> <div class="v3-num v3-num-pct"> <div class="v3-num-big">−56%</div> <div class="v3-num-lab">questions cut</div> </div> </div> <h3 class="v3-removed-h">What got cut (or moved to capture phase):</h3> <ul class="v3-removed-list"> <li>Employer-has-WC-insurance — moved to capture phase (not a knockout, it&#39;s data capture)</li><li>Hard injuries vs soft injuries multi-pick — collapsed into severity+time-off enum (Gate 4)</li><li>Off-work follow-up question — folded into Gate 4 enum</li> </ul> </section> <section class="dt-section"> <span class="dt-step-badge">v3 flow · 4 gates</span> <h2>🏗️ Workers&#39; Comp</h2> <p class="dt-note">
+Read top to bottom. Every blue node is a gate the user answers with an enum
+        or binary choice. Red nodes are dead ends. Gold nodes pivot to a different
+        product. Green is the only path through to capture.
+</p> <pre class="mermaid">
+flowchart TD
+    G1{{Gate 1 · When were you injured?<br/>(date enum)}}:::q
+    G1 -->|Less than a year ago| G2
+    G1 -->|Got a WC payment in the last year| G2
+    G1 -->|Over a year, no payments| DQ1([DQ · Past statute]):::dq
+
+    G2{{Gate 2 · Already attorney OR settled?}}:::q
+    G2 -->|No| G3
+    G2 -->|Yes — either| DQ2([DQ · Switch / cannot reopen]):::dq
+
+    G3{{Gate 3 · Where did the injury happen?<br/>(enum)}}:::q
+    G3 -->|At work / doing my job| G4
+    G3 -->|Commuting to or from work| RA([REDIRECT · Auto Accident]):::redir
+    G3 -->|Personal — outside work hours| RP([REDIRECT · Personal Injury]):::redir
+    G3 -->|Not work-related at all| DQ3([DQ · Not work-related]):::dq
+
+    G4{{Gate 4 · Injury severity + time off work<br/>(enum)}}:::q
+    G4 -->|HARD injury — concussion · broken bones · surgery| QH([QUALIFIES]):::go
+    G4 -->|SOFT — out of work 3+ months| QS([QUALIFIES]):::go
+    G4 -->|SOFT — back to work in under 3 months| DQ4([DQ · Soft + short time off]):::dq
+
+    QH --> CAP
+    QS --> CAP
+    CAP([→ CAPTURE PHASE]):::go
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+    classDef redir fill:#7a601f,stroke:#D4AF37,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <footer class="dt-footer"> <p>
+Compare with <a href="/tmtlander/decision-trees/workers-comp/">v2 · Workers&#39; Comp</a>
+to see the before/after. Once the v3 design is locked, this gets wired into
+<code>src/flows/v3/</code> to replace the current chatbot.
+</p> </footer> </main> <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        background: "#0a0a0a",
+        primaryColor: "#1a2438",
+        primaryBorderColor: "#5db4f0",
+        primaryTextColor: "#F7F5EF",
+        lineColor: "#9A9590",
+        secondaryColor: "#1f7a5b",
+        tertiaryColor: "#7a1f1f",
+        fontFamily: "Inter, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", padding: 18 },
+      securityLevel: "loose",
+    });
+  </script> </body></html>
