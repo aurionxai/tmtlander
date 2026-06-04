@@ -143,20 +143,20 @@ The only flow with explicit <strong>redirects</strong> — a "commuting"
         conversation to Auto or GPI without restarting.
 </p> <pre class="mermaid">
 flowchart TD
-    Start([Workers' Comp]):::go --> Where{{Hurt at work,<br/>or somewhere else?}}:::q
-    Where -->|Yes – at work| Inc{{Does your employer have<br/>workers' comp insurance?}}:::q
-    Where -->|Commuting to / from work| Rauto([Redirect → AUTO<br/>"reviewed as auto accident"]):::redir
-    Where -->|Not work-related| Rgpi([Redirect → PERSONAL INJURY]):::redir
-    Where -->|No – not hurt| DQno([DQ<br/>Nothing to review]):::dq
+    Start([Workers Comp]):::go --> Where{{Were you hurt at work<br/>or while doing your job?}}:::q
+    Where -->|Yes — at work| Inc{{Does your employer carry<br/>workers comp insurance?}}:::q
+    Where -->|Commuting| Rauto([Redirect to AUTO<br/>reviewed as auto accident]):::redir
+    Where -->|Not work-related| Rgpi([Redirect to PERSONAL INJURY<br/>reviewed as a slip-fall / premises case]):::redir
+    Where -->|No — not hurt at all| DQno([DQ<br/>Nothing to review]):::dq
 
-    Inc -->|Yes / Unsure / No| Time{{Less than a year since<br/>injury or last WC payment?}}:::q
-    Time -->|Yes / Recent payment| Inj{{Pick all injuries that apply}}:::q
-    Time -->|No – over a year| DQold([DQ<br/>Outside WC statute]):::dq
+    Inc -->|Yes — Unsure — No<br/>all three continue| Time{{Less than a year since you<br/>got hurt OR your last<br/>workers comp payment?}}:::q
+    Time -->|Yes — within last year<br/>OR — recent WC payment<br/>both continue| Inj{{Select all injuries<br/>that apply<br/>12-option multi-select}}:::q
+    Time -->|No — over a year| DQold([DQ<br/>Outside the WC statute window]):::dq
 
-    Inj -->|Any HARD injury| QHard([QUALIFIES]):::go
-    Inj -->|Only SOFT injuries| Off{{Off work more than 3 months?}}:::q
-    Off -->|Yes| QOff([QUALIFIES<br/>soft + long disability]):::go
-    Off -->|No| DQoff([DQ<br/>Soft + short, low damages]):::dq
+    Inj -->|Any HARD injury<br/>concussion · broken bones · ligament tears<br/>· internal bleeding · scarring · PTSD<br/>· wrongful death · other| QHard([QUALIFIES]):::go
+    Inj -->|Only SOFT injuries<br/>neck/back · ligament strains<br/>· muscle/whiplash · anxiety| Off{{Has the injury kept you out<br/>of work for more than<br/>3 months?}}:::q
+    Off -->|Yes — 3+ months| QOff([QUALIFIES<br/>soft injury + long disability]):::go
+    Off -->|No — less than 3 months| DQoff([DQ<br/>Soft + short<br/>damages too low]):::dq
 
     classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
     classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
@@ -168,16 +168,17 @@ Shortest tree of the bunch — three real gates. The "I only found out
 win that saves cases that look stale.
 </p> <pre class="mermaid">
 flowchart TD
-    Start([Nursing Home]):::go --> Sym{{What's the loved one experienced?<br/>Bed sores · Broken bones · Malnutrition ·<br/>Dehydration · Sexual abuse · Other<br/>multi-select}}:::q
-    Sym -->|Any specific symptom alone or combined| Fac
-    Sym -->|ONLY "Other" – nothing specific| DQother([DQ<br/>Can't pre-qualify without<br/>a named pattern]):::dq
+    Start([Nursing Home]):::go --> Sym{{Has your loved one experienced<br/>any of the following at the facility?<br/>Bed sores · Broken bones · Malnutrition<br/>· Dehydration · Sexual abuse · Other<br/>multi-select pick all that apply}}:::q
 
-    Fac[Facility typeahead<br/>CMS 14,699 facilities]:::q
+    Sym -->|At least one specific symptom picked<br/>Other is OK only if combined<br/>with a named pattern| Fac
+    Sym -->|ONLY the Other option<br/>nothing specific picked| DQother([DQ<br/>Cannot pre-qualify without<br/>a named pattern of abuse]):::dq
+
+    Fac[/Which facility?<br/>typeahead against CMS data<br/>14,699 US nursing homes/]:::q
     Fac --> Time{{Did this happen within<br/>the last year?}}:::q
 
-    Time -->|Yes – within 1 year| Q1([QUALIFIES]):::go
-    Time -->|I only found out within<br/>the last year| Q2([QUALIFIES<br/>discovery rule]):::go
-    Time -->|No – over a year ago| DQold([DQ<br/>Outside statute]):::dq
+    Time -->|Yes — within the last year| Q1([QUALIFIES]):::go
+    Time -->|No — but I only found out<br/>within the last year<br/>discovery rule| Q2([QUALIFIES<br/>under the discovery rule]):::go
+    Time -->|No — over a year ago<br/>and known the whole time| DQold([DQ<br/>Outside the statute window]):::dq
 
     classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
     classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
