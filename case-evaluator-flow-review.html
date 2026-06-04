@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TMT Case Evaluator — Intake Logic for Attorney Review</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5b5b5b; --line:#d8d8d8; --bg:#fff;
+    --q:#0b3d5c; --pass:#1a7f48; --dq:#a3242b; --review:#9a6b00; --refer:#5b3a8c;
+    --chip-bg:#f3f3f3;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:#f0f0f0;margin:0;line-height:1.55}
+  .page{max-width:880px;margin:24px auto;background:var(--bg);padding:52px 60px;box-shadow:0 1px 6px rgba(0,0,0,.15)}
+  h1{font-size:24px;margin:0 0 4px;border-bottom:3px solid var(--q);padding-bottom:10px}
+  h2{font-size:19px;color:var(--q);margin:38px 0 6px;border-bottom:1px solid var(--line);padding-bottom:5px}
+  h3{font-size:15px;margin:22px 0 6px;color:#222}
+  .meta{font-size:12.5px;color:var(--muted);margin:0 0 4px}
+  .lead{font-size:14px;background:#fbfbf6;border:1px solid var(--line);border-left:4px solid var(--q);padding:14px 18px;margin:18px 0}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;margin:14px 0 6px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  ol.flow{list-style:none;padding-left:0;margin:8px 0}
+  ol.flow li{margin:0 0 4px}
+  .q{font-weight:bold;color:var(--q);margin:16px 0 4px;font-size:14.5px}
+  .q .qid{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);font-weight:normal;background:var(--chip-bg);padding:1px 6px;border-radius:3px;margin-right:6px}
+  ul.opts{list-style:none;margin:4px 0 4px;padding-left:18px;border-left:2px solid #e7e7e7}
+  ul.opts>li{padding:5px 0 5px 4px;font-size:13.5px}
+  .ans{font-weight:bold}
+  .arrow{color:var(--muted);padding:0 5px}
+  .badge{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border-radius:10px;color:#fff;vertical-align:middle}
+  .b-pass{background:var(--pass)} .b-dq{background:var(--dq)} .b-go{background:var(--q)}
+  .b-review{background:var(--review)} .b-refer{background:var(--refer)} .b-msg{background:#7a7a7a}
+  .say{display:block;font-size:12.5px;color:#333;background:#faf8f2;border:1px solid #ece6d3;border-radius:4px;padding:7px 10px;margin:5px 0 2px;font-style:italic}
+  .say::before{content:"🗣 bot: ";font-style:normal;color:var(--muted);font-size:11px}
+  .reason{display:block;font-size:12.5px;color:#7a1f24;background:#fbf0f0;border:1px solid #e7c9c9;border-radius:4px;padding:7px 10px;margin:5px 0 2px}
+  .reason::before{content:"Disqualify message: ";font-weight:bold;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+  .note{font-size:12px;color:var(--muted);margin:3px 0 0;padding-left:4px}
+  .endpoint{background:#f5f7f9;border:1px solid #d6dde2;border-radius:5px;padding:10px 14px;margin:8px 0;font-size:13px}
+  .flag{background:#fff8e6;border:1px solid #e8d59a;border-radius:5px;padding:12px 16px;margin:14px 0;font-size:13px}
+  .flag b{color:#8a5a00}
+  table.sum{border-collapse:collapse;width:100%;font-size:12.5px;margin:10px 0}
+  table.sum th,table.sum td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.sum th{background:#f4f4f4}
+  code{font-family:'Courier New',monospace;font-size:12px;background:var(--chip-bg);padding:1px 5px;border-radius:3px}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:var(--muted)}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none;padding:0 8px}h2{page-break-after:avoid}.q{page-break-after:avoid}ul.opts>li{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>TMT Case Evaluator — Intake Decision Logic</h1>
+<p class="meta">Prepared for attorney review &middot; Generated 2026-05-19 &middot; Source: <code>index.html</code> (TheMoneyTeam.Law landing page)</p>
+<p class="meta">This document is a faithful, line-by-line extraction of the qualification chatbot's branching logic. Bot wording is quoted verbatim. No legal judgment has been applied — please review each gate, disqualification message, and qualification endpoint for legal/ethical accuracy and compliance.</p>
+
+<div class="lead">
+<b>What this is:</b> A visitor answers a guided chat ("TMT Case Evaluator"). Based on answers, each path ends in one of four outcomes:
+<b>Qualified</b> (auto-advance to retainer e-signature), <b>Manual review</b> (info captured, attorney follows up — no auto-retainer), <b>Disqualified</b> (declined with a stated reason + invitation to call), or a <b>Passenger referral</b> (third-party lead captured for review).
+</div>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--q)"></span> Question / gate</span>
+  <span><span class="badge b-pass">Qualified</span> auto-routes to retainer</span>
+  <span><span class="badge b-review">Manual review</span> attorney follows up</span>
+  <span><span class="badge b-dq">Disqualified</span> declined w/ reason</span>
+  <span><span class="badge b-refer">Referral</span> third-party lead</span>
+  <span><span class="badge b-go">Continue</span> next question</span>
+</div>
+
+<h2>0 &nbsp;Entry — every visitor</h2>
+<ol class="flow">
+<li><span class="say">Hey! Let's find out if you have a case worth fighting for. Takes 2 minutes — 100% free and confidential. 🏆</span></li>
+</ol>
+<div class="q"><span class="qid">START</span>"What happened to you?" — visitor picks a practice area:</div>
+<ul class="opts">
+  <li><span class="ans">Auto Accident</span> · <span class="ans">Workers' Comp</span> · <span class="ans">Personal Injury</span> · <span class="ans">Nursing Home</span> · <span class="ans">Medical Malpractice</span> · <span class="ans">SSDI / Disability</span> <span class="arrow">→</span> routes to that flow below</li>
+</ul>
+<div class="q"><span class="qid">NAME</span>"Got it. What's your full name?" <span class="note">Free-text input. Bot replies "Nice to meet you, {First}!" then begins the area flow. No disqualification here.</span></div>
+
+<!-- ========================= AUTO ========================= -->
+<h2>1 &nbsp;Auto Accident</h2>
+
+<div class="q"><span class="qid">AUTO-Q1</span>"When did the accident happen?"</div>
+<ul class="opts">
+  <li><span class="ans">Within last 30 days</span> / <span class="ans">31–60</span> / <span class="ans">61–90 days</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-FAULT</li>
+  <li><span class="ans">90 days – 1 year</span> <span class="arrow">→</span> AUTO-Q1a (medical-bills sub-gate)</li>
+  <li><span class="ans">More than 1 year ago</span> <span class="arrow">→</span> AUTO-Q1b (severity sub-gate)</li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-Q1a</span>(90 days–1 yr) "Do you have big medical bills … like <b>$10,000 or more</b>?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — $10k+</span> or <span class="ans">Not sure of amount</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-FAULT</li>
+  <li><span class="ans">Yes but under $10k</span> or <span class="ans">No big bills yet</span> <span class="arrow">→</span> ask "Are you still going to the doctor / PT / specialist?"
+    <ul class="opts">
+      <li><span class="ans">Yes — still treating</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-FAULT</li>
+      <li><span class="ans">Treatment ended</span> / <span class="ans">Just minor / one-time care</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+        <span class="reason">Accidents past 90 days usually need $10,000+ in medical bills or active ongoing treatment. This one may not meet that bar for our firm.</span></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-Q1b</span>(over 1 yr) "Are your injuries permanent or life-changing?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — serious / life-changing</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-FAULT</li>
+  <li><span class="ans">Significant but improving</span> / <span class="ans">Mostly minor</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Accidents over a year old usually need serious, permanent injuries for us to take on. We recommend calling a local attorney directly to confirm your options.</span></li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-FAULT</span>"Did you cause the accident?"</div>
+<ul class="opts">
+  <li><span class="ans">No — other driver caused it</span> / <span class="ans">Fault is shared or unclear</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-INJURY-GATE</li>
+  <li><span class="ans">Yes — I caused the accident</span>
+    <span class="say">If you caused the accident, you generally can't sue the other driver for your own injuries.</span>
+    <span class="arrow">→</span> AUTO-PASS1 (passenger sub-flow)</li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-PASS1</span>(at-fault driver) "Were there any passengers in your car?"</div>
+<ul class="opts">
+  <li><span class="ans">No — I was the only one</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Since you were at fault and were the only person in the car, there generally isn't an injury claim here. If you think fault is actually shared or unclear, call us — we're happy to review it.</span></li>
+  <li><span class="ans">Yes — there were passengers</span> <span class="arrow">→</span> AUTO-PASS2</li>
+</ul>
+<div class="q"><span class="qid">AUTO-PASS2</span>"Was a passenger injured in the accident?"</div>
+<ul class="opts">
+  <li><span class="ans">No — no one was hurt</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">If no passenger was injured, there generally isn't a claim to pursue here. If that changes, you can reach us anytime.</span></li>
+  <li><span class="ans">Yes — a passenger was injured</span>
+    <span class="say">Even though you were at fault, an injured passenger may still have a case — they could be eligible for substantial financial compensation. 💪</span>
+    <span class="arrow">→</span> AUTO-PASS3</li>
+</ul>
+<div class="q"><span class="qid">AUTO-PASS3</span>"Would you like to refer them for a free, no-obligation consultation?"</div>
+<ul class="opts">
+  <li><span class="ans">No thanks</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">No problem. If the passenger changes their mind, they can reach us anytime for a free, no-obligation consultation.</span></li>
+  <li><span class="ans">Yes — refer the passenger</span> <span class="arrow">→</span> <span class="badge b-refer">Referral</span>
+    <span class="say">Great — let's get the passenger's contact details so a case manager can reach out right away. There's no cost and no obligation. 💪</span>
+    <span class="note">Routes to the contact form, tagged <code>passengerReferral:true</code>, <code>referralType:"injured-passenger"</code>. <b>Not</b> marked qualified — ends at the "we'll review and get back to you" screen (no auto-retainer).</span></li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-INJURY-GATE</span>"Were you physically hurt in the accident?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — I have injuries</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-POLICE</li>
+  <li><span class="ans">Sore but haven't seen a doctor</span> <span class="arrow">→</span> bot urges seeing a doctor <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-POLICE</li>
+  <li><span class="ans">Property damage only — no injuries</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">No physical injuries reported. If pain or symptoms show up later, contact us right away — injuries like whiplash can take days to appear.</span></li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-POLICE</span>"Was a police report filed at the scene?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes</span> / <span class="ans">Not sure</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-MEDICAL</li>
+  <li><span class="ans">No report filed</span> <span class="arrow">→</span> ask "Have you filed one with police/DMV since?" — either answer <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-MEDICAL <span class="note">No police report does <b>not</b> disqualify ("we'll include that in the review").</span></li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-MEDICAL</span>(hard gate) "Have you seen a doctor, urgent care, or ER since the accident?"</div>
+<ul class="opts">
+  <li><span class="ans">ER</span> / <span class="ans">Urgent care</span> / <span class="ans">Primary doctor</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-ROLE</li>
+  <li><span class="ans">No treatment yet</span> <span class="arrow">→</span> warnings + offer "connect you with a doctor (paid from settlement)"; either answer <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-ROLE <span class="note">Notably, "no treatment yet" does <b>not</b> disqualify in the auto flow — please confirm this is intended.</span></li>
+</ul>
+
+<div class="q"><span class="qid">AUTO-ROLE</span>"What was your role in the accident?" (Driver–other / Driver–shared / Passenger / Pedestrian-cyclist)</div>
+<ul class="opts"><li>All answers <span class="arrow">→</span> <span class="badge b-go">Continue</span> to AUTO-INJURY-TYPE (no branching; answer stored only)</li></ul>
+
+<div class="q"><span class="qid">AUTO-INJURY-TYPE</span>Injury multi-select (neck/back, head, fractures, whiplash, etc.) <span class="arrow">→</span> ATTORNEY GATE (§7)</div>
+<div class="endpoint">If the attorney gate passes: <span class="badge b-pass">Qualified</span> — <span class="say" style="display:inline;font-style:italic">✅ Based on what you told us, it looks like you have a real case. 💪</span> → optional document upload → contact form → contingency-fee retainer e-signature.</div>
+
+<!-- ========================= WORKERS COMP ========================= -->
+<h2>2 &nbsp;Workers' Compensation</h2>
+<div class="q"><span class="qid">WC-Q1</span>"Were you hurt at work or while doing your job?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes, hurt at work</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to WC-Q2</li>
+  <li><span class="ans">Commuting to/from work</span> <span class="arrow">→</span> bot notes commuting is "tricky" <span class="arrow">→</span> <span class="badge b-go">Continue</span> to WC-Q2 <span class="note">Commuting is <b>not</b> auto-disqualified — flag for review (most states bar "going &amp; coming").</span></li>
+  <li><span class="ans">No — not work-related</span> <span class="arrow">→</span> "Check if this counts as a regular injury case instead?"
+    <ul class="opts">
+      <li><span class="ans">Yes, check personal injury</span> <span class="arrow">→</span> switches to the <b>Personal Injury</b> flow (§3)</li>
+      <li><span class="ans">No thanks</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+        <span class="reason">Workers' comp only covers injuries that happen at work. Since this didn't happen on the job, it won't qualify.</span></li>
+    </ul>
+  </li>
+</ul>
+<div class="q"><span class="qid">WC-Q2</span>"Does your employer have workers' comp insurance?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes</span> / <span class="ans">Unsure</span> / <span class="ans">No</span> <span class="arrow">→</span> all <span class="badge b-go">Continue</span> to WC-Q3 <span class="note">"No" triggers reassurance ("they can still be held responsible") — never disqualifies.</span></li>
+</ul>
+<div class="q"><span class="qid">WC-Q3</span>(time gate) "Less than one year since you got hurt — or since your last workers' comp payment?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — within the last year</span> / <span class="ans">Got a payment within the last year</span> (resets clock) <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> ATTORNEY GATE (§7)
+    <div class="endpoint">If gate passes: <span class="badge b-pass">Qualified</span> — <span style="font-style:italic">"✅ It looks like you have a workers' comp claim worth fighting for. 💪"</span> → upload → contact → retainer e-signature.</div></li>
+  <li><span class="ans">No — over a year</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Claims over one year old are hard to file, but exceptions may apply. Talk to an attorney before walking away.</span></li>
+</ul>
+
+<!-- ========================= GPI ========================= -->
+<h2>3 &nbsp;Personal Injury (general)</h2>
+<div class="q"><span class="qid">GPI-Q1</span>"Were you hurt because of someone else's carelessness within the last year?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — within the last year</span> / <span class="ans">Not sure</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to GPI-Q2</li>
+  <li><span class="ans">Yes — but more than a year ago</span> <span class="arrow">→</span> <span class="badge b-review">Manual review</span> <span class="note">Bot notes 2–3 yr statute; routes straight to contact form (upload step), <b>not</b> auto-qualified — attorney confirms timeliness.</span></li>
+</ul>
+<div class="q"><span class="qid">GPI-Q2</span>"Were you allowed to be in the place where you got hurt?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — customer/guest</span> / <span class="ans">Yes — public place</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to GPI-Q3</li>
+  <li><span class="ans">No — wasn't supposed to be there</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Personal injury cases require that you had permission to be in that location.</span></li>
+</ul>
+<div class="q"><span class="qid">GPI-Q3</span>"Have you seen a doctor for your injuries — or are you willing to?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — already seeing</span> / <span class="ans">Yes — willing to</span> <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> ATTORNEY GATE (§7)
+    <div class="endpoint">If gate passes: <span class="badge b-pass">Qualified</span> — <span style="font-style:italic">"✅ … it looks like you have a real personal injury case. 💪"</span> → upload → contact → retainer e-signature.</div></li>
+  <li><span class="ans">No — I don't want medical treatment</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">To win money for your injuries, we need medical records that prove what happened. Without treatment, that's very hard to get.</span></li>
+</ul>
+
+<!-- ========================= NURSING HOME ========================= -->
+<h2>4 &nbsp;Nursing Home</h2>
+<div class="q"><span class="qid">NH-Q1</span>Multi-select: "Has your loved one experienced any of these…?" (bed sores, falls/fractures, malnutrition, medication errors, elopement, abuse, hygiene, other) <span class="arrow">→</span> NH-Q2 <span class="note">Selection captured; no disqualification at this step.</span></div>
+<div class="q"><span class="qid">NH-Q2</span>Facility name + city/state (typeahead input) <span class="arrow">→</span> NH-Q3</div>
+<div class="q"><span class="qid">NH-Q3</span>"Did this happen within the last year?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — within the last year</span> <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> ATTORNEY GATE (§7)
+    <div class="endpoint">If gate passes: <span class="badge b-pass">Qualified</span> — <span style="font-style:italic">"✅ This situation deserves a full legal review…"</span> → upload → contact → retainer e-signature.</div></li>
+  <li><span class="ans">No — more than a year ago</span> <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> <span class="badge b-review">Manual review</span> <span class="note">Bot notes deadlines vary by state; routes to contact form, <b>not</b> auto-qualified.</span></li>
+</ul>
+
+<!-- ========================= MED MAL ========================= -->
+<h2>5 &nbsp;Medical Malpractice</h2>
+<div class="q"><span class="qid">MM-Q1</span>"Which best describes what happened?"</div>
+<ul class="opts">
+  <li><span class="ans">Wrong / missed diagnosis</span> <span class="arrow">→</span> MM-Q1a (survivability)</li>
+  <li><span class="ans">Birth injury</span> / <span class="ans">Bed sores / not fed</span> / <span class="ans">Major injury from mistake</span> / <span class="ans">Surgical or medication error</span> <span class="arrow">→</span> MM-Q2 (time gate)</li>
+</ul>
+<div class="q"><span class="qid">MM-Q1a</span>(misdiagnosis) "Would a correct diagnosis have greatly improved your chances of getting better / living longer?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — big difference</span> / <span class="ans">Probably / possibly</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to MM-Q2</li>
+  <li><span class="ans">No — outcome the same</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Misdiagnosis cases only work if catching it sooner would have made a big difference in your outcome.</span></li>
+</ul>
+<div class="q"><span class="qid">MM-Q2</span>(time gate) "Less than one year since it happened — or since you first found out something may have gone wrong?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — within the last year</span> / <span class="ans">Only recently found out</span> <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> ATTORNEY GATE (§7)
+    <div class="endpoint">If gate passes: <span class="badge b-pass">Qualified</span> — <span style="font-style:italic">"✅ … you may have a medical malpractice case worth fighting for. 💪"</span> → upload → contact → retainer e-signature.</div></li>
+  <li><span class="ans">No — more than a year</span> <span class="arrow">→</span> injury multi-select <span class="arrow">→</span> <span class="badge b-review">Manual review</span> <span class="note">Bot cites 2–3 yr / discovery rule; routes to contact form, <b>not</b> auto-qualified.</span></li>
+</ul>
+
+<!-- ========================= SSDI ========================= -->
+<h2>6 &nbsp;SSDI / Disability</h2>
+<p class="note" style="margin-bottom:8px">Note: the SSDI path skips the document-upload and contact-form steps. A qualified SSDI lead goes directly to retainer options (sign now / email / text).</p>
+<div class="q"><span class="qid">SSDI-Q1</span>"Are you unable to work because of a medical condition?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes — can't work</span> / <span class="ans">Can only work a little</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q2</li>
+  <li><span class="ans">No — able to work now</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Disability benefits require that you can't work a regular job. If that changes, reach out — we're here.</span></li>
+</ul>
+<div class="q"><span class="qid">SSDI-Q2</span>"Are you already getting disability benefits from Social Security?"</div>
+<ul class="opts">
+  <li><span class="ans">No — not getting any</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q3</li>
+  <li><span class="ans">Applied but was denied</span> <span class="arrow">→</span> bot reassures (60% denied) <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q3 (flagged as prior denial)</li>
+  <li><span class="ans">Yes — already get SSDI/SSI</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">You're already receiving benefits. If you think you're getting less than you deserve or you've been cut off, call us directly.</span></li>
+</ul>
+<div class="q"><span class="qid">SSDI-Q3</span>"Are you working and earning money right now?"</div>
+<ul class="opts">
+  <li><span class="ans">No</span> / <span class="ans">Part-time / very little</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q4</li>
+  <li><span class="ans">Yes — working regularly</span> <span class="arrow">→</span> SGA check: "Earning more than <b>$1,550/month</b>?"
+    <ul class="opts">
+      <li><span class="ans">No — under $1,550</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q4</li>
+      <li><span class="ans">Yes — over $1,550</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+        <span class="reason">Since you're earning over $1,550 a month, Social Security will consider you able to work. Reach out when your situation changes.</span>
+        <span class="note">Hard-coded SGA figure ($1,550). Confirm it tracks the current SSA annual amount.</span></li>
+    </ul>
+  </li>
+</ul>
+<div class="q"><span class="qid">SSDI-Q4</span>"Has your condition lasted at least 12 months — or is it expected to?"</div>
+<ul class="opts">
+  <li><span class="ans">Yes 12+ months</span> / <span class="ans">Doctors expect it to</span> / <span class="ans">Won't get better / life-threatening</span> <span class="arrow">→</span> <span class="badge b-go">Continue</span> to SSDI-Q5</li>
+  <li><span class="ans">No — less than 12 months</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">Your condition needs to last at least 12 months to qualify. Check back when more time has passed — we're here.</span></li>
+</ul>
+<div class="q"><span class="qid">SSDI-Q5</span>"Have you worked and paid into Social Security over the years?"</div>
+<ul class="opts">
+  <li><span class="ans">Many years</span> / <span class="ans">Some years</span> / <span class="ans">Only a few years</span> / <span class="ans">Never worked</span> <span class="arrow">→</span> all <span class="badge b-go">Continue</span> to SSDI-Q6 <span class="note">"Never worked" / "a few years" are <b>not</b> disqualified — bot pivots to SSI eligibility instead.</span></li>
+</ul>
+<div class="q"><span class="qid">SSDI-Q6</span>"Have you ever applied for disability benefits before?" (skipped if already flagged denied)</div>
+<ul class="opts"><li><span class="ans">Never</span> / <span class="ans">Pending</span> / <span class="ans">Denied</span> / <span class="ans">Denied 2+ times</span> <span class="arrow">→</span> all <span class="badge b-go">Continue</span> to SSDI-Q7 (different encouragement messages; none disqualify)</li></ul>
+<div class="q"><span class="qid">SSDI-Q7</span>"Are you married?" (Yes / No / Widowed) <span class="arrow">→</span> SSDI-Q8 (no branching)</div>
+<div class="q"><span class="qid">SSDI-Q8</span>Approximate monthly income (thresholds differ married vs. single)</div>
+<ul class="opts"><li><span class="ans">Low</span> / <span class="ans">Mid</span> / <span class="ans">High</span> <span class="arrow">→</span> all <span class="badge b-go">Continue</span> <span class="note">Income never disqualifies — bot states "SSDI itself has no income limit"; income only informs SSI routing.</span></li></ul>
+<div class="q"><span class="qid">SSDI-Q9</span>Conditions multi-select <span class="arrow">→</span> ATTORNEY GATE (§7)</div>
+<div class="endpoint">If gate passes: <span class="badge b-pass">Qualified</span> — message tailored (general "strong candidate" or, if previously denied, "people who appeal with an attorney are 3× more likely to win"). Routes <b>directly to retainer options</b>: <b>Sign now</b> (e-signature modal) / <b>Email me the agreement</b> / <b>Text me the agreement</b>. No upload or contact form.</div>
+
+<!-- ========================= SHARED ========================= -->
+<h2>7 &nbsp;Shared attorney gate (all qualified paths)</h2>
+<div class="q"><span class="qid">ATT-GATE</span>"Do you already have a lawyer handling this case for you?"</div>
+<ul class="opts">
+  <li><span class="ans">No — I don't have a lawyer</span> <span class="arrow">→</span> collect phone number (re-prompts until a valid number is entered) <span class="arrow">→</span> phone verification <span class="arrow">→</span> proceed to that flow's qualified endpoint</li>
+  <li><span class="ans">Yes — I already have representation</span> <span class="arrow">→</span> <span class="badge b-dq">Disqualified</span>
+    <span class="reason">You already have a lawyer for this case. If you're unhappy with your current attorney and want to switch, call us — we can talk through your options.</span></li>
+</ul>
+
+<h2>8 &nbsp;Endpoint definitions</h2>
+<table class="sum">
+<tr><th>Outcome</th><th>What the visitor sees / what happens</th></tr>
+<tr><td><span class="badge b-pass">Qualified</span></td><td>Confirmation message → (non-SSDI) optional document upload → contact form (name, phone, email, best time to call) → "Review My Case &amp; Sign Legal Agreement" → <b>contingency-fee retainer agreement with binding e-signature</b>. SSDI: straight to sign-now / email / text retainer options.</td></tr>
+<tr><td><span class="badge b-review">Manual review</span></td><td>Contact info captured and sent, but <b>not</b> flagged qualified — ends on "We'll Review Your Case — we'll have an attorney personally look at your situation and get back to you soon." No automatic retainer. Used for: PI &gt;1 yr, Nursing Home &gt;1 yr, Med-mal &gt;1 yr.</td></tr>
+<tr><td><span class="badge b-refer">Referral</span></td><td>At-fault driver referring an injured passenger. Contact form, tagged as a passenger referral, routed to manual review (no auto-retainer).</td></tr>
+<tr><td><span class="badge b-dq">Disqualified</span></td><td>Screen: "We May Not Be the Right Fit Right Now" + the stated reason (quoted above for each gate) + "You can still call us at [firm phone]" + options to change the last answer or start over. No lead/retainer.</td></tr>
+</table>
+
+<div class="flag">
+<b>Items worth a closer legal/compliance look:</b>
+<ol style="margin:6px 0 0;padding-left:20px;font-size:13px">
+  <li>The retainer agreement is presented and e-signed <b>inside the chat widget immediately upon "qualifying"</b>, before any attorney has reviewed the matter. Confirm this is acceptable under your jurisdiction's rules on engagement, conflicts checks, and unbundled intake.</li>
+  <li><b>Auto flow:</b> "No medical treatment yet" does <em>not</em> disqualify (only warns); and a missing police report explicitly does not disqualify. Confirm intended.</li>
+  <li><b>Workers' comp:</b> "commuting to/from work" continues to qualification rather than being gated — review against the going-and-coming rule.</li>
+  <li>Hard-coded SSA SGA figure ($1,550/mo) will drift from the annually-adjusted amount.</li>
+  <li>Time-bar messaging ("one year", "2–3 years", "12 months") is generalized; statutes of limitation/repose vary by state and claim type.</li>
+  <li>The injured-passenger <b>referral</b> path captures a third party's contact details from the at-fault driver — review consent/TCPA implications for contacting a referred non-consenting individual.</li>
+  <li>Disqualification language (quoted verbatim above) makes legal-sounding assertions ("you generally can't sue", "won't qualify") — review for unauthorized-practice / advice framing.</li>
+</ol>
+</div>
+
+<footer>
+Auto-generated from <code>index.html</code> on 2026-05-19 for internal attorney review. Bot copy quoted verbatim; outcome classifications (<i>Qualified / Manual review / Disqualified / Referral</i>) reflect the code's behavior, not a legal opinion. Please verify against the live experience before relying on this summary.
+</footer>
+
+</div>
+</body>
+</html>

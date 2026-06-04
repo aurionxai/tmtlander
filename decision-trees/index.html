@@ -1,17 +1,16 @@
 <!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Consumer Decision Trees · TheMoneyTeam.Law</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{-webkit-tap-highlight-color:rgba(212,175,55,.18)}button,a{-webkit-tap-highlight-color:rgba(212,175,55,.3);touch-action:manipulation}input,textarea{-webkit-appearance:none;font-size:16px}html,body{min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;background:#0a0a0a;color:#f7f5ef;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}p,li,span{overflow-wrap:anywhere}
 </style>
-<link rel="stylesheet" href="/tmtlander/_astro/index.B2Jajtbz.css"></head> <body>  <main class="dt"> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
+<link rel="stylesheet" href="/tmtlander/_astro/decision-trees-data.rsOErhWi.css"></head> <body>  <main class="dt"> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
 Visual <em>if A → then B</em> diagrams of the consumer case evaluator at
 <a href="https://aurionxai.github.io/tmtlander/astro-preview-v2/" target="_blank" rel="noopener">/astro-preview-v2/</a>.
-        Click a tab to see that product's <strong>complete start-to-finish flow</strong>
-on one diagram (shared pre-flow + product-specific tree merged, no age-branch splits).
-</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <!-- ── Universal pre-flow (always visible, runs before every product) ─ --> <section class="dt-section dt-shared"> <span class="dt-step-badge">Universal · runs first on every product</span> <h2>Shared pre-flow + universal knockouts</h2> <p class="dt-note">
-Every conversation on every product runs through this tree first
-        (except SSDI, which uses a legacy flow). Two of the universal
-        knockouts live here — <strong>already-hired-attorney</strong> and
-<strong>already-settled</strong> — so a visitor who's blocked here
-        never reaches the product-specific gates below.
-</p> <pre class="mermaid" id="dt-shared-diagram">
+        Each product has its own page — pick one below to see its
+<strong>complete start-to-finish flow</strong> on one diagram.
+</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <nav class="dt-tabs" role="tablist" aria-label="Decision-tree product pages"> <a class="dt-tab " href="/tmtlander/decision-trees/auto/" aria-current="false"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/personal-injury/" aria-current="false"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/workers-comp/" aria-current="false"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/nursing-home/" aria-current="false"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/medical-malpractice/" aria-current="false"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/ssdi/" aria-current="false"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </a> </nav> <section class="dt-section dt-shared"> <span class="dt-step-badge">Universal · runs first on every product</span> <h2>Shared pre-flow + universal knockouts</h2> <p class="dt-note">
+Every conversation on every product (except SSDI) runs through this tree first.
+        Two of the universal knockouts live here — <strong>already-hired-attorney</strong>
+and <strong>already-settled</strong> — so a visitor who's blocked here never
+        reaches the product-specific gates. Pick a product above to see its complete tree.
+</p> <pre class="mermaid">
 flowchart TD
     A([Pick a product type<br/>Auto · PI · WC · NH · MedMal · SSDI]):::go --> B([What's your name?]):::q
     B --> C{{Yourself, or someone else?}}:::q
@@ -26,283 +25,16 @@ flowchart TD
     classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
     classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
     classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </section> <!-- ── Per-product tabs ────────────────────────────────────── --> <div class="dt-tab-intro"> <p>Each tab below shows the <strong>complete</strong> flow for one product, with the shared pre-flow merged in at the top so you can read it end to end.</p> </div> <div class="dt-tabs" role="tablist"> <button type="button" class="dt-tab is-active" role="tab" aria-selected="true" aria-controls="dt-panel-auto" data-target="auto"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-pi" data-target="pi"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-wc" data-target="wc"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-nh" data-target="nh"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-mm" data-target="mm"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-ssdi" data-target="ssdi"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </button> </div> <!-- ── Tab panels — all rendered, hidden via .is-active ───── --> <section class="dt-panel is-active" id="dt-panel-auto" role="tabpanel" aria-hidden="false"> <div class="dt-section"> <h2>🚗 Auto Accident</h2> <p class="dt-note">Driver / passenger / pedestrian role split, fault gate, passenger-referral side channel, insurance / claim / police trunk, then 30-day OR 90-day-to-1-year branch — $10k big-bills gate and soft-only DQ live in the 90-day path.</p> <pre class="mermaid">
-flowchart TD
-    %% ── Shared pre-flow ──
-    A([Pick: Auto Accident]):::go --> B([What's your name?]):::q
-    B --> C{{Yourself, or someone else?}}:::q
-    C -->|Yourself| E
-    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
-    D -->|Legal rep / guardian| E
-    D -->|Friend / family| E
-    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
-    E -->|No to both| Role
-    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first, then come back]):::dq
-    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
-
-    %% ── Auto trunk ──
-    Role{{Driver, passenger,<br/>or pedestrian?}}:::q
-    Role -->|Driver| Fault{{Did you cause the accident?}}:::q
-    Role -->|Passenger| Ins
-    Role -->|Pedestrian| Cross{{In a crosswalk, on a sidewalk,<br/>or had the walk signal?}}:::q
-    Cross -->|Yes / I don't know| Ins
-    Cross -->|No| DQped([DQ<br/>At-fault pedestrian]):::dq
-
-    Fault -->|No / Not determined yet| NPass{{Were there passengers<br/>in your car?}}:::q
-    Fault -->|Yes — I caused it| YPass{{Were there passengers<br/>in your car?}}:::q
-
-    YPass -->|No| DQyfn([DQ<br/>At-fault driver, no passengers]):::dq
-    YPass -->|Yes| YRef{{Want to refer them<br/>for a free review?}}:::q
-    YRef -->|Yes| YRefDone([Collect passenger contact<br/>DQ for the driver, passenger referred]):::dq
-    YRef -->|No| DQy([DQ<br/>At-fault driver]):::dq
-
-    NPass -->|No| Ins
-    NPass -->|Yes| NRef{{Refer your passengers<br/>for a free review?}}:::q
-    NRef -->|Yes| NRefDone([Collect passenger contact]):::go
-    NRef -->|No| Ins
-    NRefDone --> Ins
-
-    Ins{{Does either vehicle<br/>have insurance?}}:::q
-    Ins -->|Both / At least mine / Not sure| Claim{{Has an insurance claim<br/>been filed yet?}}:::q
-    Ins -->|Neither| DQins([DQ<br/>No coverage to recover against]):::dq
-
-    Claim -->|Yes / No / Not sure| Adj[Bot delivers adjuster-warning script]:::go
-    Adj --> Pol{{Was a police report filed at the scene?}}:::q
-    Pol -->|Yes / Not sure / No| Time{{When did the accident happen?}}:::q
-
-    Time -->|More than 1 year ago| DQold([DQ<br/>Statute of limitations risk]):::dq
-    Time -->|Within the last 30 days| Hurt
-    Time -->|90 days to 1 year ago| Hurt2
-
-    %% ── 30-day branch ──
-    Hurt{{30-day branch<br/>Were you physically hurt?}}:::q
-    Hurt -->|Yes — I have injuries| Tx
-    Hurt -->|Sore but no doctor| Tx
-    Hurt -->|Property damage only<br/>no injuries| DQprop([DQ<br/>Property-damage-only not a fit]):::dq
-
-    Tx[Pick treatment received<br/>Doctor · Urgent care · ER<br/>multi-select can skip]:::q
-    Tx --> Inj{{Pick everything that applies<br/>12-option multi-select}}:::q
-    Inj -->|Any selection| Q30([QUALIFIES<br/>any injury counts on 30-day path]):::go
-
-    %% ── 90-day branch ──
-    Hurt2{{90-day branch<br/>Were you physically hurt?}}:::q
-    Hurt2 -->|Yes — injuries AND I received treatment| Tx2
-    Hurt2 -->|Sore but no doctor| DQsore([DQ<br/>Too old to start treatment now]):::dq
-    Hurt2 -->|Property damage only| DQprop2([DQ<br/>Property-damage-only]):::dq
-
-    Tx2{{Who have you seen?<br/>Doctor · Urgent · ER · Specialist}}:::q
-    Tx2 -->|Specialist included<br/>any combination| Inj2
-    Tx2 -->|Only Doctor / Urgent / ER<br/>no specialist| Bills{{Are your bills<br/>$10,000 or more?}}:::q
-
-    Bills -->|Yes — $10k+| Q90big([QUALIFIES<br/>big-bills proxy]):::go
-    Bills -->|No, but still treating| Inj2
-    Bills -->|Treatment ended<br/>no big bill| DQbill([DQ<br/>No demonstrable damages]):::dq
-
-    Inj2{{Pick all that apply<br/>12-option multi-select}}:::q
-    Inj2 -->|Any HARD injury<br/>concussion · broken bones · ligament tears<br/>· internal · scarring · PTSD · death · other| Q90hard([QUALIFIES]):::go
-    Inj2 -->|ONLY SOFT injuries<br/>neck/back · ligament strains<br/>· muscle/whiplash · anxiety| DQsoft([DQ<br/>Soft-only on the 90-day path]):::dq
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section><section class="dt-panel " id="dt-panel-pi" role="tabpanel" aria-hidden="true"> <div class="dt-section"> <h2>⚕️ Personal Injury</h2> <p class="dt-note">Slip &amp; fall, premises, dog bites. Same 30/90 age-bucket pattern as Auto but with a $50k big-bills threshold (higher because the case has to clear a bigger damages bar at that age).</p> <pre class="mermaid">
-flowchart TD
-    %% ── Shared pre-flow ──
-    A([Pick: Personal Injury]):::go --> B([What's your name?]):::q
-    B --> C{{Yourself, or someone else?}}:::q
-    C -->|Yourself| E
-    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
-    D -->|Legal rep / guardian| E
-    D -->|Friend / family| E
-    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
-    E -->|No to both| Neg
-    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first]):::dq
-    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
-
-    %% ── GPI flow ──
-    Neg{{Hurt by someone else's negligence<br/>within the last year?}}:::q
-    Neg -->|Yes — within 1 year| Allow{{Were you allowed to be there?<br/>customer · guest · public}}:::q
-    Neg -->|More than a year ago| DQneg([DQ<br/>Outside statute window]):::dq
-
-    Allow -->|Yes| Where{{Where did it happen?<br/>Retail · Business · Residence<br/>· Park · Public · School · Government}}:::q
-    Allow -->|No — wasn't supposed to be there| DQtres([DQ<br/>No premises duty]):::dq
-
-    Where -->|Any selection| Time{{When did it happen?}}:::q
-    Time -->|More than 1 year ago| DQold([DQ<br/>Statute risk]):::dq
-    Time -->|Less than 30 days| B30
-    Time -->|90 days to 1 year| B90
-
-    B30{{Doctor seen / willing to see one?}}:::q
-    B30 -->|Yes / Yes-willing / No-but-willing| Inj30{{Pick all injuries that apply}}:::q
-    Inj30 -->|Any selection| Q30([QUALIFIES<br/>any injury counts on 30-day path]):::go
-
-    B90{{Pick treatment received<br/>multi-select}}:::q
-    B90 -->|Specialist included| Inj90
-    B90 -->|Only Doctor / Urgent / ER| Bills{{Bills $50,000 or more?}}:::q
-    Bills -->|Yes — $50k+| QBig([QUALIFIES<br/>big bills]):::go
-    Bills -->|Still treating| Inj90
-    Bills -->|Treatment ended<br/>no big bill| DQbill([DQ<br/>No big damages]):::dq
-
-    Inj90{{Pick all injuries that apply}}:::q
-    Inj90 -->|Any HARD injury<br/>concussion · broken bones · ligament tears<br/>· internal · scarring · PTSD · death · other| QHard([QUALIFIES]):::go
-    Inj90 -->|Only SOFT injuries<br/>neck/back · ligament strains<br/>· muscle/whiplash · anxiety| DQsoft([DQ<br/>Soft-only on 90-day path]):::dq
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section><section class="dt-panel " id="dt-panel-wc" role="tabpanel" aria-hidden="true"> <div class="dt-section"> <h2>🏗️ Workers&#39; Comp</h2> <p class="dt-note">On-the-job injuries. The only consumer flow with explicit redirects — commuting pivots to AUTO, not-work-related pivots to PERSONAL INJURY. HARD injury qualifies outright; SOFT-only needs 3+ months off work.</p> <pre class="mermaid">
-flowchart TD
-    %% ── Shared pre-flow ──
-    A([Pick: Workers Comp]):::go --> B([What's your name?]):::q
-    B --> C{{Yourself, or someone else?}}:::q
-    C -->|Yourself| E
-    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
-    D -->|Legal rep / guardian| E
-    D -->|Friend / family| E
-    E{{Already hired an attorney<br/>OR settled this WC claim?}}:::q
-    E -->|No to both| Where
-    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first]):::dq
-    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
-
-    %% ── WC flow ──
-    Where{{Were you hurt at work<br/>or while doing your job?}}:::q
-    Where -->|Yes — at work| Inc{{Does your employer carry<br/>workers comp insurance?}}:::q
-    Where -->|Commuting| Rauto([Redirect to AUTO<br/>reviewed as auto accident]):::redir
-    Where -->|Not work-related| Rgpi([Redirect to PERSONAL INJURY<br/>reviewed as a slip-fall / premises case]):::redir
-    Where -->|No — not hurt at all| DQno([DQ<br/>Nothing to review]):::dq
-
-    Inc -->|Yes — Unsure — No<br/>all three continue| Time{{Less than a year since you<br/>got hurt OR your last WC payment?}}:::q
-    Time -->|Yes — within last year<br/>OR — recent WC payment| Inj{{Select all injuries that apply<br/>12-option multi-select}}:::q
-    Time -->|No — over a year| DQold([DQ<br/>Outside the WC statute window]):::dq
-
-    Inj -->|Any HARD injury<br/>concussion · broken bones · ligament tears<br/>· internal · scarring · PTSD · death · other| QHard([QUALIFIES]):::go
-    Inj -->|Only SOFT injuries<br/>neck/back · ligament strains<br/>· muscle/whiplash · anxiety| Off{{Has the injury kept you out<br/>of work for more than 3 months?}}:::q
-    Off -->|Yes — 3+ months| QOff([QUALIFIES<br/>soft injury + long disability]):::go
-    Off -->|No — less than 3 months| DQoff([DQ<br/>Soft + short<br/>damages too low]):::dq
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-    classDef redir fill:#5a4a1f,stroke:#d4af37,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section><section class="dt-panel " id="dt-panel-nh" role="tabpanel" aria-hidden="true"> <div class="dt-section"> <h2>🏥 Nursing Home</h2> <p class="dt-note">Shortest tree. Symptom multi-select with the only-Other DQ, CMS-typeahead facility capture, and a time gate with discovery-rule rescue (only-found-out-recently still qualifies).</p> <pre class="mermaid">
-flowchart TD
-    %% ── Shared pre-flow ──
-    A([Pick: Nursing Home]):::go --> B([What's your name?]):::q
-    B --> C{{Yourself, or someone else?}}:::q
-    C -->|Yourself| E
-    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
-    D -->|Legal rep / guardian| E
-    D -->|Friend / family| E
-    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
-    E -->|No to both| Sym
-    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first]):::dq
-    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
-
-    %% ── NH flow ──
-    Sym{{Has your loved one experienced<br/>any of the following at the facility?<br/>Bed sores · Broken bones · Malnutrition<br/>· Dehydration · Sexual abuse · Other<br/>multi-select pick all that apply}}:::q
-    Sym -->|At least one specific symptom picked<br/>Other is OK only if combined<br/>with a named pattern| Fac
-    Sym -->|ONLY the Other option<br/>nothing specific picked| DQother([DQ<br/>Cannot pre-qualify without<br/>a named pattern of abuse]):::dq
-
-    Fac[/Which facility?<br/>typeahead against CMS data<br/>14,699 US nursing homes/]:::q
-    Fac --> Time{{Did this happen within<br/>the last year?}}:::q
-
-    Time -->|Yes — within the last year| Q1([QUALIFIES]):::go
-    Time -->|No — but I only found out<br/>within the last year<br/>discovery rule| Q2([QUALIFIES<br/>under the discovery rule]):::go
-    Time -->|No — over a year ago<br/>and known the whole time| DQold([DQ<br/>Outside the statute window]):::dq
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section><section class="dt-panel " id="dt-panel-mm" role="tabpanel" aria-hidden="true"> <div class="dt-section"> <h2>🩺 Medical Malpractice</h2> <p class="dt-note">Four sub-paths depending on the type — diagnosis / bed sores / birth injury / medication error. Birth-injury gets an extended 18-year statute window because the child&#39;s claim is protected differently under the law.</p> <pre class="mermaid">
-flowchart TD
-    %% ── Shared pre-flow ──
-    A([Pick: Medical Malpractice]):::go --> B([What's your name?]):::q
-    B --> C{{Yourself, or someone else?}}:::q
-    C -->|Yourself| E
-    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
-    D -->|Legal rep / guardian| E
-    D -->|Friend / family| E
-    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
-    E -->|No to both| Type
-    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first]):::dq
-    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
-
-    %% ── MedMal flow ──
-    Type{{What best describes<br/>what happened?}}:::q
-    Type -->|Wrong / missed diagnosis| Diag
-    Type -->|Bed sores| Diag
-    Type -->|Birth injury| Birth
-    Type -->|Medication error| Med
-
-    Diag{{Would the right diagnosis sooner<br/>OR proper care have meaningfully<br/>changed the outcome?}}:::q
-    Diag -->|Yes — big difference| Time1
-    Diag -->|Probably / possibly| Time1
-    Diag -->|No — outcome would have been the same| DQcause([DQ<br/>No causation, no case]):::dq
-
-    Time1{{Less than a year since it happened<br/>OR you suspected something went wrong?}}:::q
-    Time1 -->|Yes| Q1([QUALIFIES]):::go
-    Time1 -->|No| DQt1([DQ<br/>Outside statute]):::dq
-
-    Birth{{When did the birth injury occur?}}:::q
-    Birth -->|Within the last 3 years| Q2([QUALIFIES]):::go
-    Birth -->|Within the last 18 years| Q3([QUALIFIES<br/>child-claim extended statute]):::go
-    Birth -->|More than 18 years ago| DQbirth([DQ<br/>Outside even the extended statute]):::dq
-
-    Med{{How serious were the consequences<br/>of the medication error?}}:::q
-    Med -->|Death| Q4([QUALIFIES]):::go
-    Med -->|Permanent severe impairment / disability| Q5([QUALIFIES]):::go
-    Med -->|Other / minor| DQmed([DQ<br/>Case value too low for med-mal economics]):::dq
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section><section class="dt-panel " id="dt-panel-ssdi" role="tabpanel" aria-hidden="true"> <div class="dt-section"> <h2>♿ SSDI / Disability</h2> <p class="dt-note">Legacy flow — does NOT share the consumer pre-flow front-matter. Five sequential knockouts: can-work / current-benefits / SGA / 12-month duration / work credits.</p> <pre class="mermaid">
-flowchart TD
-    Start([SSDI / Disability]):::go --> Work{{Can you currently work?}}:::q
-    Work -->|I cannot work due to medical condition| Cur
-    Work -->|I can still work| DQcanwork([DQ<br/>SSDI requires inability to work]):::dq
-
-    Cur{{Are you already receiving<br/>SSDI / SSI benefits?}}:::q
-    Cur -->|No / Wrong amount / Was cut off| Now
-    Cur -->|Yes — full benefits, all good| DQfull([DQ<br/>Already fully covered]):::dq
-
-    Now{{Are you currently working at all?}}:::q
-    Now -->|No| Dur
-    Now -->|Yes — a little, part-time| SGA{{Earning over ~$1,550 / month?}}:::q
-    SGA -->|Over $1,550| DQsga([DQ<br/>Above substantial-gainful-activity limit]):::dq
-    SGA -->|Under $1,550 / Not sure| Dur
-
-    Dur{{Condition lasted or expected<br/>to last 12+ months?}}:::q
-    Dur -->|Yes — 12+ months| Cred
-    Dur -->|No — under 12 months| DQdur([DQ<br/>SSDI requires 12-month duration]):::dq
-
-    Cred{{Have you worked 5 of the last 10 years<br/>paying into Social Security?}}:::q
-    Cred -->|Yes / No / Not sure| Applied
-    Applied{{Have you applied for SSDI yet?}}:::q
-    Applied -->|Not yet / Pending / Denied / Approved| Conds[+ Married? Income? Conditions multi-pick]:::q
-    Conds --> Q([QUALIFIES]):::go
-
-    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
-    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
-    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
-</pre> </div> </section> <footer class="dt-footer"> <p>
-Generated from <code>src/flows/v2/</code> (warm-copy build of the
-        consumer evaluator). Logic is identical between v1 and v2 — only the
-        wording differs, so this same tree applies to
+</pre> </section> <footer class="dt-footer"> <p>
+Generated from <code>src/flows/v2/</code> (warm-copy build of the consumer evaluator).
+        Logic is identical between v1 and v2 — only the wording differs, so this same tree applies to
 <a href="https://aurionxai.github.io/tmtlander/astro-preview/" target="_blank" rel="noopener">v1</a>
 as well. Plain-English knockout-questions list lives at
 <a href="/tmtlander/docs/consumer-knockout-questions.md" target="_blank" rel="noopener">docs/consumer-knockout-questions.md</a>.
 </p> </footer> </main> <script type="module">
-    /*
-     * Mermaid is initialized with startOnLoad: false so we can lazy-render
-     * each diagram only when its tab becomes active. Rendering inside a
-     * display:none panel produces a 0×0 SVG (the parser succeeds but the
-     * layout breaks), which is why every tab past the first one looked
-     * like a syntax error.
-     */
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({
-      startOnLoad: false,
+      startOnLoad: true,
       theme: "dark",
       themeVariables: {
         background: "#0a0a0a",
@@ -317,55 +49,4 @@ as well. Plain-English knockout-questions list lives at
       flowchart: { curve: "basis", padding: 18 },
       securityLevel: "loose",
     });
-
-    const rendered = new Set();
-
-    async function renderPanel(target) {
-      if (rendered.has(target)) return;
-      const el = document.querySelector("#dt-panel-" + target + " .mermaid");
-      if (!el) return;
-      rendered.add(target);
-      try {
-        await mermaid.run({ nodes: [el] });
-      } catch (err) {
-        rendered.delete(target);
-        console.error("[mermaid] render failed for tab " + target, err);
-      }
-    }
-
-    // Render the always-visible shared pre-flow diagram on page load
-    (async () => {
-      const sharedEl = document.getElementById("dt-shared-diagram");
-      if (sharedEl) {
-        try { await mermaid.run({ nodes: [sharedEl] }); }
-        catch (err) { console.error("[mermaid] shared pre-flow render failed", err); }
-      }
-    })();
-
-    function activate(target) {
-      document.querySelectorAll(".dt-tab").forEach(function (t) {
-        var on = t.dataset.target === target;
-        t.classList.toggle("is-active", on);
-        t.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      document.querySelectorAll(".dt-panel").forEach(function (p) {
-        var on = p.id === "dt-panel-" + target;
-        p.classList.toggle("is-active", on);
-        p.setAttribute("aria-hidden", on ? "false" : "true");
-      });
-      renderPanel(target);
-      if (history.replaceState) history.replaceState(null, "", "#" + target);
-    }
-
-    // Wire tab click handlers
-    document.querySelectorAll(".dt-tab").forEach(function (t) {
-      t.addEventListener("click", function () { activate(t.dataset.target); });
-    });
-
-    // Decide which tab to open first: URL hash if valid, otherwise first tab
-    var hash = window.location.hash.replace(/^#/, "");
-    var initial = hash && document.querySelector('[data-target="' + hash + '"]')
-      ? hash
-      : document.querySelector(".dt-tab").dataset.target;
-    activate(initial);
   </script> </body></html>

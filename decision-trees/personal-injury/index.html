@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Personal Injury · Consumer Decision Trees · TheMoneyTeam.Law</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{-webkit-tap-highlight-color:rgba(212,175,55,.18)}button,a{-webkit-tap-highlight-color:rgba(212,175,55,.3);touch-action:manipulation}input,textarea{-webkit-appearance:none;font-size:16px}html,body{min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;background:#0a0a0a;color:#f7f5ef;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}p,li,span{overflow-wrap:anywhere}
+</style>
+<link rel="stylesheet" href="/tmtlander/_astro/decision-trees-data.rsOErhWi.css"></head> <body>  <main class="dt"> <a class="dt-back" href="/tmtlander/decision-trees/">← All decision trees</a> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
+Visual <em>if A → then B</em> diagrams of the consumer case evaluator at
+<a href="https://aurionxai.github.io/tmtlander/astro-preview-v2/" target="_blank" rel="noopener">/astro-preview-v2/</a>.
+        Each product has its own page with the <strong>complete start-to-finish flow</strong> on one diagram.
+</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <nav class="dt-tabs" role="tablist" aria-label="Decision-tree product pages"> <a class="dt-tab " href="/tmtlander/decision-trees/auto/" aria-current="false"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </a><a class="dt-tab is-active" href="/tmtlander/decision-trees/personal-injury/" aria-current="page"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/workers-comp/" aria-current="false"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/nursing-home/" aria-current="false"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/medical-malpractice/" aria-current="false"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </a><a class="dt-tab " href="/tmtlander/decision-trees/ssdi/" aria-current="false"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </a> </nav> <section class="dt-section dt-shared"> <span class="dt-step-badge">Universal · runs first on every product</span> <h2>Shared pre-flow + universal knockouts</h2> <p class="dt-note">
+Every conversation on every product runs through this tree first.
+          Two of the universal knockouts live here — <strong>already-hired-attorney</strong>
+and <strong>already-settled</strong> — so a visitor who's blocked here
+          never reaches the product-specific gates below.
+</p> <pre class="mermaid">
+flowchart TD
+    A([Pick a product type<br/>Auto · PI · WC · NH · MedMal · SSDI]):::go --> B([What's your name?]):::q
+    B --> C{{Yourself, or someone else?}}:::q
+    C -->|Yourself| E
+    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
+    D -->|Legal rep / guardian| E
+    D -->|Friend / family| E
+    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
+    E -->|No to both| F([Continue to product questions]):::go
+    E -->|Yes — hired an attorney| G([DQ<br/>Switch attorneys first, then come back]):::dq
+    E -->|Yes — claim already settled| H([DQ<br/>Cannot reopen a settled claim]):::dq
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section"> <span class="dt-step-badge">Product-specific tree</span> <h2>⚕️ Personal Injury</h2> <p class="dt-note">Slip &amp; fall, premises, dog bites. Same 30/90 age-bucket pattern as Auto but with a $50k big-bills threshold (higher because the case has to clear a bigger damages bar at that age).</p> <pre class="mermaid">
+flowchart TD
+    %% ── Shared pre-flow ──
+    A([Pick: Personal Injury]):::go --> B([What's your name?]):::q
+    B --> C{{Yourself, or someone else?}}:::q
+    C -->|Yourself| E
+    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
+    D -->|Legal rep / guardian| E
+    D -->|Friend / family| E
+    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
+    E -->|No to both| Neg
+    E -->|Yes — hired attorney| Gatt([DQ<br/>Switch attorneys first]):::dq
+    E -->|Yes — claim already settled| Gset([DQ<br/>Cannot reopen a settled claim]):::dq
+
+    %% ── GPI flow ──
+    Neg{{Hurt by someone else's negligence<br/>within the last year?}}:::q
+    Neg -->|Yes — within 1 year| Allow{{Were you allowed to be there?<br/>customer · guest · public}}:::q
+    Neg -->|More than a year ago| DQneg([DQ<br/>Outside statute window]):::dq
+
+    Allow -->|Yes| Where{{Where did it happen?<br/>Retail · Business · Residence<br/>· Park · Public · School · Government}}:::q
+    Allow -->|No — wasn't supposed to be there| DQtres([DQ<br/>No premises duty]):::dq
+
+    Where -->|Any selection| Time{{When did it happen?}}:::q
+    Time -->|More than 1 year ago| DQold([DQ<br/>Statute risk]):::dq
+    Time -->|Less than 30 days| B30
+    Time -->|90 days to 1 year| B90
+
+    B30{{Doctor seen / willing to see one?}}:::q
+    B30 -->|Yes / Yes-willing / No-but-willing| Inj30{{Pick all injuries that apply}}:::q
+    Inj30 -->|Any selection| Q30([QUALIFIES<br/>any injury counts on 30-day path]):::go
+
+    B90{{Pick treatment received<br/>multi-select}}:::q
+    B90 -->|Specialist included| Inj90
+    B90 -->|Only Doctor / Urgent / ER| Bills{{Bills $50,000 or more?}}:::q
+    Bills -->|Yes — $50k+| QBig([QUALIFIES<br/>big bills]):::go
+    Bills -->|Still treating| Inj90
+    Bills -->|Treatment ended<br/>no big bill| DQbill([DQ<br/>No big damages]):::dq
+
+    Inj90{{Pick all injuries that apply}}:::q
+    Inj90 -->|Any HARD injury<br/>concussion · broken bones · ligament tears<br/>· internal · scarring · PTSD · death · other| QHard([QUALIFIES]):::go
+    Inj90 -->|Only SOFT injuries<br/>neck/back · ligament strains<br/>· muscle/whiplash · anxiety| DQsoft([DQ<br/>Soft-only on 90-day path]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <footer class="dt-footer"> <p>
+Generated from <code>src/flows/v2/</code> (warm-copy build of the consumer evaluator).
+        Logic is identical between v1 and v2 — only the wording differs.
+</p> </footer> </main> <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        background: "#0a0a0a",
+        primaryColor: "#1a2438",
+        primaryBorderColor: "#5db4f0",
+        primaryTextColor: "#F7F5EF",
+        lineColor: "#9A9590",
+        secondaryColor: "#1f7a5b",
+        tertiaryColor: "#7a1f1f",
+        fontFamily: "Inter, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", padding: 18 },
+      securityLevel: "loose",
+    });
+  </script> </body></html>
