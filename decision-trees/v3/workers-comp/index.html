@@ -11,7 +11,7 @@ Read top to bottom. Every blue node is a gate the user answers with an enum
         product. Green is the only path through to capture.
 </p> <pre class="mermaid">
 flowchart TD
-    G1{{Gate 1 · When were you injured?<br/>(date enum)}}:::q
+    G1{{Gate 1 · When were you injured?<br/>date enum}}:::q
     G1 -->|Less than a year ago| G2
     G1 -->|Got a WC payment in the last year| G2
     G1 -->|Over a year, no payments| DQ1([DQ · Past statute]):::dq
@@ -20,13 +20,13 @@ flowchart TD
     G2 -->|No| G3
     G2 -->|Yes — either| DQ2([DQ · Switch / cannot reopen]):::dq
 
-    G3{{Gate 3 · Where did the injury happen?<br/>(enum)}}:::q
+    G3{{Gate 3 · Where did the injury happen?<br/>enum}}:::q
     G3 -->|At work / doing my job| G4
     G3 -->|Commuting to or from work| RA([REDIRECT · Auto Accident]):::redir
     G3 -->|Personal — outside work hours| RP([REDIRECT · Personal Injury]):::redir
     G3 -->|Not work-related at all| DQ3([DQ · Not work-related]):::dq
 
-    G4{{Gate 4 · Injury severity + time off work<br/>(enum)}}:::q
+    G4{{Gate 4 · Injury severity + time off work<br/>enum}}:::q
     G4 -->|HARD injury — concussion · broken bones · surgery| QH([QUALIFIES]):::go
     G4 -->|SOFT — out of work 3+ months| QS([QUALIFIES]):::go
     G4 -->|SOFT — back to work in under 3 months| DQ4([DQ · Soft + short time off]):::dq

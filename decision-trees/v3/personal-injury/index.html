@@ -11,7 +11,7 @@ Read top to bottom. Every blue node is a gate the user answers with an enum
         product. Green is the only path through to capture.
 </p> <pre class="mermaid">
 flowchart TD
-    G1{{Gate 1 · When did the injury happen?<br/>(date enum)}}:::q
+    G1{{Gate 1 · When did the injury happen?<br/>date enum}}:::q
     G1 -->|Within last 30 days| G2
     G1 -->|30 days – 1 year ago| G2
     G1 -->|1 – 2 years ago| G2
@@ -21,17 +21,17 @@ flowchart TD
     G2 -->|No to both| G3
     G2 -->|Yes — either| DQ2([DQ · Switch / cannot reopen]):::dq
 
-    G3{{Gate 3 · Where + were you allowed to be there?<br/>(enum)}}:::q
-    G3 -->|Allowed — on someone else's property<br/>retail · business · public · etc.| G4
+    G3{{Gate 3 · Where + were you allowed to be there?<br/>enum}}:::q
+    G3 -->|Allowed — on a third-party property| G4
     G3 -->|My own home / property| DQ3a([DQ · No third party to pursue]):::dq
-    G3 -->|Wasn't allowed to be there| DQ3b([DQ · Trespasser]):::dq
+    G3 -->|Was not allowed to be there| DQ3b([DQ · Trespasser]):::dq
 
     G4{{Gate 4 · Most serious medical treatment?}}:::q
     G4 -->|ER · Surgery · Specialist| QH([QUALIFIES · HARD-injury fast track]):::go
     G4 -->|Doctor or urgent care only| G5
     G4 -->|None / sore / property only| DQ4([DQ · No treatment]):::dq
 
-    G5{{Gate 5 · Medical bills above $50,000?<br/>(binary)}}:::q
+    G5{{Gate 5 · Medical bills above $50,000?<br/>binary}}:::q
     G5 -->|Yes — $50k+| QS([QUALIFIES · SOFT cleared damages floor]):::go
     G5 -->|No — still treating| QS
     G5 -->|No — treatment ended| DQ5([DQ · Soft-only, bills too low]):::dq

@@ -11,7 +11,7 @@ Read top to bottom. Every blue node is a gate the user answers with an enum
         product. Green is the only path through to capture.
 </p> <pre class="mermaid">
 flowchart TD
-    G1{{Gate 1 · When did this happen?<br/>(date enum with discovery rule)}}:::q
+    G1{{Gate 1 · When did this happen?<br/>date enum · discovery rule}}:::q
     G1 -->|Within the last year| G2
     G1 -->|Just learned about it within the last year| G2
     G1 -->|Over a year ago — knew the whole time| DQ1([DQ · Past statute]):::dq
@@ -20,7 +20,7 @@ flowchart TD
     G2 -->|No| G3
     G2 -->|Yes — either| DQ2([DQ · Switch / cannot reopen]):::dq
 
-    G3{{Gate 3 · Which symptoms apply?<br/>(multi-pick enum, 1+ required)}}:::q
+    G3{{Gate 3 · Which symptoms apply?<br/>multi-pick · 1+ required}}:::q
     G3 -->|Bed sores / pressure ulcers| Q
     G3 -->|Broken bones / fractures| Q
     G3 -->|Malnutrition / dehydration| Q

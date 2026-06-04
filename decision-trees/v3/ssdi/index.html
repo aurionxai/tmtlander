@@ -11,11 +11,11 @@ Read top to bottom. Every blue node is a gate the user answers with an enum
         product. Green is the only path through to capture.
 </p> <pre class="mermaid">
 flowchart TD
-    G1{{Gate 1 · Can you currently work?<br/>(binary)}}:::q
+    G1{{Gate 1 · Can you currently work?<br/>binary}}:::q
     G1 -->|No — disability prevents work| G2
     G1 -->|Yes — can work| DQ1([DQ · Not disabled enough]):::dq
 
-    G2{{Gate 2 · Already receiving SSDI / SSI?<br/>(enum)}}:::q
+    G2{{Gate 2 · Already receiving SSDI / SSI?<br/>enum}}:::q
     G2 -->|Not yet — never applied| G3
     G2 -->|Application pending| G3
     G2 -->|Denied — appealing| G3
@@ -26,11 +26,11 @@ flowchart TD
     G3 -->|Not working at all| G4
     G3 -->|Yes — above SGA| DQ3([DQ · Earning over SGA]):::dq
 
-    G4{{Gate 4 · Disability lasted OR expected to last 12+ months?<br/>(binary)}}:::q
+    G4{{Gate 4 · Disability lasted OR expected to last 12+ months?<br/>binary}}:::q
     G4 -->|Yes| G5
     G4 -->|No — short-term only| DQ4([DQ · Duration too short]):::dq
 
-    G5{{Gate 5 · Worked + paid taxes 5 of last 10 years?<br/>(enum, routes SSDI vs SSI)}}:::q
+    G5{{Gate 5 · Worked + paid taxes 5 of last 10 years?<br/>enum · routes SSDI vs SSI}}:::q
     G5 -->|Yes| Q1([QUALIFIES · SSDI]):::go
     G5 -->|No — but low income + assets| Q2([QUALIFIES · SSI path]):::go
     G5 -->|No — and have income / assets| DQ5([DQ · No qualifying path]):::dq

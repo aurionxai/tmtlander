@@ -11,7 +11,7 @@ Read top to bottom. Every blue node is a gate the user answers with an enum
         product. Green is the only path through to capture.
 </p> <pre class="mermaid">
 flowchart TD
-    G1{{Gate 1 · When did the accident happen?<br/>(date enum)}}:::q
+    G1{{Gate 1 · When did the accident happen?<br/>date enum}}:::q
     G1 -->|Within last 30 days| G2
     G1 -->|30 days – 1 year ago| G2
     G1 -->|1 – 2 years ago| G2
@@ -22,7 +22,7 @@ flowchart TD
     G2 -->|Yes — hired an attorney| DQ2a([DQ · Switch attorneys first]):::dq
     G2 -->|Yes — claim already settled| DQ2b([DQ · Cannot reopen settled]):::dq
 
-    G3{{Gate 3 · Your role + fault<br/>(enum)}}:::q
+    G3{{Gate 3 · Your role + fault<br/>enum}}:::q
     G3 -->|Driver — not my fault| G4
     G3 -->|Passenger| G4
     G3 -->|Pedestrian — crossing legally| G4
@@ -30,19 +30,19 @@ flowchart TD
     G3 -->|Driver — my fault, no passengers| DQ3a([DQ · No claim to pursue]):::dq
     G3 -->|Pedestrian — not crossing legally| DQ3b([DQ · At-fault pedestrian]):::dq
 
-    G4{{Gate 4 · Most serious medical treatment?<br/>(enum)}}:::q
+    G4{{Gate 4 · Most serious medical treatment?<br/>enum}}:::q
     G4 -->|ER · Surgery · Specialist| QH([QUALIFIES · HARD-injury fast track]):::go
     G4 -->|Doctor or urgent care only| G5
     G4 -->|None / just sore / property only| DQ4([DQ · No treatment / property only]):::dq
 
-    G5{{Gate 5 · Medical bills above $10,000?<br/>(binary)}}:::q
+    G5{{Gate 5 · Medical bills above $10,000?<br/>binary}}:::q
     G5 -->|Yes — $10k+ already| QS([QUALIFIES · SOFT cleared damages floor]):::go
     G5 -->|No — still treating| QS
     G5 -->|No — treatment ended| DQ5([DQ · Soft-only, bills too low]):::dq
 
     QH --> CAP
     QS --> CAP
-    CAP([→ CAPTURE PHASE<br/>Name · Phone · Email · Address · Claim# · Retainer]):::go
+    CAP([→ CAPTURE PHASE<br/>Name · Phone · Email · Address · Claim no. · Retainer]):::go
 
     classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
     classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
