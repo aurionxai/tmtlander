@@ -1,11 +1,32 @@
 <!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Consumer Decision Trees · TheMoneyTeam.Law</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{-webkit-tap-highlight-color:rgba(212,175,55,.18)}button,a{-webkit-tap-highlight-color:rgba(212,175,55,.3);touch-action:manipulation}input,textarea{-webkit-appearance:none;font-size:16px}html,body{min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;background:#0a0a0a;color:#f7f5ef;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}p,li,span{overflow-wrap:anywhere}
 </style>
-<link rel="stylesheet" href="/tmtlander/_astro/index.CGsk-Dcm.css"></head> <body>  <main class="dt"> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
+<link rel="stylesheet" href="/tmtlander/_astro/index.B2Jajtbz.css"></head> <body>  <main class="dt"> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
 Visual <em>if A → then B</em> diagrams of the consumer case evaluator at
 <a href="https://aurionxai.github.io/tmtlander/astro-preview-v2/" target="_blank" rel="noopener">/astro-preview-v2/</a>.
         Click a tab to see that product's <strong>complete start-to-finish flow</strong>
 on one diagram (shared pre-flow + product-specific tree merged, no age-branch splits).
-</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <!-- ── Tab nav ────────────────────────────────────────────── --> <div class="dt-tabs" role="tablist"> <button type="button" class="dt-tab is-active" role="tab" aria-selected="true" aria-controls="dt-panel-auto" data-target="auto"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-pi" data-target="pi"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-wc" data-target="wc"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-nh" data-target="nh"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-mm" data-target="mm"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-ssdi" data-target="ssdi"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </button> </div> <!-- ── Tab panels — all rendered, hidden via .is-active ───── --> <section class="dt-panel is-active" id="dt-panel-auto" role="tabpanel" aria-hidden="false"> <div class="dt-section"> <h2>🚗 Auto Accident</h2> <p class="dt-note">Driver / passenger / pedestrian role split, fault gate, passenger-referral side channel, insurance / claim / police trunk, then 30-day OR 90-day-to-1-year branch — $10k big-bills gate and soft-only DQ live in the 90-day path.</p> <pre class="mermaid">
+</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> </header> <!-- ── Universal pre-flow (always visible, runs before every product) ─ --> <section class="dt-section dt-shared"> <span class="dt-step-badge">Universal · runs first on every product</span> <h2>Shared pre-flow + universal knockouts</h2> <p class="dt-note">
+Every conversation on every product runs through this tree first
+        (except SSDI, which uses a legacy flow). Two of the universal
+        knockouts live here — <strong>already-hired-attorney</strong> and
+<strong>already-settled</strong> — so a visitor who's blocked here
+        never reaches the product-specific gates below.
+</p> <pre class="mermaid" id="dt-shared-diagram">
+flowchart TD
+    A([Pick a product type<br/>Auto · PI · WC · NH · MedMal · SSDI]):::go --> B([What's your name?]):::q
+    B --> C{{Yourself, or someone else?}}:::q
+    C -->|Yourself| E
+    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
+    D -->|Legal rep / guardian| E
+    D -->|Friend / family| E
+    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
+    E -->|No to both| F([Continue to product questions]):::go
+    E -->|Yes — hired an attorney| G([DQ<br/>Switch attorneys first, then come back]):::dq
+    E -->|Yes — claim already settled| H([DQ<br/>Cannot reopen a settled claim]):::dq
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <!-- ── Per-product tabs ────────────────────────────────────── --> <div class="dt-tab-intro"> <p>Each tab below shows the <strong>complete</strong> flow for one product, with the shared pre-flow merged in at the top so you can read it end to end.</p> </div> <div class="dt-tabs" role="tablist"> <button type="button" class="dt-tab is-active" role="tab" aria-selected="true" aria-controls="dt-panel-auto" data-target="auto"> <span class="dt-tab-icon">🚗</span> <span class="dt-tab-label">Auto Accident</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-pi" data-target="pi"> <span class="dt-tab-icon">⚕️</span> <span class="dt-tab-label">Personal Injury</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-wc" data-target="wc"> <span class="dt-tab-icon">🏗️</span> <span class="dt-tab-label">Workers&#39; Comp</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-nh" data-target="nh"> <span class="dt-tab-icon">🏥</span> <span class="dt-tab-label">Nursing Home</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-mm" data-target="mm"> <span class="dt-tab-icon">🩺</span> <span class="dt-tab-label">Medical Malpractice</span> </button><button type="button" class="dt-tab " role="tab" aria-selected="false" aria-controls="dt-panel-ssdi" data-target="ssdi"> <span class="dt-tab-icon">♿</span> <span class="dt-tab-label">SSDI / Disability</span> </button> </div> <!-- ── Tab panels — all rendered, hidden via .is-active ───── --> <section class="dt-panel is-active" id="dt-panel-auto" role="tabpanel" aria-hidden="false"> <div class="dt-section"> <h2>🚗 Auto Accident</h2> <p class="dt-note">Driver / passenger / pedestrian role split, fault gate, passenger-referral side channel, insurance / claim / police trunk, then 30-day OR 90-day-to-1-year branch — $10k big-bills gate and soft-only DQ live in the 90-day path.</p> <pre class="mermaid">
 flowchart TD
     %% ── Shared pre-flow ──
     A([Pick: Auto Accident]):::go --> B([What's your name?]):::q
@@ -311,6 +332,15 @@ as well. Plain-English knockout-questions list lives at
         console.error("[mermaid] render failed for tab " + target, err);
       }
     }
+
+    // Render the always-visible shared pre-flow diagram on page load
+    (async () => {
+      const sharedEl = document.getElementById("dt-shared-diagram");
+      if (sharedEl) {
+        try { await mermaid.run({ nodes: [sharedEl] }); }
+        catch (err) { console.error("[mermaid] shared pre-flow render failed", err); }
+      }
+    })();
 
     function activate(target) {
       document.querySelectorAll(".dt-tab").forEach(function (t) {
