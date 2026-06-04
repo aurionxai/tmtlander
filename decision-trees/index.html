@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Consumer Decision Trees · TheMoneyTeam.Law</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"><style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}*{-webkit-tap-highlight-color:rgba(212,175,55,.18)}button,a{-webkit-tap-highlight-color:rgba(212,175,55,.3);touch-action:manipulation}input,textarea{-webkit-appearance:none;font-size:16px}html,body{min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto;background:#0a0a0a;color:#f7f5ef;font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}p,li,span{overflow-wrap:anywhere}
+:root{--dt-bg: #0A0A0A;--dt-card: #14181f;--dt-text: #F7F5EF;--dt-muted: #9A9590;--dt-gold: #D4AF37;--dt-q: #5db4f0;--dt-go: #2ea87e;--dt-dq: #d43d3d;--dt-redir: #D4AF37}body{background:radial-gradient(circle at 15% 10%,rgba(93,180,240,.05) 0%,transparent 45%),radial-gradient(circle at 85% 90%,rgba(46,168,126,.04) 0%,transparent 45%),linear-gradient(180deg,#0a0a0a,#050505);color:var(--dt-text)}.dt{max-width:1280px;margin:0 auto;padding:56px 24px 80px}.dt-header{text-align:center;margin-bottom:56px}.dt-title{font-family:Bebas Neue,sans-serif;font-size:60px;letter-spacing:4px;margin:0 0 12px;background:linear-gradient(180deg,#fff 0%,var(--dt-gold) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.dt-sub{max-width:720px;margin:0 auto 22px;font-size:16px;line-height:1.6;color:var(--dt-muted)}.dt-sub a{color:var(--dt-gold);border-bottom:1px solid rgba(212,175,55,.25)}.dt-key{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 12px;margin:0 auto 22px}.dt-chip{display:inline-flex;align-items:center;padding:5px 12px;border-radius:50px;font-size:11.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:1px solid currentColor}.dt-chip-q{color:var(--dt-q);background:#5db4f01f}.dt-chip-go{color:var(--dt-go);background:#2ea87e24}.dt-chip-dq{color:var(--dt-dq);background:#d43d3d24}.dt-chip-redir{color:var(--dt-gold);background:#d4af3724}.dt-toc{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px}.dt-toc a{padding:6px 14px;border-radius:50px;background:#ffffff0a;border:1px solid rgba(255,255,255,.1);color:var(--dt-text);font-size:12.5px;font-weight:600;text-decoration:none;transition:all .15s}.dt-toc a:hover{background:#d4af371a;border-color:#d4af3766;color:var(--dt-gold)}.dt-section{margin-top:56px;padding:28px 28px 32px;background:var(--dt-card);border:1px solid rgba(255,255,255,.06);border-radius:18px;scroll-margin-top:16px}.dt-section h2{font-family:Newsreader,Georgia,serif;font-size:30px;font-weight:700;color:var(--dt-text);margin:0 0 8px;padding-left:14px;border-left:4px solid var(--dt-gold)}.dt-sub-h{margin-top:28px;padding-left:14px;border-left:4px solid var(--dt-q);font-family:Newsreader,Georgia,serif;font-size:19px;font-weight:700;color:var(--dt-text)}.dt-note{margin:0 0 18px;padding-left:16px;font-size:14.5px;line-height:1.55;color:var(--dt-muted)}.dt-note strong{color:var(--dt-text)}pre.mermaid{margin:18px 0;padding:24px;background:#050505;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow-x:auto;text-align:center;font-size:0;line-height:0}pre.mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}pre.mermaid:not([data-processed=true]){font-family:SF Mono,Menlo,monospace;font-size:12px;line-height:1.45;text-align:left;color:var(--dt-muted);white-space:pre-wrap}.dt-footer{margin-top:56px;padding-top:28px;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:13px;color:var(--dt-muted);line-height:1.6}.dt-footer a{color:var(--dt-gold);border-bottom:1px solid rgba(212,175,55,.3)}.dt-footer code{font-family:SF Mono,Menlo,monospace;font-size:12px;background:#ffffff0f;padding:1px 6px;border-radius:4px;color:var(--dt-text)}@media(max-width:600px){.dt{padding:36px 14px 56px}.dt-title{font-size:40px;letter-spacing:2px}.dt-sub{font-size:14px}.dt-section{padding:22px 16px 26px}.dt-section h2{font-size:22px}pre.mermaid{padding:12px}}
+</style></head> <body>  <main class="dt"> <header class="dt-header"> <h1 class="dt-title">Decision Trees</h1> <p class="dt-sub">
+Visual <em>if A → then B</em> diagrams of the consumer case evaluator at
+<a href="https://aurionxai.github.io/tmtlander/astro-preview-v2/" target="_blank" rel="noopener">/astro-preview-v2/</a>.
+        Each product type gets its own tree. Plain-English labels — readable end to end.
+</p> <p class="dt-key"> <span class="dt-chip dt-chip-q">Question / step</span> <span class="dt-chip dt-chip-go">Keep going / qualifies</span> <span class="dt-chip dt-chip-dq">DQ / dead end</span> <span class="dt-chip dt-chip-redir">Redirect to a different product</span> </p> <nav class="dt-toc"> <a href="#shared">Shared pre-flow</a> <a href="#auto">Auto Accident</a> <a href="#gpi">Personal Injury</a> <a href="#wc">Workers' Comp</a> <a href="#nh">Nursing Home</a> <a href="#medmal">Medical Malpractice</a> <a href="#ssdi">SSDI / Disability</a> </nav> </header> <section class="dt-section" id="shared"> <h2>Shared Pre-Flow (every product runs this first)</h2> <p class="dt-note">
+Asked once at the start of every conversation, regardless of which
+        product the visitor picked. Two of the universal knockouts live here.
+</p> <pre class="mermaid">
+flowchart TD
+    A([Pick a product type<br/>Auto · PI · WC · NH · MedMal · SSDI]):::go --> B([What's your name?]):::q
+    B --> C{{Yourself, or someone else?}}:::q
+    C -->|Yourself| E
+    C -->|Someone else| D{{Legal rep / guardian,<br/>or friend / family?}}:::q
+    D -->|Legal rep / guardian| E
+    D -->|Friend / family| E
+    E{{Already hired an attorney<br/>OR settled this claim?}}:::q
+    E -->|No to both| F([Continue to product questions]):::go
+    E -->|Yes – hired an attorney| G([DQ<br/>Switch attorneys first, then come back]):::dq
+    E -->|Yes – claim already settled| H([DQ<br/>Can't reopen a settled claim]):::dq
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="auto"> <h2>🚗 Auto Accident</h2> <p class="dt-note">
+The most-branched tree in the evaluator. Splits three ways on
+<strong>role</strong> (driver / passenger / pedestrian), then re-merges
+        before the time-bucket gate.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([Auto Accident]):::go --> Role{{Driver, passenger,<br/>or pedestrian?}}:::q
+    Role -->|Driver| Fault{{Did you cause the accident?}}:::q
+    Role -->|Passenger| Ins
+    Role -->|Pedestrian| Cross{{In a crosswalk, on a sidewalk,<br/>or had the walk signal?}}:::q
+    Cross -->|Yes / I don't know| Ins
+    Cross -->|No| DQped([DQ<br/>At-fault pedestrian]):::dq
+
+    Fault -->|No / Not determined yet| NPass{{Were there passengers<br/>in your car?}}:::q
+    Fault -->|Yes – I caused it| YPass{{Were there passengers<br/>in your car?}}:::q
+
+    YPass -->|No| DQyfn([DQ<br/>At-fault driver, no passengers]):::dq
+    YPass -->|Yes| YRef{{Want to refer them<br/>for a free review?}}:::q
+    YRef -->|Yes| YRefDone([Collect passenger contact<br/>DQ for the driver,<br/>passenger referred]):::dq
+    YRef -->|No| DQy([DQ<br/>At-fault driver]):::dq
+
+    NPass -->|No| Ins
+    NPass -->|Yes| NRef{{Refer your passengers<br/>for a free review?}}:::q
+    NRef -->|Yes| NRefDone([Collect passenger contact]):::go
+    NRef -->|No| Ins
+    NRefDone --> Ins
+
+    Ins{{Does either vehicle<br/>have insurance?}}:::q
+    Ins -->|Both / At least mine / Not sure| Claim{{Has an insurance claim<br/>been filed yet?}}:::q
+    Ins -->|Neither| DQins([DQ<br/>No coverage to recover against]):::dq
+
+    Claim -->|Yes / No / Not sure| Adj[Bot delivers adjuster-warning script]:::go
+    Adj --> Pol{{Was a police report filed at the scene?}}:::q
+    Pol -->|Yes / Not sure / No| Time{{When did the accident happen?}}:::q
+
+    Time -->|More than 1 year ago| DQold([DQ<br/>Statute of limitations risk]):::dq
+    Time -->|Within the last 30 days| B30([→ go to 30-day branch]):::go
+    Time -->|90 days to 1 year ago| B90([→ go to 90-day branch]):::go
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> <h3 class="dt-sub-h">30-day branch (≤ 30 days since the accident)</h3> <pre class="mermaid">
+flowchart TD
+    Hurt{{Were you physically hurt<br/>in the accident?}}:::q
+    Hurt -->|Yes – I have injuries| Tx
+    Hurt -->|Sore but no doctor| Tx
+    Hurt -->|Property damage only<br/>no injuries| DQprop([DQ<br/>Property-damage-only not a fit]):::dq
+
+    Tx[Pick treatment received<br/>Doctor · Urgent care · ER<br/>multi-select, can skip]:::q
+    Tx --> Inj{{Pick everything that<br/>applies to your injuries<br/>12-option multi-select}}:::q
+    Inj -->|Any selection| Q([QUALIFIES<br/>any injury counts on the 30-day path]):::go
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> <h3 class="dt-sub-h">90-day-to-1-year branch (older, stricter)</h3> <pre class="mermaid">
+flowchart TD
+    Hurt2{{Were you physically hurt?}}:::q
+    Hurt2 -->|Yes – injuries AND I received treatment| Tx2
+    Hurt2 -->|Sore but no doctor| DQsore([DQ<br/>Too old to start treatment now]):::dq
+    Hurt2 -->|Property damage only| DQprop2([DQ<br/>Property-damage-only]):::dq
+
+    Tx2{{Who have you seen?<br/>Doctor · Urgent · ER · Specialist}}:::q
+    Tx2 -->|Specialist included<br/>any combination| Inj2
+    Tx2 -->|Only Doctor / Urgent / ER<br/>no specialist| Bills{{Are your bills<br/>$10,000 or more?}}:::q
+
+    Bills -->|Yes – $10k+| Q1([QUALIFIES<br/>big-bills proxy]):::go
+    Bills -->|No, but still treating| Inj2
+    Bills -->|Treatment ended<br/>no big bill| DQbill([DQ<br/>No demonstrable damages]):::dq
+
+    Inj2{{Pick all that apply<br/>12-option multi-select}}:::q
+    Inj2 -->|Any HARD injury<br/>concussion · broken bones · ligament tears ·<br/>internal bleeding · scarring · PTSD ·<br/>wrongful death · other| Q2([QUALIFIES]):::go
+    Inj2 -->|ONLY SOFT injuries<br/>neck/back · ligament strains ·<br/>muscle/whiplash · anxiety| DQsoft([DQ<br/>Soft-only on the 90-day path]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="gpi"> <h2>⚕️ Personal Injury (GPI)</h2> <p class="dt-note">
+Slip & fall, premises, dog bites. The 90-day-to-1-year branch uses a
+<strong>$50k big-bills threshold</strong> (higher than Auto's $10k)
+        because the case has to clear a bigger damages bar at that age.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([Personal Injury]):::go --> Neg{{Hurt by someone else's negligence<br/>within the last year?}}:::q
+    Neg -->|Yes – within 1 year| Allow{{Were you allowed to be there?<br/>customer · guest · public}}:::q
+    Neg -->|More than a year ago| DQneg([DQ<br/>Outside statute window]):::dq
+
+    Allow -->|Yes| Where{{Where did it happen?<br/>Retail · Business · Residence ·<br/>Park · Public · School · Government}}:::q
+    Allow -->|No – wasn't supposed to be there| DQtres([DQ<br/>No premises duty]):::dq
+
+    Where -->|Any selection| Time{{When did it happen?}}:::q
+
+    Time -->|More than 1 year ago| DQold([DQ<br/>Statute risk]):::dq
+    Time -->|≤ 30 days| B30
+    Time -->|90 days – 1 year| B90
+
+    B30{{Doctor seen / willing to see one?}}:::q
+    B30 -->|Yes / Yes-willing / No-but-willing| Inj30{{Pick all injuries that apply}}:::q
+    Inj30 -->|Any selection| Q30([QUALIFIES]):::go
+
+    B90{{Pick treatment received<br/>multi-select}}:::q
+    B90 -->|Specialist included| Inj90
+    B90 -->|Only Doctor / Urgent / ER| Bills{{Bills $50,000 or more?}}:::q
+    Bills -->|Yes – $50k+| QBig([QUALIFIES<br/>big bills]):::go
+    Bills -->|Still treating| Inj90
+    Bills -->|Treatment ended<br/>no big bill| DQbill([DQ<br/>No big damages]):::dq
+
+    Inj90{{Pick all injuries that apply}}:::q
+    Inj90 -->|Any HARD injury| QHard([QUALIFIES]):::go
+    Inj90 -->|Only SOFT injuries| DQsoft([DQ<br/>Soft-only on 90-day path]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="wc"> <h2>🏗️ Workers' Comp</h2> <p class="dt-note">
+The only flow with explicit <strong>redirects</strong> — a "commuting"
+        or "not-work-related" answer doesn't end the chat, it pivots the whole
+        conversation to Auto or GPI without restarting.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([Workers' Comp]):::go --> Where{{Hurt at work,<br/>or somewhere else?}}:::q
+    Where -->|Yes – at work| Inc{{Does your employer have<br/>workers' comp insurance?}}:::q
+    Where -->|Commuting to / from work| Rauto([Redirect → AUTO<br/>"reviewed as auto accident"]):::redir
+    Where -->|Not work-related| Rgpi([Redirect → PERSONAL INJURY]):::redir
+    Where -->|No – not hurt| DQno([DQ<br/>Nothing to review]):::dq
+
+    Inc -->|Yes / Unsure / No| Time{{Less than a year since<br/>injury or last WC payment?}}:::q
+    Time -->|Yes / Recent payment| Inj{{Pick all injuries that apply}}:::q
+    Time -->|No – over a year| DQold([DQ<br/>Outside WC statute]):::dq
+
+    Inj -->|Any HARD injury| QHard([QUALIFIES]):::go
+    Inj -->|Only SOFT injuries| Off{{Off work more than 3 months?}}:::q
+    Off -->|Yes| QOff([QUALIFIES<br/>soft + long disability]):::go
+    Off -->|No| DQoff([DQ<br/>Soft + short, low damages]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+    classDef redir fill:#5a4a1f,stroke:#d4af37,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="nh"> <h2>🏥 Nursing Home</h2> <p class="dt-note">
+Shortest tree of the bunch — three real gates. The "I only found out
+        recently" answer on the time gate is a <strong>discovery rule</strong>
+win that saves cases that look stale.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([Nursing Home]):::go --> Sym{{What's the loved one experienced?<br/>Bed sores · Broken bones · Malnutrition ·<br/>Dehydration · Sexual abuse · Other<br/>multi-select}}:::q
+    Sym -->|Any specific symptom alone or combined| Fac
+    Sym -->|ONLY "Other" – nothing specific| DQother([DQ<br/>Can't pre-qualify without<br/>a named pattern]):::dq
+
+    Fac[Facility typeahead<br/>CMS 14,699 facilities]:::q
+    Fac --> Time{{Did this happen within<br/>the last year?}}:::q
+
+    Time -->|Yes – within 1 year| Q1([QUALIFIES]):::go
+    Time -->|I only found out within<br/>the last year| Q2([QUALIFIES<br/>discovery rule]):::go
+    Time -->|No – over a year ago| DQold([DQ<br/>Outside statute]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="medmal"> <h2>🩺 Medical Malpractice</h2> <p class="dt-note">
+Four sub-trees depending on the type of incident. Birth-injury gets
+        an extended <strong>18-year</strong> statute window because the child's
+        claim is protected differently under the law.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([Medical Malpractice]):::go --> Type{{What best describes<br/>what happened?}}:::q
+
+    Type -->|Wrong / missed diagnosis| Diag
+    Type -->|Bed sores| Diag
+    Type -->|Birth injury| Birth
+    Type -->|Medication error| Med
+
+    Diag{{Would the right diagnosis sooner<br/>OR proper care have meaningfully<br/>changed the outcome?}}:::q
+    Diag -->|Yes – big difference| Time1
+    Diag -->|Probably / possibly| Time1
+    Diag -->|No – outcome would have been the same| DQcause([DQ<br/>No causation, no case]):::dq
+
+    Time1{{Less than a year since it happened<br/>OR you suspected something went wrong?}}:::q
+    Time1 -->|Yes| Q1([QUALIFIES]):::go
+    Time1 -->|No| DQt1([DQ<br/>Outside statute]):::dq
+
+    Birth{{When did the birth injury occur?}}:::q
+    Birth -->|Within the last 3 years| Q2([QUALIFIES]):::go
+    Birth -->|Within the last 18 years| Q3([QUALIFIES<br/>child-claim extended statute]):::go
+    Birth -->|More than 18 years ago| DQbirth([DQ<br/>Outside even the extended statute]):::dq
+
+    Med{{How serious were the consequences<br/>of the medication error?}}:::q
+    Med -->|Death| Q4([QUALIFIES]):::go
+    Med -->|Permanent severe impairment / disability| Q5([QUALIFIES]):::go
+    Med -->|Other / minor| DQmed([DQ<br/>Case value too low for med-mal economics]):::dq
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <section class="dt-section" id="ssdi"> <h2>♿ SSDI / Disability</h2> <p class="dt-note">
+SSDI uses its own legacy flow (it doesn't share the consumer
+        front-matter). Five sequential knockouts before qualification.
+</p> <pre class="mermaid">
+flowchart TD
+    Start([SSDI / Disability]):::go --> Work{{Can you currently work?}}:::q
+    Work -->|I cannot work due to medical condition| Cur
+    Work -->|I can still work| DQcanwork([DQ<br/>SSDI requires inability to work]):::dq
+
+    Cur{{Are you already receiving<br/>SSDI / SSI benefits?}}:::q
+    Cur -->|No / Wrong amount / Was cut off| Now
+    Cur -->|Yes – full benefits, all good| DQfull([DQ<br/>Already fully covered]):::dq
+
+    Now{{Are you currently working at all?}}:::q
+    Now -->|No| Dur
+    Now -->|Yes – a little, part-time| SGA{{Earning over ~$1,550 / month?}}:::q
+    SGA -->|Over $1,550| DQsga([DQ<br/>Above substantial-gainful-activity limit]):::dq
+    SGA -->|Under $1,550 / Not sure| Dur
+
+    Dur{{Condition lasted or expected<br/>to last 12+ months?}}:::q
+    Dur -->|Yes – 12+ months| Cred
+    Dur -->|No – under 12 months| DQdur([DQ<br/>SSDI requires 12-month duration]):::dq
+
+    Cred{{Have you worked 5 of the last 10 years<br/>paying into Social Security?}}:::q
+    Cred -->|Yes / No / Not sure| Applied
+    Applied{{Have you applied for SSDI yet?}}:::q
+    Applied -->|Not yet / Pending / Denied / Approved| Conds[+ Married? Income? Conditions multi-pick]:::q
+    Conds --> Q([QUALIFIES]):::go
+
+    classDef q fill:#1a2438,stroke:#5db4f0,color:#fff,stroke-width:1.5px
+    classDef go fill:#1f7a5b,stroke:#2ea87e,color:#fff,stroke-width:2px,font-weight:bold
+    classDef dq fill:#7a1f1f,stroke:#d43d3d,color:#fff,stroke-width:2px,font-weight:bold
+</pre> </section> <footer class="dt-footer"> <p>
+Generated from <code>src/flows/v2/</code> (warm-copy build of the
+        consumer evaluator). Logic is identical between v1 and v2 — only the
+        wording differs, so this same tree applies to
+<a href="https://aurionxai.github.io/tmtlander/astro-preview/" target="_blank" rel="noopener">v1</a>
+as well. Plain-English knockout-questions list lives at
+<a href="/tmtlander/docs/consumer-knockout-questions.md" target="_blank" rel="noopener">docs/consumer-knockout-questions.md</a>.
+</p> </footer> </main> <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        background: "#0a0a0a",
+        primaryColor: "#1a2438",
+        primaryBorderColor: "#5db4f0",
+        primaryTextColor: "#F7F5EF",
+        lineColor: "#9A9590",
+        secondaryColor: "#1f7a5b",
+        tertiaryColor: "#7a1f1f",
+        fontFamily: "Inter, system-ui, sans-serif",
+      },
+      flowchart: { curve: "basis", padding: 18 },
+      securityLevel: "loose",
+    });
+  </script> </body></html>
