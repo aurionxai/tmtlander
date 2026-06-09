@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 200 150">
+  <!-- Generator: Adobe Illustrator 30.0.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 123)  -->
+  <defs>
+    <style>
+      .st0 {
+        font-size: 21.8px;
+      }
+
+      .st0, .st1 {
+        font-family: Gotham-Bold, Gotham;
+        font-weight: 700;
+      }
+
+      .st1 {
+        font-size: 20.41px;
+      }
+    </style>
+  </defs>
+  <g>
+    <text class="st1" transform="translate(15.27 140.13) scale(.9 1)"><tspan x="0" y="0">LEGAL NETWORK</tspan></text>
+    <text class="st0" transform="translate(5.5 120.79) scale(.9 1)"><tspan x="0" y="0">THE MONEY TEAM</tspan></text>
+  </g>
+  <path d="M.77,9.15h71.78l27.36,52.87,27.36-52.87h71.78v19.28h-60.57l-28.91,56.71h-19.31l-28.91-56.71H.77s0-19.28,0-19.28Z"/>
+  <path d="M41.33,33.15h-18.86v62.28h18.86v-62.28Z"/>
+  <path d="M76.19,95.43h-18.86v-62.28l18.86,37.29v24.99Z"/>
+  <path d="M158.48,33.15h18.86v62.28h-18.86v-62.28h0Z"/>
+  <path d="M123.62,95.43h18.86v-62.28l-18.86,37.29v24.99Z"/>
+</svg>
