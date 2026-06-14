@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADHD Screening Test — Clinical Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --surface2: #1E1E1E;
+      --border: #2A2A2A;
+      --gold: #C8932E;
+      --gold-light: #D4AF37;
+      --gold-dim: rgba(200, 147, 46, 0.15);
+      --text: #F5F5F0;
+      --text-muted: #8A8A82;
+      --text-dim: #5A5A55;
+      --green: #2ECC71;
+      --green-dim: rgba(46, 204, 113, 0.12);
+      --amber: #F39C12;
+      --amber-dim: rgba(243, 156, 18, 0.12);
+      --orange: #E67E22;
+      --orange-dim: rgba(230, 126, 34, 0.12);
+      --red: #E74C3C;
+      --red-dim: rgba(231, 76, 60, 0.12);
+      --crimson: #C0392B;
+      --crimson-dim: rgba(192, 57, 43, 0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .header-badge {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .header-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .header-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Intro block ── */
+    .intro {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .intro-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .intro-tag::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .intro h1 {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .intro p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 24px;
+    }
+
+    .intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .intro-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .intro-meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .intro-meta-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      margin-bottom: 40px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .progress-count {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .progress-bar-bg {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Question card ── */
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .question-card.answered {
+      border-color: rgba(200, 147, 46, 0.3);
+    }
+
+    .question-number {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* ── Answer options ── */
+    .options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 580px) {
+      .options {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .options label:last-child {
+        grid-column: span 2;
+      }
+    }
+
+    .option-label {
+      display: block;
+      cursor: pointer;
+    }
+
+    .option-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      user-select: none;
+    }
+
+    .option-btn:hover {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .option-label input[type="radio"]:checked + .option-btn {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .option-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1.5px solid var(--text-dim);
+      transition: all 0.15s;
+    }
+
+    .option-label input[type="radio"]:checked + .option-btn .option-dot {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .option-text {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .option-label input[type="radio"]:checked + .option-btn .option-text {
+      color: var(--gold);
+    }
+
+    /* ── Submit ── */
+    .submit-wrap {
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .submit-error {
+      font-size: 13px;
+      color: var(--red);
+      display: none;
+    }
+
+    .submit-error.visible {
+      display: block;
+    }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #0A0A0A;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 14px 32px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── Result screen ── */
+    #result-screen {
+      display: none;
+      padding: 48px 0;
+    }
+
+    #result-screen.visible {
+      display: block;
+    }
+
+    #quiz-screen.hidden {
+      display: none;
+    }
+
+    .result-card {
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-bottom: 32px;
+      border: 1px solid;
+    }
+
+    .result-card.level-normal {
+      background: var(--green-dim);
+      border-color: var(--green);
+    }
+    .result-card.level-low {
+      background: var(--amber-dim);
+      border-color: var(--amber);
+    }
+    .result-card.level-medium {
+      background: var(--orange-dim);
+      border-color: var(--orange);
+    }
+    .result-card.level-high {
+      background: var(--red-dim);
+      border-color: var(--red);
+    }
+    .result-card.level-very-high {
+      background: var(--crimson-dim);
+      border-color: var(--crimson);
+    }
+
+    .result-level-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .level-normal .result-level-tag   { background: rgba(46,204,113,0.2); color: var(--green); }
+    .level-low .result-level-tag      { background: rgba(243,156,18,0.2); color: var(--amber); }
+    .level-medium .result-level-tag   { background: rgba(230,126,34,0.2); color: var(--orange); }
+    .level-high .result-level-tag     { background: rgba(231,76,60,0.2); color: var(--red); }
+    .level-very-high .result-level-tag { background: rgba(192,57,43,0.2); color: var(--crimson); }
+
+    .result-heading {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .result-score-line {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .result-score-line strong {
+      color: var(--text);
+    }
+
+    .result-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Score meter ── */
+    .score-meter {
+      margin: 28px 0;
+    }
+
+    .score-meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .score-meter-track {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .score-meter-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+
+    .level-normal   .score-meter-fill { background: var(--green); }
+    .level-low      .score-meter-fill { background: var(--amber); }
+    .level-medium   .score-meter-fill { background: var(--orange); }
+    .level-high     .score-meter-fill { background: var(--red); }
+    .level-very-high .score-meter-fill { background: var(--crimson); }
+
+    /* ── Domain breakdown ── */
+    .domain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .domain-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+    }
+
+    .domain-name {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .domain-score {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .domain-max {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .domain-bar-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .domain-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    /* ── Next steps ── */
+    .next-steps {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+
+    .next-steps h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    .next-steps ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .next-steps li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .next-steps li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* ── Retry ── */
+    .btn-retry {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-retry:hover {
+      border-color: var(--text-dim);
+      color: var(--text);
+    }
+
+    /* ── Citation ── */
+    .citation-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 40px;
+    }
+
+    .citation-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .citation-text {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <span class="header-badge">Clinical</span>
+    <span class="header-title">ADHD Screening Assessment</span>
+    <span class="header-sub">ASRS v1.1 — WHO Validated</span>
+  </header>
+
+  <div class="container">
+
+    <!-- ── QUIZ SCREEN ── -->
+    <div id="quiz-screen">
+
+      <!-- Intro -->
+      <div class="intro">
+        <div class="intro-tag">Self-Report Screening</div>
+        <h1>Adult ADHD<br>Self-Report Scale</h1>
+        <p>
+          Answer each question honestly based on how you have felt and conducted yourself
+          over the <strong>past 6 months</strong>. There are no right or wrong answers.
+        </p>
+        <div class="intro-meta">
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Questions</span>
+            <span class="intro-meta-value">18 questions</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Time</span>
+            <span class="intro-meta-value">~5 minutes</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Validated by</span>
+            <span class="intro-meta-value">World Health Organization</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Source</span>
+            <span class="intro-meta-value">ASRS-v1.1 Symptom Checklist</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-header">
+          <span class="progress-label">Progress</span>
+          <span class="progress-count" id="progress-count">0 / 18</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form id="adhd-form" novalidate>
+
+        <!-- Part A -->
+        <div class="section-label">Part A — Core Screening (Questions 1–6)</div>
+
+        <div id="questions-part-a"></div>
+
+        <!-- Part B -->
+        <div class="section-label" style="margin-top:32px;">Part B — Extended Symptoms (Questions 7–18)</div>
+
+        <div id="questions-part-b"></div>
+
+        <!-- Submit -->
+        <div class="submit-wrap">
+          <p class="submit-error" id="submit-error">Please answer all 18 questions before submitting.</p>
+          <button type="submit" class="btn-submit">
+            View My Results
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="disclaimer">
+            This is a screening tool only — not a clinical diagnosis. Results should be discussed
+            with a qualified healthcare professional. For emergencies, contact 988 (crisis line) or 911.
+          </p>
+        </div>
+
+      </form>
+
+      <!-- Citation -->
+      <div class="citation-box">
+        <div class="citation-label">Clinical Reference</div>
+        <p class="citation-text">
+          Kessler RC, Adler L, Ames M, et al. <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population.</em>
+          Psychological Medicine, 2005;35(2):245–256. Scoring thresholds validated across six countries in the WHO World Mental Health Survey Initiative.
+        </p>
+      </div>
+
+    </div><!-- end #quiz-screen -->
+
+    <!-- ── RESULT SCREEN ── -->
+    <div id="result-screen">
+
+      <div class="intro-tag" style="margin-top:48px; display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold);">
+        <span style="display:block;width:16px;height:1px;background:var(--gold);"></span>
+        Your Results
+      </div>
+
+      <div id="result-card" class="result-card" style="margin-top:16px;">
+        <div id="result-level-tag" class="result-level-tag"></div>
+        <div id="result-heading" class="result-heading"></div>
+        <p id="result-score-line" class="result-score-line"></p>
+
+        <div class="score-meter">
+          <div class="score-meter-label">
+            <span>Symptom Burden</span>
+            <span id="result-pct"></span>
+          </div>
+          <div class="score-meter-track">
+            <div class="score-meter-fill" id="result-meter" style="width:0%"></div>
+          </div>
+        </div>
+
+        <p id="result-body" class="result-body"></p>
+      </div>
+
+      <!-- Domain breakdown -->
+      <div class="section-label">Domain Breakdown</div>
+      <div class="domain-grid">
+        <div class="domain-card">
+          <div class="domain-name">Inattention</div>
+          <div class="domain-score" id="domain-inatt-score">—</div>
+          <div class="domain-max">out of 36</div>
+          <div class="domain-bar-track">
+            <div class="domain-bar-fill" id="domain-inatt-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-name">Hyperactivity / Impulsivity</div>
+          <div class="domain-score" id="domain-hyper-score">—</div>
+          <div class="domain-max">out of 36</div>
+          <div class="domain-bar-track">
+            <div class="domain-bar-fill" id="domain-hyper-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next steps -->
+      <div id="next-steps-card" class="next-steps">
+        <h3>Recommended Next Steps</h3>
+        <ul id="next-steps-list"></ul>
+      </div>
+
+      <button class="btn-retry" id="btn-retry">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 0 1.5-3.9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2 4v4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Retake Assessment
+      </button>
+
+      <!-- Citation -->
+      <div class="citation-box">
+        <div class="citation-label">Important Disclaimer</div>
+        <p class="citation-text">
+          This screening tool is based on the validated ASRS v1.1 and is intended for informational purposes only.
+          A positive screen does not confirm an ADHD diagnosis; a negative screen does not rule one out.
+          Only a licensed clinician (psychiatrist, psychologist, or trained physician) can make a formal diagnosis
+          through a comprehensive evaluation. Please share these results with your healthcare provider.
+        </p>
+      </div>
+
+    </div><!-- end #result-screen -->
+
+  </div><!-- end .container -->
+
+  <script>
+    // ── Question bank ──────────────────────────────────────────────
+    // Source: ASRS v1.1 Symptom Checklist (Kessler et al., 2005)
+    // Part A: Q1–6 are the validated 6-item screening subset.
+    // Domain tags: I = Inattention, H = Hyperactivity/Impulsivity
+
+    const QUESTIONS = [
+      // Part A
+      {
+        id: 1,
+        text: "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
+        domain: "I"
+      },
+      {
+        id: 2,
+        text: "How often do you have difficulty getting things in order when you have to do a task that requires organization?",
+        domain: "I"
+      },
+      {
+        id: 3,
+        text: "How often do you have problems remembering appointments or obligations?",
+        domain: "I"
+      },
+      {
+        id: 4,
+        text: "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
+        domain: "I"
+      },
+      {
+        id: 5,
+        text: "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
+        domain: "H"
+      },
+      {
+        id: 6,
+        text: "How often do you feel overly active and compelled to do things, like you were driven by a motor?",
+        domain: "H"
+      },
+      // Part B
+      {
+        id: 7,
+        text: "How often do you make careless mistakes when you have to work on a boring or difficult project?",
+        domain: "I"
+      },
+      {
+        id: 8,
+        text: "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?",
+        domain: "I"
+      },
+      {
+        id: 9,
+        text: "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?",
+        domain: "I"
+      },
+      {
+        id: 10,
+        text: "How often do you misplace or have difficulty finding things at home or at work?",
+        domain: "I"
+      },
+      {
+        id: 11,
+        text: "How often are you distracted by activity or noise around you?",
+        domain: "I"
+      },
+      {
+        id: 12,
+        text: "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?",
+        domain: "H"
+      },
+      {
+        id: 13,
+        text: "How often do you feel restless or fidgety?",
+        domain: "H"
+      },
+      {
+        id: 14,
+        text: "How often do you have difficulty unwinding and relaxing when you have time to yourself?",
+        domain: "H"
+      },
+      {
+        id: 15,
+        text: "How often do you find yourself talking too much when you are in social situations?",
+        domain: "H"
+      },
+      {
+        id: 16,
+        text: "When you are in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?",
+        domain: "H"
+      },
+      {
+        id: 17,
+        text: "How often do you have difficulty waiting your turn in situations when turn-taking is required?",
+        domain: "H"
+      },
+      {
+        id: 18,
+        text: "How often do you interrupt others when they are busy?",
+        domain: "H"
+      }
+    ];
+
+    const OPTIONS = [
+      { label: "Never",     value: 0 },
+      { label: "Rarely",    value: 1 },
+      { label: "Sometimes", value: 2 },
+      { label: "Often",     value: 3 },
+      { label: "Very Often",value: 4 }
+    ];
+
+    // ── Result levels ──────────────────────────────────────────────
+    // Total score: 0–72 (18 questions × max 4)
+    const LEVELS = [
+      {
+        key: "normal",
+        label: "Normal",
+        range: [0, 17],
+        heading: "Minimal or No ADHD Indicators",
+        body: "Your responses suggest that ADHD symptoms are not significantly present at this time. The frequency and intensity of attention, hyperactivity, and impulsivity symptoms you reported fall within the range typical of the general population. This does not rule out other conditions that may be affecting focus or daily functioning.",
+        steps: [
+          "No immediate clinical action is indicated based on this screening.",
+          "If you still have concerns about focus or attention, mention them at your next routine check-up.",
+          "Consider lifestyle factors — sleep, nutrition, and stress — which commonly affect concentration.",
+          "Re-screen in 6–12 months if symptoms change or worsen."
+        ]
+      },
+      {
+        key: "low",
+        label: "Low",
+        range: [18, 29],
+        heading: "Low-Level ADHD Indicators",
+        body: "Your responses indicate a low level of ADHD-related symptoms. While some inattention or restlessness is present, it appears to be mild and may not significantly impair daily functioning. These symptoms can also be associated with stress, anxiety, sleep disruption, or other common conditions.",
+        steps: [
+          "Consider discussing your results with your primary care physician.",
+          "Track symptom patterns over the next few weeks — note when difficulties are most pronounced.",
+          "Evaluate whether stress, sleep, or anxiety may be contributing factors.",
+          "Cognitive behavioral strategies (time management, task-chunking) may be beneficial."
+        ]
+      },
+      {
+        key: "medium",
+        label: "Medium",
+        range: [30, 41],
+        heading: "Moderate ADHD Indicators",
+        body: "Your responses suggest a moderate level of ADHD-associated symptoms across inattention and/or hyperactivity-impulsivity domains. This level of symptom burden is clinically meaningful and warrants professional evaluation. Many adults with this profile go undiagnosed and benefit significantly from targeted treatment.",
+        steps: [
+          "Schedule an appointment with your primary care physician and share these results.",
+          "Request a referral to a psychiatrist, psychologist, or ADHD specialist for formal evaluation.",
+          "Bring a record of how symptoms affect your work, relationships, and daily life.",
+          "A comprehensive evaluation typically includes clinical interview, symptom rating scales, and history review.",
+          "Avoid self-treating — proper diagnosis distinguishes ADHD from anxiety, depression, and other conditions."
+        ]
+      },
+      {
+        key: "high",
+        label: "High",
+        range: [42, 53],
+        heading: "High ADHD Symptom Burden",
+        body: "Your responses indicate a high level of ADHD symptoms consistent with significant functional impairment. This degree of symptom burden is associated with difficulties in occupational performance, relationships, and quality of life. A formal clinical evaluation is strongly recommended to guide appropriate treatment.",
+        steps: [
+          "Seek evaluation from a psychiatrist or licensed psychologist as soon as practical.",
+          "Bring these results and prepare to describe how symptoms have impacted work, school, and relationships.",
+          "If previously diagnosed, consult your provider about whether your current treatment plan is optimized.",
+          "Ask about evidence-based treatments: stimulant medications (e.g., methylphenidate, amphetamines), non-stimulants (e.g., atomoxetine), and behavioral therapy.",
+          "Explore workplace or academic accommodations if ADHD is confirmed."
+        ]
+      },
+      {
+        key: "very-high",
+        label: "Very High",
+        range: [54, 72],
+        heading: "Very High ADHD Symptom Burden",
+        body: "Your responses suggest a very high frequency and severity of ADHD symptoms across multiple domains. This level of symptom burden typically causes substantial impairment in daily life and is highly consistent with adult ADHD. Prompt professional evaluation is strongly recommended. Effective treatments are available and can produce significant improvement in function and well-being.",
+        steps: [
+          "Contact a psychiatrist or ADHD specialist as a priority — do not delay this referral.",
+          "Share this screening result with your provider at your first available appointment.",
+          "Comprehensive evaluation will assess symptom history (onset before age 12), cross-setting impairment, and rule out comorbid conditions.",
+          "Effective, well-studied treatments include stimulant medications, non-stimulant pharmacotherapy, CBT for ADHD, and coaching.",
+          "Build a support structure now: external reminders, structured routines, and trusted accountability partners can help while you await evaluation.",
+          "Comorbid conditions (anxiety, depression, sleep disorders) are common with ADHD and will be assessed during evaluation."
+        ]
+      }
+    ];
+
+    // ── DOM builders ───────────────────────────────────────────────
+    function buildQuestion(q) {
+      const partLetter = q.id <= 6 ? "a" : "b";
+      const container = document.createElement("div");
+      container.className = "question-card";
+      container.id = `qcard-${q.id}`;
+
+      const num = document.createElement("div");
+      num.className = "question-number";
+      num.textContent = `Question ${q.id} of 18`;
+      container.appendChild(num);
+
+      const text = document.createElement("div");
+      text.className = "question-text";
+      text.textContent = q.text;
+      container.appendChild(text);
+
+      const opts = document.createElement("div");
+      opts.className = "options";
+
+      OPTIONS.forEach(opt => {
+        const label = document.createElement("label");
+        label.className = "option-label";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${q.id}`;
+        input.value = opt.value;
+        input.addEventListener("change", onAnswer);
+
+        const btn = document.createElement("div");
+        btn.className = "option-btn";
+
+        const dot = document.createElement("div");
+        dot.className = "option-dot";
+
+        const txt = document.createElement("span");
+        txt.className = "option-text";
+        txt.textContent = opt.label;
+
+        btn.appendChild(dot);
+        btn.appendChild(txt);
+        label.appendChild(input);
+        label.appendChild(btn);
+        opts.appendChild(label);
+      });
+
+      container.appendChild(opts);
+      return container;
+    }
+
+    function renderQuestions() {
+      const partA = document.getElementById("questions-part-a");
+      const partB = document.getElementById("questions-part-b");
+      partA.innerHTML = "";
+      partB.innerHTML = "";
+      QUESTIONS.forEach(q => {
+        const el = buildQuestion(q);
+        (q.id <= 6 ? partA : partB).appendChild(el);
+      });
+    }
+
+    // ── Progress ───────────────────────────────────────────────────
+    function updateProgress() {
+      let answered = 0;
+      QUESTIONS.forEach(q => {
+        if (document.querySelector(`input[name="q${q.id}"]:checked`)) answered++;
+      });
+      const pct = Math.round((answered / 18) * 100);
+      document.getElementById("progress-bar").style.width = pct + "%";
+      document.getElementById("progress-count").textContent = `${answered} / 18`;
+    }
+
+    function onAnswer(e) {
+      const qid = parseInt(e.target.name.replace("q", ""));
+      const card = document.getElementById(`qcard-${qid}`);
+      card.classList.add("answered");
+      updateProgress();
+    }
+
+    // ── Scoring ────────────────────────────────────────────────────
+    function getScore() {
+      let total = 0;
+      let inatt = 0;
+      let hyper = 0;
+
+      QUESTIONS.forEach(q => {
+        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+        if (selected) {
+          const v = parseInt(selected.value);
+          total += v;
+          if (q.domain === "I") inatt += v;
+          else hyper += v;
+        }
+      });
+
+      return { total, inatt, hyper };
+    }
+
+    function getLevel(total) {
+      return LEVELS.find(l => total >= l.range[0] && total <= l.range[1]);
+    }
+
+    // ── Show result ────────────────────────────────────────────────
+    function showResult(score) {
+      const { total, inatt, hyper } = score;
+      const level = getLevel(total);
+      const pct = Math.round((total / 72) * 100);
+
+      // Card class
+      const card = document.getElementById("result-card");
+      card.className = `result-card level-${level.key}`;
+
+      document.getElementById("result-level-tag").textContent = level.label;
+      document.getElementById("result-heading").textContent = level.heading;
+      document.getElementById("result-score-line").innerHTML =
+        `Total score: <strong>${total} / 72</strong> &nbsp;·&nbsp; Symptom burden: <strong>${pct}%</strong>`;
+      document.getElementById("result-body").textContent = level.body;
+      document.getElementById("result-pct").textContent = pct + "%";
+
+      // Animate meter after small delay so transition is visible
+      setTimeout(() => {
+        document.getElementById("result-meter").style.width = pct + "%";
+      }, 100);
+
+      // Domain scores
+      const inattPct = Math.round((inatt / 36) * 100);
+      const hyperPct = Math.round((hyper / 36) * 100);
+
+      document.getElementById("domain-inatt-score").textContent = inatt;
+      document.getElementById("domain-hyper-score").textContent = hyper;
+      setTimeout(() => {
+        document.getElementById("domain-inatt-bar").style.width = inattPct + "%";
+        document.getElementById("domain-hyper-bar").style.width = hyperPct + "%";
+      }, 150);
+
+      // Next steps
+      const ul = document.getElementById("next-steps-list");
+      ul.innerHTML = "";
+      level.steps.forEach(step => {
+        const li = document.createElement("li");
+        li.textContent = step;
+        ul.appendChild(li);
+      });
+
+      // Show/hide screens
+      document.getElementById("quiz-screen").classList.add("hidden");
+      document.getElementById("result-screen").classList.add("visible");
+      document.getElementById("result-screen").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ── Form submit ────────────────────────────────────────────────
+    document.getElementById("adhd-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const unanswered = QUESTIONS.filter(
+        q => !document.querySelector(`input[name="q${q.id}"]:checked`)
+      );
+
+      const errEl = document.getElementById("submit-error");
+      if (unanswered.length > 0) {
+        errEl.classList.add("visible");
+        // Scroll to first unanswered
+        const first = document.getElementById(`qcard-${unanswered[0].id}`);
+        first.scrollIntoView({ behavior: "smooth", block: "center" });
+        first.style.borderColor = "var(--red)";
+        setTimeout(() => { first.style.borderColor = ""; }, 2000);
+        return;
+      }
+
+      errEl.classList.remove("visible");
+      showResult(getScore());
+    });
+
+    // ── Retry ──────────────────────────────────────────────────────
+    document.getElementById("btn-retry").addEventListener("click", function () {
+      document.getElementById("result-screen").style.display = "none";
+      document.getElementById("result-screen").classList.remove("visible");
+      document.getElementById("quiz-screen").classList.remove("hidden");
+      renderQuestions();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // ── Init ───────────────────────────────────────────────────────
+    renderQuestions();
+    updateProgress();
+  </script>
+
+</body>
+</html>
