@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Free Case Evaluation — TheMoneyTeam.Law</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,7 +186,7 @@
       border-radius: 10px;
       padding: 12px 14px;
       color: var(--text);
-      font-size: 15px;
+      font-size: 16px; /* 16px minimum prevents iOS Safari auto-zoom on focus */
       outline: none;
     }
     .kb-input-row input:focus { border-color: var(--accent); }
@@ -316,6 +316,7 @@
       touch-action: manipulation; /* eliminates 300ms tap delay on iOS */
     }
     .pill:hover { background: var(--accent); color: #0A0A0A; border-color: var(--accent); transform: translateY(-1px); }
+    .pill:active { background: var(--accent); color: #0A0A0A; border-color: var(--accent); transform: scale(0.96); }
 
     .opts-grid {
       display: grid;
@@ -336,6 +337,11 @@
       border-color: var(--accent);
       background: rgba(212,175,55,0.08);
       transform: translateY(-2px);
+    }
+    .practice-card:active {
+      border-color: var(--accent);
+      background: rgba(212,175,55,0.12);
+      transform: scale(0.97);
     }
     .pc-icon { font-size: 22px; margin-bottom: 7px; }
     .pc-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
@@ -375,6 +381,7 @@
       touch-action: manipulation;
     }
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,175,55,.45); }
+    .submit-btn:active { transform: scale(0.97); box-shadow: none; }
     .form-note { font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.5; }
 
     /* ─── SUCCESS ─── */
@@ -421,6 +428,7 @@
       touch-action: manipulation;
     }
     .restart-btn:hover { border-color: var(--text-muted); color: var(--text); }
+    .restart-btn:active { border-color: var(--text-muted); color: var(--text); transform: scale(0.96); }
 
     /* ─── UNDO LINK ─── */
     .undo-link {
@@ -432,16 +440,22 @@
       padding: 4px 0;
       opacity: 0.7;
       transition: opacity .18s, color .18s;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       text-align: center;
+      min-height: 44px; /* 44px touch target */
+      touch-action: manipulation;
     }
     .undo-link:hover { opacity: 1; color: var(--accent); }
+    .undo-link:active { opacity: 1; color: var(--accent); }
 
     /* ─── TEXT INPUT ─── */
     .chat-input-row {
       border-top: 1px solid var(--border);
       padding: 13px 16px;
+      padding-bottom: max(13px, env(safe-area-inset-bottom));
       display: none;
       gap: 10px;
       align-items: center;
@@ -478,6 +492,7 @@
       max-width: 700px;
       margin: 0 auto 48px;
       padding: 0 16px;
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
       text-align: center;
     }
     .disclaimer {
@@ -538,7 +553,9 @@
       .chat-card { border-radius: 16px; }
       .chat-header { padding: 10px 14px; gap: 8px; }
       .chat-avatar { width: 34px; height: 34px; font-size: 16px; }
-      .chat-meta h3 { font-size: 14px; }
+      /* Prevent meta text from pushing the button row off-screen */
+      .chat-meta { min-width: 0; flex: 1; overflow: hidden; }
+      .chat-meta h3 { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .chat-meta p { font-size: 11px; }
       .ask-btn { font-size: 11px; padding: 5px 8px; }
       .reset-btn-hdr { font-size: 11px; padding: 5px 8px; }
@@ -553,11 +570,17 @@
       .form-row { grid-template-columns: 1fr; }
       .hero { padding: 28px 16px 50px; }
       .hero h1 { font-size: clamp(34px, 10vw, 58px); }
-      .modal-sheet { padding: 20px 16px 36px; }
+      /* safe-area-inset-bottom keeps the sheet above the iPhone home bar */
+      .modal-sheet { padding: 20px 16px max(36px, calc(env(safe-area-inset-bottom) + 16px)); }
       .modal-h { font-size: 18px; }          /* prevent long titles wrapping badly */
       #sigPad { height: 140px; }             /* more room for finger signatures */
       /* Retainer address: stack City/State/ZIP vertically on narrow screens */
       .retainer-addr-row { flex-direction: column !important; }
+    }
+
+    /* Hide "Ask a question" text label on phones narrower than 380px to prevent header overflow */
+    @media (max-width: 380px) {
+      .ask-btn { display: none; }
     }
 
     /* ─── POST-SUBMIT MODAL ─── */
@@ -576,7 +599,7 @@
       width: 100%; max-width: 720px;
       max-height: 94vh;
       overflow-y: auto;
-      padding: 28px 24px 44px;
+      padding: 28px 24px max(44px, calc(env(safe-area-inset-bottom) + 24px));
       animation: sheetUp .3s ease;
     }
     @keyframes sheetUp {
@@ -793,7 +816,7 @@
     <div id="optsArea"></div>
     <!-- Text input (hidden by default) -->
     <div class="chat-input-row" id="inputRow">
-      <input type="text" id="textInput" placeholder="Type your answer…" autocomplete="off">
+      <input type="text" id="textInput" placeholder="Type your answer…" autocomplete="off" enterkeyhint="send">
       <button class="send-btn" onclick="sendText()">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
       </button>
@@ -1746,6 +1769,8 @@ async function nhFlow_facility() {
   nameInput.type = "text";
   nameInput.placeholder = "Start typing facility name…";
   nameInput.autocomplete = "off";
+  nameInput.setAttribute("autocapitalize", "words");
+  nameInput.setAttribute("enterkeyhint", "search");
   nameInput.style.cssText = inputStyle;
 
   const dd = document.createElement("div");
@@ -2416,21 +2441,21 @@ function showContactForm() {
       <div class="form-row">
         <div class="field">
           <label>First Name</label>
-          <input id="cf_fname" type="text" placeholder="Jane" autocomplete="given-name">
+          <input id="cf_fname" type="text" placeholder="Jane" autocomplete="given-name" enterkeyhint="next" autocapitalize="words">
         </div>
         <div class="field">
           <label>Last Name</label>
-          <input id="cf_lname" type="text" placeholder="Smith" autocomplete="family-name">
+          <input id="cf_lname" type="text" placeholder="Smith" autocomplete="family-name" enterkeyhint="next" autocapitalize="words">
         </div>
       </div>
       <div class="field">
         <label>Phone Number</label>
         <input id="cf_phone" type="tel" placeholder="(555) 000-0000" autocomplete="tel" maxlength="14"
-          oninput="this.value=formatPhoneInput(this.value)">
+          enterkeyhint="next" oninput="this.value=formatPhoneInput(this.value)">
       </div>
       <div class="field">
         <label>Email Address (optional)</label>
-        <input id="cf_email" type="email" placeholder="jane@email.com" autocomplete="email">
+        <input id="cf_email" type="email" placeholder="jane@email.com" autocomplete="email" enterkeyhint="done" autocapitalize="none" autocorrect="off">
       </div>
       <div class="field">
         <label>Best Time to Call *</label>
@@ -2928,6 +2953,7 @@ function buildKBWrap(isFirst) {
   inp.type = "text";
   inp.placeholder = isFirst ? "What's your question?" : "Ask another question…";
   inp.autocomplete = "off";
+  inp.setAttribute("enterkeyhint", "send");
   inp.addEventListener("keydown", e => { if (e.key === "Enter") sendQuestion(); });
   const sendBtn = document.createElement("button");
   sendBtn.className = "submit-btn";
