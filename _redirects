@@ -1,3 +1,0 @@
-# Fallback redirect — Cloudflare Pages serves index.html first,
-# but this catches any direct /index requests.
-/index  /tmt-case-evaluator.html  301

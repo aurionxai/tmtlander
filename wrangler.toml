@@ -1,6 +1,0 @@
-name = "smugglersrun"
-compatibility_date = "2024-01-01"
-
-[env.production]
-# Custom domain is configured in the Cloudflare Pages dashboard under
-# Settings → Custom domains → Add a custom domain → smugglersrun.co
