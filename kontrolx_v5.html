@@ -189,21 +189,69 @@
   .foot a:hover{color:var(--ink)}
 
   /* ============ RESPONSIVE ============ */
+  /* overflow safety: never let a long word or code token push the page sideways */
+  .kx-root h1,.kx-root .h2,.kx-root .buy h3{overflow-wrap:break-word}
+  .kx-root code{overflow-wrap:anywhere;word-break:break-word}
+
+  /* tablet / small laptop */
   @media(max-width:1000px){
     .hero h1{font-size:48px}
     .cap-grid,.plan-grid{grid-template-columns:repeat(2,1fr)}
     .five-grid{grid-template-columns:repeat(2,1fr)}
     .stat-grid{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:680px){
-    .nav-inner{flex-wrap:wrap;gap:12px}
+  /* large phones + phablets (≤700px): single column, stacked nav with full-width tabs */
+  @media(max-width:700px){
+    .nav-inner{flex-wrap:wrap;gap:10px;padding:11px 18px}
     .brand{order:1}
     .nav .btn-primary{order:2;margin-left:auto}
     .tabs{order:3;width:100%}
-    .tab{flex:1;text-align:center}
-    .hero h1{font-size:34px}
+    .tab{flex:1;text-align:center;padding:9px 8px}
+    .hero-inner{padding:60px 22px 54px}
+    .hero h1{font-size:36px}
+    .hero .sub{font-size:17px}
+    .hero .fine{font-size:12.5px}
+    .h2{font-size:30px}
+    .lede{font-size:16px;margin-bottom:30px}
+    .kx-root section{padding:54px 22px}
     .cap-grid,.plan-grid,.five-grid,.stat-grid,.buy-grid{grid-template-columns:1fr}
-    .kx-root section{padding:52px 22px}
+    .buy{padding:28px 22px}
+    .buy h3{font-size:24px}
+    .stat .big{font-size:40px}
+  }
+  /* standard phones (≤430px): iPhone 12–15, most Android */
+  @media(max-width:430px){
+    .brand .wm{font-size:16px}
+    .nav .btn-primary{padding:8px 12px;font-size:13px}
+    .tab{font-size:12px;letter-spacing:-.02em}
+    .hero-inner{padding:48px 18px 44px}
+    .hero h1{font-size:30px;letter-spacing:-.025em}
+    .hero .sub{font-size:16px}
+    .hero .fine{font-size:12px}
+    .h2{font-size:26px}
+    .lede{font-size:15px}
+    .kx-root section{padding:46px 18px}
+    .plan{padding:22px 20px}
+    .plan .price{font-size:30px}
+    .cap,.five{padding:20px}
+    .stat{padding:22px 18px}
+    .stat .big{font-size:36px}
+    .receipt{padding:8px 20px}
+    .receipt .row .amt{font-size:15px}
+    .stack-note,.meter-fine,.table-note{font-size:13px}
+  }
+  /* small phones (≤360px): iPhone SE, Galaxy S-mini, older Android */
+  @media(max-width:360px){
+    .nav-inner{padding:10px 14px}
+    .tab{font-size:11px;padding:8px 4px}
+    .hero-inner{padding:44px 15px 40px}
+    .hero h1{font-size:27px}
+    .h2{font-size:23px}
+    .kx-root section{padding:42px 15px}
+    .plan .price{font-size:27px}
+    .stat .big{font-size:33px}
+    .buy{padding:24px 18px}
+    .receipt{padding:6px 16px}
   }
 </style>
 
