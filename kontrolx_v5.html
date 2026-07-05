@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>kontrolx — One-Pager &amp; Pricing · V5 · July 2026</title>
+<title>kontrolx — One-Pager, Pricing &amp; Industries · V5 · July 2026</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>html,body{margin:0;padding:0;background:#FFFFFF}</style>
 <body>
@@ -182,6 +182,31 @@
   .receipt-fine{font-size:13px;color:var(--slate-2);margin:22px 0 0;max-width:620px;line-height:1.6}
   .receipt-fine b{color:var(--slate-bright)}
 
+  /* ============ INDUSTRIES: PIPELINE FLOW ============ */
+  .flow{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .flow-step{border:1px solid var(--line);border-radius:12px;padding:18px 16px;background:var(--white);position:relative}
+  .flow-step .fn{font-size:11px;font-weight:700;color:var(--cobalt);letter-spacing:.1em;display:block;margin-bottom:8px}
+  .flow-step b{display:block;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:-.01em}
+  .flow-step span:not(.fn){display:block;font-size:12.5px;color:var(--slate);line-height:1.45}
+
+  /* ============ INDUSTRIES: FEATURED ============ */
+  .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .feat{border:1px solid var(--line);border-radius:16px;padding:30px;background:var(--white)}
+  .feat-kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 12px}
+  .feat-rec{font-size:14px;color:var(--ink);font-weight:600;margin:0 0 14px}
+  .feat-rec span{color:var(--slate);font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-right:6px}
+  .feat-body{font-size:14.5px;color:var(--slate);line-height:1.62;margin:0}
+  .feat-body b{color:var(--ink);font-weight:600}
+  .feat-body i{color:var(--ink);font-style:italic}
+
+  /* ============ INDUSTRIES: GRID ============ */
+  .ind-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ind{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--white);position:relative;overflow:hidden}
+  .ind::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,var(--cobalt))}
+  .ind h3{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px;color:var(--ink)}
+  .ind .rec{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,var(--slate));font-weight:700;margin:0 0 12px}
+  .ind p:not(.rec){font-size:13.5px;color:var(--slate);line-height:1.5;margin:0}
+
   /* ============ FOOTER ============ */
   .kx-root footer{border-top:1px solid var(--line);padding:32px;background:var(--white)}
   .foot{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--slate)}
@@ -189,18 +214,16 @@
   .foot a:hover{color:var(--ink)}
 
   /* ============ RESPONSIVE ============ */
-  /* overflow safety: never let a long word or code token push the page sideways */
   .kx-root h1,.kx-root .h2,.kx-root .buy h3{overflow-wrap:break-word}
   .kx-root code{overflow-wrap:anywhere;word-break:break-word}
-
-  /* tablet / small laptop */
   @media(max-width:1000px){
     .hero h1{font-size:48px}
     .cap-grid,.plan-grid{grid-template-columns:repeat(2,1fr)}
     .five-grid{grid-template-columns:repeat(2,1fr)}
     .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .flow{grid-template-columns:repeat(3,1fr)}
+    .ind-grid{grid-template-columns:repeat(2,1fr)}
   }
-  /* large phones + phablets (≤700px): single column, stacked nav with full-width tabs */
   @media(max-width:700px){
     .nav-inner{flex-wrap:wrap;gap:10px;padding:11px 18px}
     .brand{order:1}
@@ -218,8 +241,10 @@
     .buy{padding:28px 22px}
     .buy h3{font-size:24px}
     .stat .big{font-size:40px}
+    .flow{grid-template-columns:repeat(2,1fr)}
+    .feat-grid,.ind-grid{grid-template-columns:1fr}
+    .feat{padding:26px 22px}
   }
-  /* standard phones (≤430px): iPhone 12–15, most Android */
   @media(max-width:430px){
     .brand .wm{font-size:16px}
     .nav .btn-primary{padding:8px 12px;font-size:13px}
@@ -240,7 +265,6 @@
     .receipt .row .amt{font-size:15px}
     .stack-note,.meter-fine,.table-note{font-size:13px}
   }
-  /* small phones (≤360px): iPhone SE, Galaxy S-mini, older Android */
   @media(max-width:360px){
     .nav-inner{padding:10px 14px}
     .tab{font-size:11px;padding:8px 4px}
@@ -268,8 +292,9 @@
       <span class="wm">kontrolx</span>
     </div>
     <div class="tabs" role="tablist" aria-label="KontrolX documents">
-      <button class="tab" id="tab-onepager" role="tab" aria-selected="true" aria-controls="panel-onepager" data-target="onepager">Product One-Pager</button>
-      <button class="tab" id="tab-pricing" role="tab" aria-selected="false" aria-controls="panel-pricing" data-target="pricing">Pricing &amp; Comparison</button>
+      <button class="tab" id="tab-onepager" role="tab" aria-selected="true" aria-controls="panel-onepager" data-target="onepager">One-Pager</button>
+      <button class="tab" id="tab-pricing" role="tab" aria-selected="false" aria-controls="panel-pricing" data-target="pricing">Pricing</button>
+      <button class="tab" id="tab-industries" role="tab" aria-selected="false" aria-controls="panel-industries" data-target="industries">Industries</button>
     </div>
     <a href="mailto:hello@kontrolx.ai" class="btn btn-primary">Talk to the team</a>
   </div>
@@ -541,6 +566,118 @@
 
 </div><!-- /panel-pricing -->
 
+<!-- ============================================================= -->
+<!-- ==================== PANEL: INDUSTRIES ======================= -->
+<!-- ============================================================= -->
+<div class="panel" id="panel-industries" role="tabpanel" aria-labelledby="tab-industries" hidden>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">kontrolx · Works on any record · V5 · July 2026</p>
+    <h1>Not just leads. Any record with a price.</h1>
+    <p class="sub"><b>A lead is only one kind of record.</b> A policy, a claim, a patient referral, a loan application — anywhere a row carries a cost, a revenue, or an obligation, the same engine runs it: <span class="flat">intake → screen → enrich → route → settle → serve.</span></p>
+    <p class="fine">If you can describe what a row is worth, kontrolx can run on it. The verticals below are examples of the same pipeline — not separate products.</p>
+  </div>
+</div>
+
+<!-- universal pipeline -->
+<section id="pipeline">
+  <div class="container">
+    <p class="eyebrow">One Engine</p>
+    <h2 class="h2">The pipeline is industry-agnostic</h2>
+    <p class="lede">Every vertical maps to the same six stages. What changes is the shape of the record and who it routes to — not the platform underneath.</p>
+    <div class="flow">
+      <div class="flow-step"><span class="fn">01</span><b>Intake</b><span>API, hosted forms, or bulk — every record acknowledged in &lt;300ms.</span></div>
+      <div class="flow-step"><span class="fn">02</span><b>Screen</b><span>Eligibility, dedupe, blacklist, and rule checks at submit.</span></div>
+      <div class="flow-step"><span class="fn">03</span><b>Enrich</b><span>Vendor pipelines + human-in-the-loop forms fill what's missing.</span></div>
+      <div class="flow-step"><span class="fn">04</span><b>Route</b><span>To the right buyer, carrier, provider, or firm — with accept/return windows.</span></div>
+      <div class="flow-step"><span class="fn">05</span><b>Settle</b><span>Double-entry ledger: costs, revenue, commissions, statements.</span></div>
+      <div class="flow-step"><span class="fn">06</span><b>Serve</b><span>Partner portals, per-audience dashboards, AI on every screen.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- featured: insurance + healthcare -->
+<section class="diff" id="featured">
+  <div class="container">
+    <p class="eyebrow">In Depth</p>
+    <h2 class="h2">Insurance &amp; healthcare, on the same rails</h2>
+    <p class="diff-note">Two record-heavy, compliance-sensitive industries — run end to end without a single bolt-on.</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <p class="feat-kicker" style="color:var(--cobalt)">Insurance</p>
+        <p class="feat-rec"><span>The record:</span> a quote, policy, or claim</p>
+        <p class="feat-body">Intake quotes and applications by API or hosted form; screen for eligibility, duplicates, and fraud blacklists at submit; enrich with carrier and underwriting data; route to the right carrier or agent inside the accept/return window. Premiums, commissions, and reversals post to the double-entry ledger, and every carrier and agency gets its own portal, statements, and dashboards. The AI answers <i>"which carrier converts book X best?"</i> — and can rebalance routing on the spot.</p>
+      </div>
+      <div class="feat">
+        <p class="feat-kicker" style="color:var(--emerald)">Healthcare</p>
+        <p class="feat-rec"><span>The record:</span> a referral, prior-auth, or provider intake</p>
+        <p class="feat-body">Intake referrals and authorizations; screen for eligibility and completeness. When a field is missing, a <b>human-in-the-loop</b> secure form — PIN worklist or signed one-record link — lets a coordinator finish it without exposing the whole system. Route to the right provider, network, or facility; track every handoff with error drill-ins and webhook replay. A per-partner knowledge base keeps payer rules searchable, and each client runs on a <b>dedicated single-tenant database</b> built for data isolation and per-partner access control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- industry grid -->
+<section id="verticals">
+  <div class="container">
+    <p class="eyebrow">More Verticals</p>
+    <h2 class="h2">Same engine, different record</h2>
+    <p class="lede">Each row below is one record type flowing through intake, screening, routing, and settlement — with portals and AI on top.</p>
+    <div class="ind-grid">
+      <div class="ind" style="--accent:var(--violet)">
+        <h3>Lending &amp; Fintech</h3>
+        <p class="rec">The record · a loan or credit application</p>
+        <p>KYC/DNC screening at submit, credit and income enrichment, routing to lenders by criteria, and a fee-and-commission ledger per originator.</p>
+      </div>
+      <div class="ind" style="--accent:var(--amber)">
+        <h3>Legal &amp; Mass Tort</h3>
+        <p class="rec">The record · a claimant or case intake</p>
+        <p>Qualification screening, signed retainers via one-record links, conflict/dedupe checks, and routing to firms with per-firm portals and statements.</p>
+      </div>
+      <div class="ind" style="--accent:var(--plasma)">
+        <h3>Home Services</h3>
+        <p class="rec">The record · a job or service request</p>
+        <p>Dedupe and geo-routing to available pros, appointment windows, contractor portals, and a payout ledger that reconciles every job.</p>
+      </div>
+      <div class="ind" style="--accent:var(--cobalt)">
+        <h3>Real Estate</h3>
+        <p class="rec">The record · a property inquiry or listing</p>
+        <p>Route inquiries to the right agent or brokerage, enrich with property data, and give each office its own dashboard and delivery feed.</p>
+      </div>
+      <div class="ind" style="--accent:var(--emerald)">
+        <h3>Automotive</h3>
+        <p class="rec">The record · a buyer, trade-in, or service appt</p>
+        <p>Screen and enrich on vehicle and credit signals, route to dealers by inventory and geography, and settle referral costs automatically.</p>
+      </div>
+      <div class="ind" style="--accent:var(--violet)">
+        <h3>Education &amp; Enrollment</h3>
+        <p class="rec">The record · an enrollment inquiry</p>
+        <p>Eligibility screening, routing to programs, and compliance-grade consent capture — every "yes" recorded with 2FA via kontrolx Record.</p>
+      </div>
+      <div class="ind" style="--accent:var(--amber)">
+        <h3>Collections &amp; Recovery</h3>
+        <p class="rec">The record · an account or placement</p>
+        <p>Route placements to agencies, track status transitions on the lifecycle state machine, and run recovery commissions through the ledger.</p>
+      </div>
+      <div class="ind" style="--accent:var(--plasma)">
+        <h3>Solar &amp; Home Improvement</h3>
+        <p class="rec">The record · a project lead or appointment</p>
+        <p>Screen and appointment-route to installers, enrich with property and utility data, and give each installer a branded portal.</p>
+      </div>
+      <div class="ind" style="--accent:var(--cobalt)">
+        <h3>Staffing &amp; Recruiting</h3>
+        <p class="rec">The record · a candidate or requisition</p>
+        <p>Screen and enrich candidates, route to employers by role and location, and settle placement fees on the same double-entry ledger.</p>
+      </div>
+    </div>
+    <p class="stack-note" style="margin-top:26px"><b>Not seeing yours?</b> These are examples, not limits. If a record has a cost, a revenue, or an obligation attached — insurance, healthcare, finance, or something we haven't listed — the same pipeline runs it. <a href="mailto:hello@kontrolx.ai" style="color:var(--cobalt);font-weight:600">Tell us what your row is worth.</a></p>
+  </div>
+</section>
+
+</div><!-- /panel-industries -->
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="foot">
@@ -555,6 +692,7 @@
     <div style="display:flex;gap:24px">
       <a data-target="onepager">One-Pager</a>
       <a data-target="pricing">Pricing</a>
+      <a data-target="industries">Industries</a>
       <a href="mailto:hello@kontrolx.ai">hello@kontrolx.ai</a>
     </div>
   </div>
@@ -566,7 +704,8 @@
 (function(){
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
   var panels = { onepager: document.getElementById('panel-onepager'),
-                 pricing: document.getElementById('panel-pricing') };
+                 pricing: document.getElementById('panel-pricing'),
+                 industries: document.getElementById('panel-industries') };
   function select(name, updateHash){
     if(!panels[name]) name = 'onepager';
     Object.keys(panels).forEach(function(k){
@@ -587,7 +726,7 @@
     });
   });
   var start = (location.hash || '').replace('#','');
-  select(start === 'pricing' ? 'pricing' : 'onepager', false);
+  select(panels[start] ? start : 'onepager', false);
 })();
 </script>
 </body>
