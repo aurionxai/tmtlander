@@ -126,15 +126,49 @@
   .foot a:hover{color:var(--ink)}
 
   /* ============ RESPONSIVE ============ */
+  h1,.h2{overflow-wrap:break-word}
+  code{overflow-wrap:anywhere;word-break:break-word}
   @media(max-width:1000px){
     .hero h1{font-size:46px}
     .plan-grid{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:640px){
+  @media(max-width:700px){
+    .nav-inner{padding:12px 20px}
+    .hero-inner{padding:60px 22px 54px}
     .hero h1{font-size:34px}
+    .hero .sub{font-size:17px}
+    .hero .fine{font-size:12.5px}
+    .h2{font-size:30px}
+    .lede{font-size:16px;margin-bottom:30px}
+    section{padding:54px 22px}
     .plan-grid{grid-template-columns:1fr}
-    section{padding:56px 22px}
     .nav-tag,.nav-links{display:none}
+  }
+  @media(max-width:430px){
+    .brand .wm{font-size:16px}
+    .nav .btn-primary{padding:8px 12px;font-size:13px}
+    .hero-inner{padding:48px 18px 44px}
+    .hero h1{font-size:29px;letter-spacing:-.025em}
+    .hero .sub{font-size:16px}
+    .hero .fine{font-size:12px}
+    .h2{font-size:25px}
+    .lede{font-size:15px}
+    section{padding:46px 18px}
+    .plan{padding:22px 20px}
+    .plan .price{font-size:30px}
+    .stat{padding:22px 18px}
+    .receipt{padding:8px 20px}
+    .receipt .row .amt{font-size:15px}
+    .stack-note,.meter-fine,.table-note{font-size:13px}
+  }
+  @media(max-width:360px){
+    .nav-inner{padding:10px 14px}
+    .hero-inner{padding:44px 15px 40px}
+    .hero h1{font-size:26px}
+    .h2{font-size:23px}
+    section{padding:42px 15px}
+    .plan .price{font-size:27px}
+    .receipt{padding:6px 16px}
   }
 
   /* ============ PRINT ============ */
