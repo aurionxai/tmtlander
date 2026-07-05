@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>kontrolx — One-Pager &amp; Pricing · V5 · July 2026</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>html,body{margin:0;padding:0;background:#FFFFFF}</style>
+<body>
+<style>
+  :root{
+    --ink:#0A0E1A;
+    --ink-2:#13182A;
+    --cobalt:#2A4BFF;
+    --amber:#FFB800;
+    --emerald:#00B884;
+    --plasma:#FF2E63;
+    --violet:#7B1FE5;
+    --slate:#6B7480;
+    --slate-2:#9BA3AD;
+    --slate-bright:#C7CCD4;
+    --line:#E5E8EC;
+    --mist:#F4F5F7;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  .kx-root{font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .kx-root a{color:inherit;text-decoration:none}
+
+  /* ============ NAV + TABS ============ */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .wm{font-size:18px;font-weight:700;letter-spacing:-.5px}
+  .tabs{display:flex;gap:4px;background:var(--mist);border:1px solid var(--line);border-radius:10px;padding:4px}
+  .tab{appearance:none;border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--slate);padding:7px 16px;border-radius:7px;cursor:pointer;transition:background .15s,color .15s;letter-spacing:-.01em}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(10,14,26,0.08)}
+  .tab:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+  .btn{display:inline-block;padding:9px 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:0}
+  .btn-primary{background:var(--ink);color:var(--white)}
+
+  /* ============ PANELS ============ */
+  .panel{display:none}
+  .panel.active{display:block}
+  @media(prefers-reduced-motion:no-preference){
+    .panel.active{animation:kxfade .25s ease}
+  }
+  @keyframes kxfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* ============ HERO ============ */
+  .hero{background:var(--ink);color:var(--white);position:relative;overflow:hidden}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:88px 32px 80px;position:relative;z-index:2}
+  .hero-eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate-bright);margin:0 0 22px;font-weight:600}
+  .hero h1{font-size:68px;font-weight:700;letter-spacing:-.035em;margin:0 0 26px;line-height:1.0;max-width:960px;text-wrap:balance}
+  .hero .sub{font-size:20px;color:var(--slate-bright);margin:0 0 18px;max-width:840px;line-height:1.55}
+  .hero .sub b{color:#FFFFFF;font-weight:600}
+  .hero .sub .flat{color:var(--emerald);font-weight:700}
+  .hero .fine{font-size:13px;color:var(--slate-2);max-width:840px;margin:0;line-height:1.5}
+  .hero-glow{position:absolute;right:-160px;top:-160px;width:680px;height:680px;border-radius:50%;filter:blur(24px);pointer-events:none;z-index:1}
+  #panel-onepager .hero-glow{background:radial-gradient(circle,rgba(255,46,99,0.32),rgba(42,75,255,0.22) 40%,rgba(10,14,26,0) 70%)}
+  #panel-pricing .hero-glow{background:radial-gradient(circle,rgba(0,184,132,0.28),rgba(42,75,255,0.22) 42%,rgba(10,14,26,0) 70%)}
+
+  /* ============ SECTION SHELL ============ */
+  .kx-root section{padding:78px 32px}
+  .container{max-width:1180px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin:0 0 14px;font-weight:600}
+  .h2{font-size:38px;font-weight:700;letter-spacing:-.025em;margin:0 0 12px;line-height:1.06;text-wrap:balance}
+  .lede{font-size:17px;color:var(--slate);max-width:780px;margin:0 0 40px;line-height:1.55}
+
+  /* ============ CAPABILITY GRID ============ */
+  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cap{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--white);position:relative;overflow:hidden}
+  .cap::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,var(--cobalt))}
+  .cap h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px;font-weight:700;color:var(--ink)}
+  .cap ul{margin:0;padding:0;list-style:none}
+  .cap li{font-size:14px;color:var(--slate);line-height:1.45;padding:0 0 10px 16px;position:relative}
+  .cap li:last-child{padding-bottom:0}
+  .cap li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent,var(--cobalt))}
+  .cap li b{color:var(--ink);font-weight:600}
+
+  /* ============ FIVE / DIFF ============ */
+  .diff{background:var(--mist)}
+  .diff-note{font-size:14px;color:var(--slate);margin:0 0 36px}
+  .five-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  .five{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .five .num{font-size:12px;font-weight:700;color:var(--plasma);letter-spacing:.1em;margin:0 0 12px}
+  .five h4{font-size:16px;font-weight:700;letter-spacing:-.01em;margin:0 0 8px;line-height:1.25}
+  .five p{font-size:13px;color:var(--slate);margin:0;line-height:1.5}
+
+  /* ============ TWO WAYS ============ */
+  .buy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .buy{border:1px solid var(--line);border-radius:16px;padding:36px;position:relative;overflow:hidden}
+  .buy.embed{background:var(--white)}
+  .buy.own{background:var(--ink);color:var(--white)}
+  .buy .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:0 0 16px}
+  .buy.embed .kicker{color:var(--cobalt)}
+  .buy.own .kicker{color:var(--slate-bright)}
+  .buy h3{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 14px;line-height:1.1}
+  .buy p{font-size:15px;line-height:1.6;margin:0}
+  .buy.embed p{color:var(--slate)}
+  .buy.own p{color:var(--slate-bright)}
+  .buy.own .own-glow{position:absolute;right:-120px;bottom:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(42,75,255,0.35),rgba(10,14,26,0) 70%);filter:blur(20px);pointer-events:none}
+
+  /* ============ PROOF ============ */
+  .proof{background:var(--ink);color:var(--white)}
+  .proof .eyebrow{color:var(--slate-bright)}
+  .proof .h2{color:var(--white)}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:0 0 32px}
+  .stat{border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:28px 22px;background:rgba(255,255,255,0.03)}
+  .stat .big{font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1;margin:0 0 12px;color:var(--white);font-variant-numeric:tabular-nums}
+  .stat.c1 .big{color:#7FA0FF}
+  .stat.c2 .big{color:#FF6E93}
+  .stat.c3 .big{color:#5AD9B6}
+  .stat.c4 .big{color:#FFCE52}
+  .stat p{font-size:13px;color:var(--slate-bright);margin:0;line-height:1.45}
+  .proof .fine{font-size:13px;color:var(--slate-2);max-width:900px;margin:0;line-height:1.55}
+
+  /* ============ PLANS ============ */
+  .plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .plan{border:1px solid var(--line);border-radius:16px;padding:26px 22px;background:var(--white);display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .plan.feature{border-color:var(--cobalt);box-shadow:0 12px 40px rgba(42,75,255,0.14)}
+  .plan.feature::after{content:"Most chosen";position:absolute;top:16px;right:16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--cobalt);background:rgba(42,75,255,0.08);padding:4px 8px;border-radius:6px}
+  .plan .tier{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--slate);margin:0 0 12px}
+  .plan.feature .tier{color:var(--cobalt)}
+  .plan .price{font-size:34px;font-weight:700;letter-spacing:-.03em;margin:0 0 4px;line-height:1;font-variant-numeric:tabular-nums}
+  .plan .per{font-size:13px;color:var(--slate);margin:0 0 20px}
+  .plan ul{margin:0;padding:0;list-style:none;flex:1}
+  .plan li{font-size:14px;color:var(--slate);line-height:1.45;padding:0 0 10px 18px;position:relative}
+  .plan li:last-child{padding-bottom:0}
+  .plan li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--cobalt)}
+  .plan li b{color:var(--ink);font-weight:600}
+
+  /* ============ COMPARISON TABLE ============ */
+  .compare{background:var(--mist)}
+  .table-note{font-size:14px;color:var(--slate);margin:0 0 28px;max-width:840px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+  table.cmp{border-collapse:collapse;width:100%;min-width:920px;font-size:13px}
+  table.cmp thead th{text-align:left;padding:16px 14px;vertical-align:top;border-bottom:2px solid var(--line);background:var(--white);position:sticky;top:0}
+  table.cmp thead th .vn{font-weight:700;font-size:13px;color:var(--ink);display:block}
+  table.cmp thead th.kx .vn{color:var(--cobalt)}
+  table.cmp thead th .vp{font-weight:500;font-size:11px;color:var(--slate);display:block;margin-top:3px;line-height:1.3}
+  table.cmp tbody td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
+  table.cmp tbody tr:last-child td{border-bottom:0}
+  table.cmp td.cap{font-weight:600;color:var(--ink);min-width:210px}
+  table.cmp td.kxc{background:rgba(42,75,255,0.04);font-weight:600}
+  .pill{display:inline-block;font-weight:600;font-size:12px;padding:2px 9px;border-radius:20px;white-space:nowrap}
+  .pill.yes{background:rgba(0,184,132,0.12);color:#00754F}
+  .pill.partial{background:rgba(255,184,0,0.16);color:#8A6300}
+  .pill.no{background:rgba(107,116,128,0.12);color:var(--slate)}
+  .pill.kx{background:rgba(42,75,255,0.12);color:var(--cobalt)}
+  .cell-note{color:var(--slate);font-size:12px}
+  .cost{color:var(--plasma);font-weight:600;font-size:12px}
+  .stack-note{margin:26px 0 0;padding:20px 22px;background:var(--white);border:1px solid var(--line);border-radius:12px;font-size:14px;color:var(--slate);line-height:1.55}
+  .stack-note b{color:var(--ink);font-weight:600}
+
+  /* ============ METER ============ */
+  .meter-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  table.meter{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+  table.meter th{text-align:left;padding:16px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);border-bottom:2px solid var(--line);font-weight:700}
+  table.meter td{padding:18px 20px;border-bottom:1px solid var(--line);vertical-align:middle;font-variant-numeric:tabular-nums}
+  table.meter tr:last-child td{border-bottom:0}
+  table.meter td.vol{font-weight:700;color:var(--ink);font-size:17px}
+  table.meter td.kxc{color:var(--cobalt);font-weight:700}
+  table.meter td.them{color:var(--plasma);font-weight:600}
+  table.meter td.other{color:var(--slate);font-weight:600}
+  .meter-fine{font-size:13px;color:var(--slate);margin:22px 0 0;max-width:900px;line-height:1.55}
+
+  /* ============ RECEIPT ============ */
+  .receipt-wrap{background:var(--ink);color:var(--white)}
+  .receipt-wrap .eyebrow{color:var(--slate-bright)}
+  .receipt-wrap .h2{color:var(--white)}
+  .receipt-wrap .lede{color:var(--slate-bright)}
+  .receipt{max-width:620px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:12px 28px}
+  .receipt .row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px dashed rgba(255,255,255,0.14)}
+  .receipt .row .item{font-size:15px;color:var(--slate-bright)}
+  .receipt .row .amt{font-size:16px;font-weight:600;color:var(--white);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .receipt .row.total{border-bottom:0;padding:22px 0}
+  .receipt .row.total .item{font-size:16px;font-weight:700;color:var(--white)}
+  .receipt .row.total .amt{font-size:26px;font-weight:700;color:var(--plasma)}
+  .receipt-fine{font-size:13px;color:var(--slate-2);margin:22px 0 0;max-width:620px;line-height:1.6}
+  .receipt-fine b{color:var(--slate-bright)}
+
+  /* ============ FOOTER ============ */
+  .kx-root footer{border-top:1px solid var(--line);padding:32px;background:var(--white)}
+  .foot{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--slate)}
+  .foot a{cursor:pointer}
+  .foot a:hover{color:var(--ink)}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:1000px){
+    .hero h1{font-size:48px}
+    .cap-grid,.plan-grid{grid-template-columns:repeat(2,1fr)}
+    .five-grid{grid-template-columns:repeat(2,1fr)}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:680px){
+    .nav-inner{flex-wrap:wrap;gap:12px}
+    .brand{order:1}
+    .nav .btn-primary{order:2;margin-left:auto}
+    .tabs{order:3;width:100%}
+    .tab{flex:1;text-align:center}
+    .hero h1{font-size:34px}
+    .cap-grid,.plan-grid,.five-grid,.stat-grid,.buy-grid{grid-template-columns:1fr}
+    .kx-root section{padding:52px 22px}
+  }
+</style>
+
+<div class="kx-root">
+
+<!-- ============ NAV + TABS ============ -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg viewBox="0 0 140 140" width="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="20" width="70" height="70" rx="12" fill="#2A4BFF" transform="rotate(-12 55 55)"/>
+        <rect x="50" y="50" width="70" height="70" rx="12" fill="#FF2E63" transform="rotate(12 85 85)" style="mix-blend-mode:multiply"/>
+      </svg>
+      <span class="wm">kontrolx</span>
+    </div>
+    <div class="tabs" role="tablist" aria-label="KontrolX documents">
+      <button class="tab" id="tab-onepager" role="tab" aria-selected="true" aria-controls="panel-onepager" data-target="onepager">Product One-Pager</button>
+      <button class="tab" id="tab-pricing" role="tab" aria-selected="false" aria-controls="panel-pricing" data-target="pricing">Pricing &amp; Comparison</button>
+    </div>
+    <a href="mailto:hello@kontrolx.ai" class="btn btn-primary">Talk to the team</a>
+  </div>
+</div>
+
+<!-- ============================================================= -->
+<!-- ==================== PANEL: ONE-PAGER ======================== -->
+<!-- ============================================================= -->
+<div class="panel active" id="panel-onepager" role="tabpanel" aria-labelledby="tab-onepager">
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">kontrolx · Product One-Pager · V5 · July 2026</p>
+    <h1>One platform. Eight tools gone. Now measured.</h1>
+    <p class="sub"><b>Every client gets a dedicated, single-tenant system</b> that runs their whole lead business — intake to money — operated by AI, proven under load, priced flat. <b>No per-lead tax. Ever.</b></p>
+    <p class="fine">Everything on this page ships in every deployment today. Capacity figures are measured on production-class hardware, not projected.</p>
+  </div>
+</div>
+
+<section id="system">
+  <div class="container">
+    <p class="eyebrow">The System</p>
+    <h2 class="h2">Thirteen capabilities, zero add-on SKUs</h2>
+    <p class="lede">Eight capability groups, all shipping in every deployment. One price. No tiers hiding features behind a sales call.</p>
+    <div class="cap-grid">
+      <div class="cap" style="--accent:var(--cobalt)">
+        <h3>Intake &amp; Screening</h3>
+        <ul>
+          <li>Ping/post API + pre-ping ownership check</li>
+          <li>DNC · blacklist · dedupe · rule validation — <b>at submit, in milliseconds</b></li>
+          <li>Hosted public intake forms &amp; bulk upload</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--emerald)">
+        <h3>Routing &amp; Money</h3>
+        <ul>
+          <li>Buyer routing, accept / reject / return windows</li>
+          <li><b>Double-entry ledger:</b> costs, revenue, commissions, reversals</li>
+          <li>Vendor &amp; buyer statements, automatic</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--violet)">
+        <h3>Enrichment Engine</h3>
+        <ul>
+          <li>Vendor pipelines with SLAs, callbacks, cost tracking</li>
+          <li><b>Human-in-the-loop:</b> PIN worklists + signed one-lead links — a person can complete any async step</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--amber)">
+        <h3>Partner Portals</h3>
+        <ul>
+          <li>Auto-built buyer + vendor portals</li>
+          <li>Dashboards, statements, self-serve API keys, webhook drill-ins, docs</li>
+          <li>White-label ready</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--plasma)">
+        <h3>AI Operation</h3>
+        <ul>
+          <li>Assistant on every screen — its own consultant</li>
+          <li><b>~90 agent tools (MCP)</b> + agent-to-agent (A2A)</li>
+          <li>Agents don't describe the system. They operate it.</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--cobalt)">
+        <h3>Knowledge &amp; BI</h3>
+        <ul>
+          <li>Knowledge base / RAG with per-KB access grants</li>
+          <li>Datasets: CSV + live slices, dynamic metrics, export</li>
+          <li>Custom dashboards per audience, rendered inside each portal</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--emerald)">
+        <h3>Observability</h3>
+        <ul>
+          <li>System status, alerts, API-failure capture</li>
+          <li>Error drill-ins per source / buyer / vendor</li>
+          <li>Webhook delivery tracking + one-click replay</li>
+        </ul>
+      </div>
+      <div class="cap" style="--accent:var(--violet)">
+        <h3>Reliability Core</h3>
+        <ul>
+          <li><b>Crash-proof durable pipeline</b> — nothing is ever dropped</li>
+          <li>Lifecycle state machine, schedules, risk gates</li>
+          <li>Connection pooling + backpressure: overload degrades politely, never down</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="diff">
+  <div class="container">
+    <p class="eyebrow">The Moat</p>
+    <h2 class="h2">Five things nobody else sells at any price</h2>
+    <p class="diff-note">Not in boberdoo, LeadConduit, Phonexa, or LeadsPedia — at any tier.</p>
+    <div class="five-grid">
+      <div class="five"><p class="num">01</p><h4>AI that operates the system</h4><p>Every screen has a conversational equivalent; ~90 tools let outside agents run the business end-to-end.</p></div>
+      <div class="five"><p class="num">02</p><h4>Per-audience custom dashboards</h4><p>Composable, metric-driven dashboards targeted to each buyer or vendor — inside their own portal.</p></div>
+      <div class="five"><p class="num">03</p><h4>Human-in-the-loop async steps</h4><p>Any pending enrichment becomes a secure form a person can complete — PIN worklists or signed links.</p></div>
+      <div class="five"><p class="num">04</p><h4>Knowledge base / RAG</h4><p>Org documents, semantically searchable, access-controlled per partner, wired into the AI.</p></div>
+      <div class="five"><p class="num">05</p><h4>Dedicated tenancy as standard</h4><p>Own database, own pipeline, own capacity envelope. Competitors gate this behind enterprise sales.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="container">
+    <p class="eyebrow">Two Ways To Buy</p>
+    <h2 class="h2">Sit beside your stack, or become it</h2>
+    <p class="lede">Same system underneath. Choose how much of the business you want kontrolx to run.</p>
+    <div class="buy-grid">
+      <div class="buy embed">
+        <p class="kicker">Embed · The Middleman</p>
+        <h3>We sit beside your stack</h3>
+        <p>Leads in via API, screened and routed; results, webhooks, and deliveries flow back to your existing CRM and warehouse. No rip-and-replace. Upgrade path built in.</p>
+      </div>
+      <div class="buy own">
+        <div class="own-glow"></div>
+        <p class="kicker">Own · The System of Record</p>
+        <h3>We run the whole business</h3>
+        <p>Intake to money on one system: portals for your partners, ledger for your books, AI for your operators, dashboards for everyone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="container">
+    <p class="eyebrow">Proof, Not Promises — Measured July 2026</p>
+    <h2 class="h2">The numbers are re-runnable.</h2>
+    <div class="stat-grid">
+      <div class="stat c1"><p class="big">&lt;300 ms</p><p>every lead acknowledged, durably persisted</p></div>
+      <div class="stat c2"><p class="big">6,500</p><p>lead spike absorbed at once — zero rejections, cleared in 2.5 min</p></div>
+      <div class="stat c3"><p class="big">115 M</p><p>leads/month measured ceiling on the smallest production database</p></div>
+      <div class="stat c4"><p class="big">100%</p><p>of the pipeline crash-recoverable — durable workflows end to end</p></div>
+    </div>
+    <p class="fine">Load-tested container by container: saturation knees, burst absorption, and database ceilings are measured and re-runnable — capacity tiers are engineering documents, not marketing copy.</p>
+  </div>
+</section>
+
+</div><!-- /panel-onepager -->
+
+<!-- ============================================================= -->
+<!-- ==================== PANEL: PRICING ========================= -->
+<!-- ============================================================= -->
+<div class="panel" id="panel-pricing" role="tabpanel" aria-labelledby="tab-pricing" hidden>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">kontrolx · Pricing &amp; Market Comparison · July 2026</p>
+    <h1>Competitors tax every lead. We sell the whole system, flat.</h1>
+    <p class="sub">At one million leads a month, per-event platforms bill <b>$15,000–25,000</b>. A dedicated KontrolX system with more capability is <span class="flat">$2,995 — flat.</span></p>
+    <p class="fine">All competitor figures from public pricing pages and verified pricing guides, July 2026. Our capacity figures are load-test measurements, sources in <code>docs/pricing-market-comparison.md</code>.</p>
+  </div>
+</div>
+
+<section id="plans">
+  <div class="container">
+    <p class="eyebrow">Plans</p>
+    <h2 class="h2">Flat price, measured capacity, dedicated infrastructure</h2>
+    <p class="lede">Every tier is a dedicated single-tenant system. The price is the price — capacity ceilings below are load-test measurements, not promises.</p>
+    <div class="plan-grid">
+      <div class="plan">
+        <p class="tier">Embed</p>
+        <p class="price">$1,495<span style="font-size:15px;font-weight:500;color:var(--slate)">/mo</span></p>
+        <p class="per">Middleman mode</p>
+        <ul><li>Beside your CRM</li><li>Intake, screening, routing, webhooks out</li><li><b>1M leads/mo</b></li><li>No rip-and-replace</li></ul>
+      </div>
+      <div class="plan feature">
+        <p class="tier">Base · Own</p>
+        <p class="price">$2,995<span style="font-size:15px;font-weight:500;color:var(--slate)">/mo</span></p>
+        <p class="per">The system of record</p>
+        <ul><li><b>Everything:</b> portals, AI, BI, ledger</li><li>1M leads/mo <span style="color:var(--emerald)">(13M measured ceiling)</span></li><li>Dedicated database + pipeline</li></ul>
+      </div>
+      <div class="plan">
+        <p class="tier">Growth</p>
+        <p class="price">$4,995<span style="font-size:15px;font-weight:500;color:var(--slate)">/mo</span></p>
+        <p class="per">Scale tier</p>
+        <ul><li>10M leads/mo <span style="color:var(--emerald)">(41M measured)</span></li><li>Same-day config upgrade — no migration</li></ul>
+      </div>
+      <div class="plan">
+        <p class="tier">Enterprise</p>
+        <p class="price">$9,995+<span style="font-size:15px;font-weight:500;color:var(--slate)">/mo</span></p>
+        <p class="per">Sovereign scale</p>
+        <ul><li>100M leads/mo <span style="color:var(--emerald)">(115M measured)</span></li><li>Custom SLA, database tiers beyond</li><li>Sovereign KB add-on <b>+$499</b></li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compare" class="compare">
+  <div class="container">
+    <p class="eyebrow">Apples to Apples</p>
+    <h2 class="h2">…and the add-ons they need where they fall short</h2>
+    <p class="table-note">Every competitor row reflects list pricing plus the third-party tools required to match a capability KontrolX ships as standard.</p>
+    <div class="table-scroll">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="kx"><span class="vn">KontrolX</span><span class="vp">Flat, all-in</span></th>
+            <th><span class="vn">boberdoo</span><span class="vp">$500–3K/mo + per action</span></th>
+            <th><span class="vn">LeadConduit</span><span class="vp">$1K–5K/mo + per event</span></th>
+            <th><span class="vn">Phonexa</span><span class="vp">$700–3K/mo + usage</span></th>
+            <th><span class="vn">LeadsPedia</span><span class="vp">$1.5K–2.5K/mo</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="cap">Ping/post, routing, returns</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="pill yes">Yes</span></td><td><span class="pill yes">Yes</span> <span class="cell-note">billed per event</span></td><td><span class="pill yes">Yes</span></td><td><span class="pill yes">Yes</span></td></tr>
+          <tr><td class="cap">Screeners: DNC / blacklist / dedupe / rules</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill yes">Yes</span> <span class="cell-note">billed per event</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+          <tr><td class="cap">Enrichment orchestration + vendor costs</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="pill partial">Partial</span></td><td><span class="cell-note">Via integrations —</span> <span class="cost">every call billed</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+          <tr><td class="cap">Human-in-loop async forms</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Custom dev</span> <span class="cost">$10–30k</span></td><td><span class="cell-note">Custom dev</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td></tr>
+          <tr><td class="cap">Double-entry ledger, commissions, statements</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">QuickBooks + glue dev</span></td><td><span class="pill no">No</span></td><td><span class="cell-note">Books360 add-on</span></td><td><span class="pill partial">Partial</span></td></tr>
+          <tr><td class="cap">Branded buyer/vendor portals</td><td class="kxc"><span class="pill kx">Auto-built</span></td><td><span class="cell-note">Softr/Clinked</span> <span class="cost">$139–399/mo</span></td><td><span class="cell-note">same add-on</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+          <tr><td class="cap">Custom per-audience dashboards</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Explo</span> <span class="cost">$999–1,995/mo</span></td><td><span class="cell-note">same add-on</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td></tr>
+          <tr><td class="cap">BI datasets &amp; metrics</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Tableau</span> <span class="cost">$15–115/user/mo</span></td><td><span class="cell-note">same add-on</span></td><td><span class="cell-note">Reports only</span></td><td><span class="cell-note">Reports only</span></td></tr>
+          <tr><td class="cap">AI assistant on every screen</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Nothing to buy — nearest is ThoughtSpot at $50/user/mo, 25 queries</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td></tr>
+          <tr><td class="cap">Agent surface (MCP/A2A) — AI operates the system</td><td class="kxc"><span class="pill kx">~90 tools</span></td><td><span class="cell-note">Doesn't exist</span></td><td><span class="cell-note">Doesn't exist</span></td><td><span class="cell-note">Doesn't exist</span></td><td><span class="cell-note">Doesn't exist</span></td></tr>
+          <tr><td class="cap">Knowledge base / RAG, per-partner access</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Custom RAG</span> <span class="cost">$25k+</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td><td><span class="pill no">No</span></td></tr>
+          <tr><td class="cap">Error drill-ins + webhook replay</td><td class="kxc"><span class="pill kx">Included</span></td><td><span class="cell-note">Support tickets</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+          <tr><td class="cap">Dedicated single-tenant infrastructure</td><td class="kxc"><span class="pill kx">Standard</span></td><td><span class="cell-note">Enterprise only</span></td><td><span class="cell-note">Enterprise only</span></td><td><span class="cell-note">Enterprise only</span></td><td><span class="cell-note">Enterprise only</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stack-note">Matching one <b>KontrolX Base</b> stack ≈ platform $1.5–3k + portal $250 + dashboards $999 + BI seats $270 + custom dev — <b>$3.5–5.5k/mo before lead metering</b>, with zero AI operation.</p>
+  </div>
+</section>
+
+<section id="meter">
+  <div class="container">
+    <p class="eyebrow">What the Meter Costs at Volume</p>
+    <h2 class="h2">Their bill scales with your leads. Ours doesn't.</h2>
+    <p class="lede">The same volume, priced three ways. KontrolX is flat because the capacity is already measured and provisioned.</p>
+    <div class="meter-scroll">
+      <table class="meter">
+        <thead><tr><th>Leads / month</th><th>KontrolX</th><th>Per-event platforms*</th><th>boberdoo</th></tr></thead>
+        <tbody>
+          <tr><td class="vol">100,000</td><td class="kxc">$2,995 flat</td><td class="them">$1.5k–2.5k</td><td class="other">$500–1.5k</td></tr>
+          <tr><td class="vol">1,000,000</td><td class="kxc">$2,995 flat</td><td class="them">$15k–25k</td><td class="other">$1.5k–3k+</td></tr>
+          <tr><td class="vol">10,000,000</td><td class="kxc">$4,995 flat</td><td class="them">$150k+ (custom)</td><td class="other">custom</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="meter-fine">*LeadConduit-style: ~$0.005/event × 3–5 events per lead (ping, post, integration calls). Our flat price is backed by measured ceilings — <b style="color:var(--emerald)">13M / 41M / 115M leads/mo</b> per tier.</p>
+  </div>
+</section>
+
+<section class="receipt-wrap">
+  <div class="container">
+    <p class="eyebrow">The DIY Receipt · 10-Seat Team</p>
+    <h2 class="h2">Build it yourself, and the bill still arrives.</h2>
+    <p class="lede">Assemble the same surface area from best-in-class tools and here's the monthly minimum — none of it lead-native.</p>
+    <div class="receipt">
+      <div class="row"><span class="item">Salesforce Enterprise ×10</span><span class="amt">$1,750</span></div>
+      <div class="row"><span class="item">Tableau (2 Creator + 8 Viewer)</span><span class="amt">$270</span></div>
+      <div class="row"><span class="item">Airtable Business ×10</span><span class="amt">$450</span></div>
+      <div class="row"><span class="item">Workato glue (entry)</span><span class="amt">$1,700+</span></div>
+      <div class="row"><span class="item">Client portal tool</span><span class="amt">$269</span></div>
+      <div class="row"><span class="item">…still need ping/post (boberdoo)</span><span class="amt">$500+</span></div>
+      <div class="row total"><span class="item">Monthly, before implementation</span><span class="amt">$4,939+</span></div>
+    </div>
+    <p class="receipt-fine">Plus <b>$50k+ implementation</b>, none of it lead-native, and Salesforce's AI tier alone is <b>$550/user/mo</b>.</p>
+  </div>
+</section>
+
+</div><!-- /panel-pricing -->
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg viewBox="0 0 140 140" width="24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="20" width="70" height="70" rx="12" fill="#2A4BFF" transform="rotate(-12 55 55)"/>
+        <rect x="50" y="50" width="70" height="70" rx="12" fill="#FF2E63" transform="rotate(12 85 85)" style="mix-blend-mode:multiply"/>
+      </svg>
+      <span style="font-weight:700;color:var(--ink);font-size:14px">kontrolx</span>
+      <span style="margin-left:14px">The hub for living, breathing data.</span>
+    </div>
+    <div style="display:flex;gap:24px">
+      <a data-target="onepager">One-Pager</a>
+      <a data-target="pricing">Pricing</a>
+      <a href="mailto:hello@kontrolx.ai">hello@kontrolx.ai</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /kx-root -->
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = { onepager: document.getElementById('panel-onepager'),
+                 pricing: document.getElementById('panel-pricing') };
+  function select(name, updateHash){
+    if(!panels[name]) name = 'onepager';
+    Object.keys(panels).forEach(function(k){
+      var on = k === name;
+      panels[k].classList.toggle('active', on);
+      panels[k].hidden = !on;
+    });
+    tabs.forEach(function(t){
+      t.setAttribute('aria-selected', t.dataset.target === name ? 'true' : 'false');
+    });
+    if(updateHash){ try{ history.replaceState(null,'','#'+name); }catch(e){ location.hash = name; } }
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  document.querySelectorAll('[data-target]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      select(el.dataset.target, true);
+    });
+  });
+  var start = (location.hash || '').replace('#','');
+  select(start === 'pricing' ? 'pricing' : 'onepager', false);
+})();
+</script>
+</body>
+</html>
